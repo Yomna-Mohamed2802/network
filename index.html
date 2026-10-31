@@ -380,7 +380,6 @@ th{font-size:.85rem}
 :root[data-theme="dark"]{--bg:#0d1117;--panel:#151b23;--fg:#f0f6fc;--muted:#9198a1;--line:#3d444d;--code:#151b23;
   --accent:#4493f8;--c1:#4493f8;--c2:#3fb950;--c3:#db6d28;--c4:#ab7df8;--lab:#4493f8;--good:#3fb950;--bad:#f85149;
   --note:#151b23;--noteline:#3d444d;--hero1:#0d1117;--hero2:#0d1117;--shadow:none;color-scheme:dark}
-section.view,nav.tabs button,.toc{--k:var(--accent)!important}
 header.top{background:var(--bg)!important;border-bottom:1px solid var(--line);padding-block:26px 18px}
 header.top h1{color:var(--fg)}
 header.top h1::after{content:none!important}
@@ -416,6 +415,30 @@ th{background:var(--code)!important}
 .toc li a.cur{color:var(--fg)!important;border-left-color:#fd8c73!important}
 .toc-prog i{background:var(--good)!important}
 .totop{border-radius:6px!important;box-shadow:none!important}
+
+/* ---------- chapter colour coding: solid colours, one per tab ---------- */
+:root{--lab:#0e7c86;--c5:#bf3989;--c6:#9a6700}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--lab:#39c5cf;--c5:#db61a2;--c6:#d29922}}
+:root[data-theme="dark"]{--lab:#39c5cf;--c5:#db61a2;--c6:#d29922}
+header.top{position:relative}
+header.top::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:4px;background:linear-gradient(90deg,var(--c1) 0 16.6%,var(--c2) 16.6% 33.3%,var(--c3) 33.3% 50%,var(--c4) 50% 66.6%,var(--c5) 66.6% 83.3%,var(--c6) 83.3%)}
+nav.tabs button i{display:inline-block!important;width:8px!important;height:8px!important;background:var(--k)!important}
+nav.tabs button[aria-selected="true"]{color:var(--k)!important;border-bottom-color:var(--k)!important}
+.chap-head{background:color-mix(in srgb,var(--k) 7%,var(--bg))!important;border:1px solid color-mix(in srgb,var(--k) 22%,var(--line))!important;border-top:4px solid var(--k)!important;border-radius:8px!important;padding:18px 20px!important}
+.chap-head small{color:var(--k)!important;font-weight:800}
+.chap-head h2{color:var(--fg)}
+.block>h3 .h3t::before{content:""!important;width:10px;height:10px;border-radius:2px;background:var(--k);flex:0 0 10px}
+.block{border-top:3px solid color-mix(in srgb,var(--k) 70%,var(--line))!important}
+th{background:color-mix(in srgb,var(--k) 9%,var(--code))!important}
+.note{border-left-color:var(--k)!important;background:color-mix(in srgb,var(--k) 5%,var(--code))!important}
+.toc li a.cur{color:var(--k)!important;border-left-color:var(--k)!important}
+.toc-prog i{background:var(--k)!important}
+.pill{color:var(--k);border-color:color-mix(in srgb,var(--k) 50%,transparent);background:color-mix(in srgb,var(--k) 8%,transparent)}
+.dg{background:color-mix(in srgb,var(--k) 4%,var(--code))!important;border-color:color-mix(in srgb,var(--k) 25%,var(--line))!important}
+.watchrow,.watchrow.hard{background:color-mix(in srgb,var(--k) 5%,var(--code))!important}
+.layer-stack div{border-left-color:var(--k)!important}
+.filters button[aria-pressed="true"]{background:var(--k)!important;color:#fff!important;border-color:var(--k)!important}
+.seg button[aria-pressed="true"]{background:var(--k)!important}
 </style>
 
 <header class="top"><div class="wrap">
@@ -442,8 +465,8 @@ th{background:var(--code)!important}
   <button role="tab" data-v="ch3" style="--k:var(--c3)"><i></i>Ch3 TCP/IP &amp; Subnetting</button>
   <button role="tab" data-v="ch4" style="--k:var(--c4)"><i></i>Ch4 Switching</button>
   <button role="tab" data-v="lab" style="--k:var(--lab)"><i></i>Subnetting Lab</button>
-  <button role="tab" data-v="quiz" style="--k:var(--c3)"><i></i>Quiz</button>
-  <button role="tab" data-v="review" style="--k:var(--c1)"><i></i>Night Before</button>
+  <button role="tab" data-v="quiz" style="--k:var(--c5)"><i></i>Quiz</button>
+  <button role="tab" data-v="review" style="--k:var(--c6)"><i></i>Night Before</button>
 </div></nav>
 
 <main class="wrap layout">
@@ -1474,7 +1497,7 @@ Switch# <b>copy running-config startup-config</b></pre>
 </section>
 
 <!-- ================= QUIZ ================= -->
-<section class="view" id="v-quiz" style="--k:var(--c3)" hidden>
+<section class="view" id="v-quiz" style="--k:var(--c5)" hidden>
   <div class="chap-head"><small>Practice</small><h2>Quiz</h2><p>Two sections: objective questions (MCQ, True/False, fill in the blank, matching) and essay questions with model answers.</p><span class="tr">قسمين: أسئلة اختيار (MCQ وصح وغلط وأكمل وتوصيل) بتتصحح لوحدها، وأسئلة مقالي ليها إجابة نموذجية.</span></div>
   <div class="qtabs seg" role="group" aria-label="Quiz section"><button type="button" data-qs="obj" aria-pressed="true">MCQ section</button><button type="button" data-qs="essay" aria-pressed="false">Essay section</button></div>
   <div id="qsObj" class="qs">
@@ -1514,7 +1537,7 @@ Switch# <b>copy running-config startup-config</b></pre>
 </section>
 
 <!-- ================= REVIEW ================= -->
-<section class="view" id="v-review" style="--k:var(--c1)" hidden>
+<section class="view" id="v-review" style="--k:var(--c6)" hidden>
   <div class="chap-head"><small>Last look</small><h2>Night Before the Exam</h2><p>The things that get asked the most, on one page.</p><span class="tr">أهم الحاجات اللي بتيجي في الامتحان في صفحة واحدة.</span></div>
   <div class="grid2">
     <div class="block"><h3>OSI: layer · PDU · device</h3>
