@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>ملخص أم سميحة لتجنب الفضيحة</title>
-<meta name="site-version" content="2026-10-31-r21">
+<meta name="site-version" content="2026-10-31-r22">
 <script>
 (function(){
   /* auto-update: if the server has a newer version than this cached copy, reload once */
   try{
-    var cur='2026-10-31-r21';
+    var cur='2026-10-31-r22';
     fetch(location.pathname+'?nocache='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():'';}).then(function(t){
       var m=t.match(/name="site-version" content="([^"]+)"/);
       if(m&&m[1]!==cur&&!sessionStorage.getItem('reloaded-'+m[1])){sessionStorage.setItem('reloaded-'+m[1],'1');location.reload();}
@@ -473,6 +473,10 @@ th{background:color-mix(in srgb,var(--k) 9%,var(--code))!important}
 .icc figcaption{padding:8px 10px;display:grid;gap:2px;font-size:.82rem;line-height:1.4}
 .icc figcaption b{font-size:.9rem}
 .icc figcaption .tr{border:0!important;padding:0!important;font-size:.8rem!important}
+.studied-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:18px;padding-top:12px;border-top:1px dashed var(--line);font:600 .88rem var(--f-body);color:var(--muted)}
+.studied-row .tr{display:inline!important;border:0!important;padding:0 0 0 8px!important}
+.h3done{display:none;flex:0 0 auto;font:700 .72rem var(--f-display);color:var(--good);border:1px solid var(--good);border-radius:99px;padding:2px 9px}
+.block>h3.isdone .h3done{display:inline-block}
 </style>
 
 <header class="top"><div class="wrap">
@@ -2583,9 +2587,9 @@ Switch# <b>copy running-config startup-config</b></pre>
     const key=b.closest('section').id+'|'+h.textContent.trim();
     const t=document.createElement('span');t.className='h3t';while(h.firstChild)t.appendChild(h.firstChild);h.appendChild(t);
     const btn=document.createElement('button');btn.type='button';btn.className='studied';btn.dataset.key=key;
-    const paint=()=>{btn.setAttribute('aria-pressed',!!done[key]);btn.textContent=done[key]?'✓ Studied':'☐ Mark as studied';};
+    const paint=()=>{btn.setAttribute('aria-pressed',!!done[key]);btn.textContent=done[key]?'✓ Studied':'☐ Mark as studied';h.classList.toggle('isdone',!!done[key]);};
     btn.addEventListener('click',()=>{if(done[key])delete done[key];else done[key]=1;save();paint();build();toast(done[key]?'✓ Marked as studied · اتعلّم إنه اتذاكر':'Unmarked · اتشال من المذاكر');});
-    paint();h.appendChild(btn);
+    const row=document.createElement('div');row.className='studied-row';row.innerHTML='<span>Finished this part?<span class="tr">خلصتي الجزء ده؟</span></span>';row.appendChild(btn);b.appendChild(row);const badge=document.createElement('span');badge.className='h3done';badge.textContent='✓ Studied';h.appendChild(badge);paint();
   });
   function toast(t){let el=document.getElementById('toast');if(!el){el=document.createElement('div');el.id='toast';el.className='toast';el.setAttribute('role','status');document.body.appendChild(el);}el.textContent=t;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),1800);}
   const toc=document.getElementById('toc');let obs;
@@ -2593,7 +2597,7 @@ Switch# <b>copy running-config startup-config</b></pre>
     const sec=[...document.querySelectorAll('section.view')].find(x=>!x.hidden);if(!sec)return;
     toc.style.setProperty('--k',getComputedStyle(sec).getPropertyValue('--k'));
     const hs=[...sec.querySelectorAll('.block > h3')];
-    const items=hs.map(h=>{const b=h.parentElement,k=h.querySelector('.studied').dataset.key;return {id:b.id,t:h.querySelector('.h3t').textContent.replace('★','').trim(),d:!!done[k]};});
+    const items=hs.map(h=>{const b=h.parentElement,k=b.querySelector('.studied-row .studied').dataset.key;return {id:b.id,t:h.querySelector('.h3t').textContent.replace('★','').trim(),d:!!done[k]};});
     const c=items.filter(i=>i.d).length,pct=items.length?Math.round(c/items.length*100):0;
     const list='<ol>'+items.map(i=>`<li><a href="#${i.id}" data-id="${i.id}" class="${i.d?'done':''}"><span class="dot"></span><span>${i.t}</span></a></li>`).join('')+'</ol>';
     const title=sec.querySelector('.chap-head h2').textContent;
