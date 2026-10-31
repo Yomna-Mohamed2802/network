@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>ملخص أم سميحة لتجنب الفضيحة</title>
-<meta name="site-version" content="2026-10-31-r23">
+<meta name="site-version" content="2026-10-31-r24">
 <script>
 (function(){
   /* auto-update: if the server has a newer version than this cached copy, reload once */
   try{
-    var cur='2026-10-31-r23';
+    var cur='2026-10-31-r24';
     fetch(location.pathname+'?nocache='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():'';}).then(function(t){
       var m=t.match(/name="site-version" content="([^"]+)"/);
       if(m&&m[1]!==cur&&!sessionStorage.getItem('reloaded-'+m[1])){sessionStorage.setItem('reloaded-'+m[1],'1');location.reload();}
@@ -498,6 +498,8 @@ th{background:color-mix(in srgb,var(--k) 9%,var(--code))!important}
 .mmg-n.lit text{fill:#fff!important}
 .mmg-n:hover circle{filter:drop-shadow(0 0 6px var(--k))}
 .mmg .dim{opacity:.12}
+.mmg-n.t2 circle{fill:#8f8a96!important}
+.mmg-link{stroke:rgba(225,220,230,.13)!important}
 </style>
 
 <header class="top"><div class="wrap">
@@ -1732,7 +1734,7 @@ Switch# <b>copy running-config startup-config</b></pre>
       const hid='h'+i; nodes.push({id:hid,label:d.h,t:1,go:d.id,hard:d.hard}); links.push({source:'r',target:hid});
       d.chips.forEach((c,j)=>{const cid=hid+'c'+j; nodes.push({id:cid,label:c[0],t:2,go:c[1]}); links.push({source:hid,target:cid});});
     });
-    const R={0:13,1:7.5,2:3.6};
+    const R={0:15,1:10,2:5.5};
     const svg=d3.select(map).append('svg').attr('class','mmg').attr('viewBox',[0,0,W,H]).attr('role','img').attr('aria-label',root+' graph');
     const sky=svg.append('g').attr('class','mmg-sky');for(let i=0;i<46;i++)sky.append('circle').attr('cx',Math.random()*W).attr('cy',Math.random()*H).attr('r',Math.random()*1.1+.3).attr('opacity',Math.random()*.5+.15);
     const g=svg.append('g');
@@ -1759,10 +1761,10 @@ Switch# <b>copy running-config startup-config</b></pre>
       n.x=cx+Math.cos(a)*rr+(m[2]?(+m[3]-3)*6:0); n.y=cy+Math.sin(a)*rr+(m[2]?(+m[3]-3)*6:0);
     });
     const sim=d3.forceSimulation(nodes)
-      .force('link',d3.forceLink(links).id(d=>d.id).distance(l=>l.target.t===1?r1:34).strength(l=>l.target.t===1?.3:.8))
-      .force('charge',d3.forceManyBody().strength(d=>d.t===0?-400:d.t===1?-350:-60).distanceMax(260))
-      .force('radial',d3.forceRadial(d=>d.t===1?r1:d.t===2?r1+55:0,cx,cy).strength(d=>d.t===1?.55:d.t===2?.04:0))
-      .force('collide',d3.forceCollide(d=>R[d.t]+(d.t===2?7:22)));
+      .force('link',d3.forceLink(links).id(d=>d.id).distance(l=>l.target.t===1?r1*.62:24).strength(l=>l.target.t===1?.5:1))
+      .force('charge',d3.forceManyBody().strength(d=>d.t===0?-520:d.t===1?-420:-38).distanceMax(320))
+      .force('radial',d3.forceRadial(d=>d.t===1?r1:d.t===2?r1+55:0,cx,cy).strength(d=>d.t===1?.06:0))
+      .force('collide',d3.forceCollide(d=>R[d.t]+(d.t===2?4:16)));
     node.call(d3.drag().clickDistance(4)
       .on('start',(e,d)=>{if(!e.active)sim.alphaTarget(.25).restart();d.fx=d.x;d.fy=d.y;})
       .on('drag',(e,d)=>{d.fx=e.x;d.fy=e.y;})
