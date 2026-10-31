@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Data Structures in Java</title>
-<meta name="site-version" content="ds-2026-11-01-r1">
+<meta name="site-version" content="ds-2026-11-01-r2">
 <script>
 (function(){
   /* auto-update: if the server has a newer version than this cached copy, reload once */
   try{
-    var cur='ds-2026-11-01-r1';
+    var cur='ds-2026-11-01-r2';
     fetch(location.pathname+'?nocache='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():'';}).then(function(t){
       var m=t.match(/name="site-version" content="([^"]+)"/);
       if(m&&m[1]!==cur&&!sessionStorage.getItem('reloaded-'+m[1])){sessionStorage.setItem('reloaded-'+m[1],'1');location.reload();}
@@ -570,6 +570,20 @@ pre.cli{white-space:pre;tab-size:2}
 .bo-v{font:600 .8rem var(--f-mono);color:var(--muted)}
 .bo-a{grid-column:2/-1;font:500 .78rem var(--f-ar);color:var(--muted);direction:rtl;text-align:right;margin-top:-4px}
 .dg-ctl input[type=number]{width:5.5rem;font:inherit;padding:.3rem .4rem;border-radius:6px;border:1px solid var(--line);background:var(--bg);color:var(--fg)}
+details.ans{margin:.3rem 0 .9rem;border:1px solid var(--line);border-radius:6px;padding:.35rem .7rem;background:var(--panel)}
+details.ans summary{cursor:pointer;font:700 .85rem var(--f-body);color:var(--k)}
+details.ans pre.cli{margin:.4rem 0}
+details.ans .tr{border:0!important;padding:0!important}
+.chapvid{border:1px solid color-mix(in srgb,var(--k) 35%,var(--line));border-left:5px solid var(--k);border-radius:8px;padding:12px 14px;background:color-mix(in srgb,var(--k) 6%,var(--panel))}
+.cv-h{font:800 1rem var(--f-ar);direction:rtl;text-align:right;color:var(--fg);margin-bottom:8px}
+.cv-h span{display:block;font:500 .85rem var(--f-ar);color:var(--muted)}
+.cv-b{display:flex;flex-wrap:wrap;gap:8px}
+.cvid{display:flex;gap:10px;align-items:center;flex:1 1 260px;min-width:0;padding:10px 12px;border-radius:8px;background:var(--k);color:#fff;text-decoration:none}
+.cvid:hover{filter:brightness(1.08)}
+.cvid:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+.cvid .play{flex:0 0 34px;height:34px;border-radius:50%;background:rgba(255,255,255,.25);display:grid;place-items:center}
+.cvid b{display:block;font:700 .92rem var(--f-ar)}
+.cvid small{font:600 .76rem var(--f-body);opacity:.9}
 </style>
 
 <header class="top"><div class="wrap">
@@ -608,6 +622,7 @@ pre.cli{white-space:pre;tab-size:2}
 <!-- ================= CH1 INTRODUCTION ================= -->
 <section class="view" id="v-ch1" style="--k:var(--c1)">
   <div class="chap-head"><small>Chapter 1 · lecture pages 2–10</small><h2>Introduction</h2><p>Data structures, algorithms, types, operations and Big-O complexity.</p><span class="tr">يعني إيه Data Structure و Algorithm، وأنواعها، والعمليات عليها، وحساب الـ Complexity.</span></div>
+  <div class="chapvid"><div class="cv-h">🎬 شرح الشابتر بالعربي (فيديو طويل)<span>اتفرجي عليه الأول، وبعدين ذاكري من الملخص تحت.</span></div><div class="cv-b"><a class="cvid" href="https://www.youtube.com/watch?v=_b1wo2QKqGw" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span><b>ليه نتعلم Data Structures (مقدمة الكورس)</b><small>17:46 · محمد الدسوقي · Java</small></span></a><a class="cvid" href="https://www.youtube.com/watch?v=_Hjl_ozIWhg" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span><b>الـ Time Complexity والـ Big O كاملة بأمثلة</b><small>17:17 · KE RO Salah</small></span></a></div></div>
   <div class="mm" data-map></div>
 
   <div class="block">
@@ -754,6 +769,7 @@ System.out.println("Average = " + average);    // O(1)
 <!-- ================= CH2 ARRAYS ================= -->
 <section class="view" id="v-ch2" style="--k:var(--c2)" hidden>
   <div class="chap-head"><small>Chapter 2 · lecture pages 10–18 + Lab 1</small><h2>Arrays</h2><p>Arrays in Java, core operations, and building the Array class.</p><span class="tr">الـ Array في Java، والعمليات عليها، وبناء كلاس Array بإيدينا.</span></div>
+  <div class="chapvid"><div class="cv-h">🎬 شرح الشابتر بالعربي (فيديو طويل)<span>اتفرجي عليه الأول، وبعدين ذاكري من الملخص تحت.</span></div><div class="cv-b"><a class="cvid" href="https://www.youtube.com/watch?v=SlQmNU76goU" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span><b>Array as a Data Structure: الشرح الكامل بالكود</b><small>1:04:03 · محمد الدسوقي · Java</small></span></a></div></div>
   <div class="mm" data-map></div>
 
   <div class="block">
@@ -900,6 +916,7 @@ arr.append(200); arr.append(300);</pre>
 <!-- ================= CH3 ARRAYLIST ================= -->
 <section class="view" id="v-ch3" style="--k:var(--c3)" hidden>
   <div class="chap-head"><small>Chapter 3 · lecture pages 19–28 + ArrayList section</small><h2>ArrayList</h2><p>A resizable array: constructors, core operations, sorting, merging, deleting, and Array vs ArrayList.</p><span class="tr">الـ ArrayList: array بتكبر لوحدها، وعملياتها، والفرق بينها وبين الـ Array.</span></div>
+  <div class="chapvid"><div class="cv-h">🎬 شرح الشابتر بالعربي (فيديو طويل)<span>اتفرجي عليه الأول، وبعدين ذاكري من الملخص تحت.</span></div><div class="cv-b"><a class="cvid" href="https://www.youtube.com/watch?v=S4mLqmaWj14" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span><b>شرح ArrayList في جافا: الإنشاء وكل الدوال</b><small>13:12 · برمجه وأكثر بالعربي · Java</small></span></a></div></div>
   <div class="mm" data-map></div>
 
   <div class="block">
@@ -1009,6 +1026,7 @@ area of Circle(2)   → 12.566370614359172</pre>
 <!-- ================= CH4 LINKED LIST ================= -->
 <section class="view" id="v-ch4" style="--k:var(--c4)" hidden>
   <div class="chap-head"><small>Chapter 4 · lecture pages 29–53 + Linked List lab</small><h2>Linked List</h2><p>Nodes and links: singly linked list, doubly linked list, and Java's LinkedList class.</p><span class="tr">الـ Linked List: nodes متوصلة ببعض، Singly و Doubly، والكلاس الجاهز في Java.</span></div>
+  <div class="chapvid"><div class="cv-h">🎬 شرح الشابتر بالعربي (فيديو طويل)<span>اتفرجي عليه الأول، وبعدين ذاكري من الملخص تحت.</span></div><div class="cv-b"><a class="cvid" href="https://www.youtube.com/watch?v=oZgoPGNdScE" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span><b>Single Linked List: الشرح الكامل بالكود</b><small>24:03 · محمد الدسوقي · Java</small></span></a><a class="cvid" href="https://www.youtube.com/watch?v=kZZz41F2FIw" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span><b>Doubly Linked List: الشرح الكامل بالكود</b><small>45:34 · محمد الدسوقي · Java</small></span></a></div></div>
   <div class="mm" data-map></div>
 
   <div class="block">
@@ -1249,6 +1267,7 @@ list.getFirst();  // Kiwi     list.getLast(); // Orange    list.get(2); // Mango
 <!-- ================= CH5 STACK ================= -->
 <section class="view" id="v-ch5" style="--k:var(--lab)" hidden>
   <div class="chap-head"><small>Chapter 5 · Stack lecture, pages 53–61</small><h2>Stack</h2><p>LIFO, operations, array-based stack, linked stack, and Java's Stack class.</p><span class="tr">الـ Stack: آخر واحد يدخل أول واحد يطلع، وتنفيذها بالـ array، والكلاس الجاهز.</span></div>
+  <div class="chapvid"><div class="cv-h">🎬 شرح الشابتر بالعربي (فيديو طويل)<span>اتفرجي عليه الأول، وبعدين ذاكري من الملخص تحت.</span></div><div class="cv-b"><a class="cvid" href="https://www.youtube.com/watch?v=bfBC-TbZ0_M" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span><b>Stack بالـ Array: الشرح الكامل بالكود</b><small>38:03 · محمد الدسوقي · Java</small></span></a><a class="cvid" href="https://www.youtube.com/watch?v=r8mXUoZCXC0" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span><b>Stack بالـ Linked List</b><small>23:25 · محمد الدسوقي · Java</small></span></a></div></div>
   <div class="mm" data-map></div>
 
   <div class="block">
@@ -1470,6 +1489,412 @@ add(3)     → 7 -> 5 -> 3 -> null</pre>
     </ul>
   </div>
 
+  <div class="block">
+    <h3>Book examples: Introduction and arrays</h3>
+    <p>Try each one on paper, then open the answer.<span class="tr">حلّي كل واحد في ورقة الأول، وبعدين افتحي الإجابة.</span></p>
+    <h4>1. Linear search on unordered data (book 1.11)</h4>
+<pre class="cli">int[] arr = {5, 3, 8, 1, 9};
+int target = 8, pos = -1;
+for (int i = 0; i &lt; arr.length; i++) if (arr[i] == target) { pos = i; break; }
+System.out.println("Found at index: " + pos);</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">Found at index: 2</pre><span class="tr">8 في index 2، والـ break بيوقف اللفة.</span></details>
+    <h4>2. Average of marks (book 1.11)</h4>
+<pre class="cli">int[] marks = {80, 90, 70, 85, 95};
+int sum = 0;
+for (int mark : marks) sum += mark;
+double average = (double) sum / marks.length;
+System.out.println("Average = " + average);</pre>
+    <details class="ans"><summary>Show output and complexity</summary><pre class="cli">Average = 84.0</pre><span class="tr">المجموع 420 على 5 = 84.0، والـ complexity = O(n).</span></details>
+    <h4>3. Access by index (book 1.11)</h4>
+<pre class="cli">int[] numbers = {10, 20, 30, 40, 50};
+System.out.println(numbers[2]);</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">30</pre><span class="tr">index 2 هو العنصر التالت، والوصول O(1).</span></details>
+    <h4>4. Deletion with underflow check (book 1.11)</h4>
+<pre class="cli">ArrayList&lt;Integer&gt; list = new ArrayList&lt;&gt;(List.of(10, 20, 30));
+if (!list.isEmpty()) list.remove(1);
+else System.out.println("Underflow: empty structure");
+System.out.println(list);</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">[10, 30]</pre><span class="tr">remove(1) شالت index 1 يعني 20.</span></details>
+    <h4>5. Destruction (book 1.11)</h4>
+<pre class="cli">Student student = new Student("Ahmed");
+System.out.println("Created: " + student.name);
+student = null;
+System.gc();
+System.out.println("object destroyed.");</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">Created: Ahmed
+object destroyed.</pre><span class="tr">student = null بيخلي الـ object مش متوصل بحاجة، والـ Garbage Collector ممكن يمسحه.</span></details>
+    <h4>6. What is the complexity? (book table)</h4>
+<pre class="cli">(a) System.out.println(marks[0]);
+(b) for (int i = 0; i &lt; 3; i++) System.out.println(i);
+(c) for (int i = 0; i &lt; n; i++) System.out.println(i);
+(d) for (int i = 0; i &lt; n; i++) for (int j = 0; j &lt; n; j++) System.out.println(i + j);
+(e) binary search on a sorted array</pre>
+    <details class="ans"><summary>Show answer</summary><pre class="cli">(a) O(1)   (b) O(1)   (c) O(n)   (d) O(n²)   (e) O(log n)</pre><span class="tr">(b) ثابتة لأن عدد اللفات 3 دايمًا ومش بيعتمد على n.</span></details>
+    <h4>7. Traversal of scores (book 2.6)</h4>
+<pre class="cli">int[] scores = {90, 85, 78, 92, 88};
+for (int i = 0; i &lt; scores.length; i++)
+    System.out.println("Element at index " + i + ": " + scores[i]);</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">Element at index 0: 90
+Element at index 1: 85
+Element at index 2: 78
+Element at index 3: 92
+Element at index 4: 88</pre></details>
+    <h4>8. Standalone insertElement and deleteAtIndex (book 2.6)</h4>
+<pre class="cli">int[] a = {1, 2, 4, 5};
+a = insertElement(a, 3, 2);          // book method returning a new array
+System.out.println(Arrays.toString(a));
+deleteAtIndex(a, 0, a.length);       // book method, shifts left
+System.out.println(Arrays.toString(a));</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">[1, 2, 3, 4, 5]
+[2, 3, 4, 5, 0]</pre><span class="tr">الـ insert عمل array طولها 5. والـ delete زحزح شمال وحط 0 في آخر خانة. ده مثال إحنا كاتبينه على كود الكتاب.</span></details>
+    <h4>9. Book 1.3: student IDs with linear search</h4>
+<pre class="cli">int[] ids = {105, 120, 135, 150, 175};
+System.out.println(linearSearch(ids, 150));
+System.out.println(linearSearch(ids, 999));</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">3
+-1</pre><span class="tr">الكتاب بيعرّف الدالة بس، والاستدعاء ده مثال مننا عليها. الـ array هي الـ DS، والـ linearSearch هي الـ algorithm.</span></details>
+    <h4>10. Lab 1: the ready-made array</h4>
+<pre class="cli">int[] a = new int[5];
+a[0] = 10; a[1] = 50; a[2] = 60;
+System.out.println(a[1]);
+System.out.println(a.length);
+for (int i = 0; i &lt; 3; i++) System.out.println(a[i]);
+// a[5] = 1;</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">50
+5
+10
+50
+60
+a[5] = 1 → ArrayIndexOutOfBoundsException</pre><span class="tr">a.length هي الـ capacity (5)، وآخر index هو 4.</span></details>
+  </div>
+
+  <div class="block">
+    <h3>Lab 1 demo: DS_Array step by step</h3>
+<pre class="cli">Array arr = new Array(5);
+System.out.println("Created 5, count = " + arr.getCount());
+arr.append(10); arr.append(50); arr.append(60); arr.append(15);
+arr.traverse();
+arr.insertElement(1000, 3);          // lecture version: resizes
+arr.traverse();
+System.out.println("Capacity: " + arr.getItems().length);
+System.out.println(arr.linearSearch(60));
+System.out.println(arr.linearSearch(999));
+arr.deleteAtIndex(2);
+arr.traverse();
+arr.append(200); arr.append(300);
+arr.traverse();</pre>
+    <details class="ans"><summary>Show output (lecture version, insert resizes)</summary><pre class="cli">Created 5, count = 0
+10 50 60 15
+10 50 60 1000 15
+Capacity: 6
+2
+-1
+10 50 1000 15
+10 50 1000 15 200 300</pre><span class="tr">في نسخة المحاضرة الـ insert بيعمل array بطول 6، فبعد الحذف الـ count = 4 والـ 200 والـ 300 بيدخلوا.</span></details>
+    <details class="ans"><summary>Show output (lab version, no resize)</summary><pre class="cli">10 50 60 15
+10 50 60 1000 15        (capacity 5)
+search 60 → 2, search 999 → -1
+10 50 1000 15
+sorry array is full     (when appending 300)
+10 50 1000 15 200</pre><span class="tr">في نسخة السكشن الـ capacity تفضل 5، فالـ 200 تدخل والـ 300 لأ.</span></details>
+  </div>
+
+  <div class="block">
+    <h3>Book and section: ArrayList programs</h3>
+    <h4>1. Insertion with add and addAll (book 4.3)</h4>
+<pre class="cli">ArrayList&lt;String&gt; names = new ArrayList&lt;&gt;();
+names.add("Heartin"); names.add("Sneha"); names.add(1, "Jacob");
+System.out.println(names);
+ArrayList&lt;String&gt; namesNew = new ArrayList&lt;&gt;();
+namesNew.addAll(names);
+namesNew.addAll(2, names);
+System.out.println(namesNew);</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">[Heartin, Jacob, Sneha]
+[Heartin, Jacob, Heartin, Jacob, Sneha, Sneha]</pre><span class="tr">addAll(2, names) دخّلت الـ list كلها من index 2.</span></details>
+    <h4>2. Sorting ascending and descending (book 5.1, 5.2)</h4>
+<pre class="cli">numbers = [50, 20, 80, 10, 40]
+Collections.sort(numbers);                             println
+Collections.sort(numbers, Collections.reverseOrder()); println</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">[10, 20, 40, 50, 80]
+[80, 50, 40, 20, 10]</pre></details>
+    <h4>3. Merging (book 4.3)</h4>
+<pre class="cli">ArrayList&lt;String&gt; listA = new ArrayList&lt;&gt;(List.of("A", "B", "C"));
+ArrayList&lt;String&gt; listB = new ArrayList&lt;&gt;(List.of("D", "E"));
+listA.addAll(listB);
+System.out.println(listA);</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">[A, B, C, D, E]</pre></details>
+    <h4>4. Deleting: remove, removeAll, retainAll, clear (book 4.3)</h4>
+<pre class="cli">(a) [Apple, Banana, Apple]: remove(1); remove("Apple");
+(b) [Apple, Banana, Cherry, Date].removeAll([Banana, Date, Fig])
+(c) [Apple, Banana, Cherry, Date].retainAll([Banana, Date, Fig])
+(d) [Apple, Banana, Cherry].clear()</pre>
+    <details class="ans"><summary>Show answers</summary><pre class="cli">(a) [Apple]
+(b) [Apple, Cherry]
+(c) [Banana, Date]
+(d) []</pre><span class="tr">(a) remove(1) شالت Banana، وبعدين remove("Apple") شالت أول Apple بس. (c) retainAll سابت المشترك بس.</span></details>
+    <h4>5. Complete example 1: all 7 operations (book)</h4>
+<pre class="cli">names: add Heartin, Sneha, add(1, Jacob)   → print "After insertion"
+traversal with for-each                    → print "Traversal"
+indexOf("Jacob"), contains("Sneha")
+set(1, "June")                             → print "After update"
+Collections.sort(names)                    → print "After sorting"
+addAll([Ali, Omar])                        → print "After merging"
+remove("Omar"); remove(0)                  → print "After deletion"</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">After insertion: [Heartin, Jacob, Sneha]
+Traversal: Heartin Jacob Sneha
+Index of 'Jacob': 1
+Contains 'Sneha': true
+After update: [Heartin, June, Sneha]
+After sorting: [Heartin, June, Sneha]
+After merging: [Heartin, June, Sneha, Ali, Omar]
+After deletion: [June, Sneha, Ali]
+ArrayList destroyed (unreachable).</pre></details>
+    <h4>6. Section: creating and sizes</h4>
+<pre class="cli">ArrayList&lt;Integer&gt; a = new ArrayList&lt;&gt;();
+System.out.println(a);
+System.out.println(a.size());
+ArrayList&lt;Integer&gt; b = new ArrayList&lt;&gt;(10);
+System.out.println(b.size());
+b.add(5); b.add(7);
+System.out.println(b.size());</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">[]
+0
+0
+2</pre><span class="tr">الـ capacity 10 مش بتغيّر الـ size.</span></details>
+    <h4>7. Section: add, get, set</h4>
+<pre class="cli">ArrayList&lt;String&gt; f = new ArrayList&lt;&gt;(Arrays.asList("Apple", "Banana", "Orange"));
+f.add("Grape");
+f.add(1, "Mango");
+String old = f.set(2, "Kiwi");
+System.out.println(f);
+System.out.println(old);</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">[Apple, Mango, Kiwi, Orange, Grape]
+Banana</pre><span class="tr">set رجّعت القيمة القديمة Banana.</span></details>
+    <h4>8. Section: addAll with index</h4>
+<pre class="cli">f = [Apple, Banana]
+f.addAll(Arrays.asList("Mango", "Kiwi"));      println
+f.addAll(1, Arrays.asList("Grape", "Lemon"));  println</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">[Apple, Banana, Mango, Kiwi]
+[Apple, Grape, Lemon, Banana, Mango, Kiwi]</pre></details>
+    <h4>9. Section: indexOf, lastIndexOf, contains</h4>
+<pre class="cli">c = [Red, Blue, Green, Blue, Blue]
+c.indexOf("Blue"); c.lastIndexOf("Blue"); c.indexOf("Pink");
+c.contains("Green"); c.contains("Pink");</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">1
+4
+-1
+true false</pre></details>
+    <h4>10. Section: remove by index vs by element</h4>
+<pre class="cli">f = [Apple, Banana, Orange]; f.remove(1); println; f.remove("Apple"); println
+n = [10, 20, 30];  n.remove(1); println;  n.remove(Integer.valueOf(10)); println</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">[Apple, Orange]
+[Orange]
+[10, 30]
+[30]</pre></details>
+    <h4>11. Section: removeAll, retainAll, clear</h4>
+<pre class="cli">x = [1, 2, 3, 2, 4, 5]
+x.removeAll(Arrays.asList(2, 4));     println
+x.retainAll(Arrays.asList(1, 5, 6));  println
+x.clear();                            println</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">[1, 3, 5]
+[1, 5]
+[]</pre><span class="tr">removeAll شالت كل الـ 2 مش أول واحدة بس.</span></details>
+    <h4>12. Section: sorting with Collections and with the List interface</h4>
+<pre class="cli">s = [40, 10, 30, 20]
+Collections.sort(s); println
+Collections.sort(s, Collections.reverseOrder()); println
+s.sort(null); println
+s.sort(Comparator.reverseOrder()); println</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">[10, 20, 30, 40]
+[40, 30, 20, 10]
+[10, 20, 30, 40]
+[40, 30, 20, 10]</pre></details>
+    <h4>13. Section: Arrays.asList</h4>
+<pre class="cli">List&lt;String&gt; fruits = Arrays.asList("Apple", "Banana", "Orange");
+fruits.set(0, "Kiwi");
+fruits.add("Mango");</pre>
+    <details class="ans"><summary>Show answer</summary><pre class="cli">set works: [Kiwi, Banana, Orange]
+add throws UnsupportedOperationException</pre><span class="tr">Arrays.asList حجمها ثابت.</span></details>
+    <h4>14. Book Example 2: cityList</h4>
+<pre class="cli">ArrayList&lt;String&gt; cityList = new ArrayList&lt;&gt;();
+cityList.add("London"); cityList.add("Denver"); cityList.add("Paris");
+cityList.add("Miami"); cityList.add("Seoul"); cityList.add("Tokyo");
+System.out.println("List size? " + cityList.size());
+System.out.println("Is Miami in the list? " + cityList.contains("Miami"));
+System.out.println("The location of Denver in the list? " + cityList.indexOf("Denver"));
+System.out.println("Is the list empty? " + cityList.isEmpty());
+cityList.add(2, "Xian");
+cityList.remove("Miami");
+cityList.remove(1);
+System.out.println(cityList.toString());
+for (int i = cityList.size() - 1; i &gt;= 0; i--) System.out.print(cityList.get(i) + " ");
+System.out.println();
+ArrayList&lt;Circle&gt; list = new ArrayList&lt;&gt;();
+list.add(new Circle(2)); list.add(new Circle(3));
+System.out.println("The area of the circle? " + list.get(0).getArea());</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">List size? 6
+Is Miami in the list? true
+The location of Denver in the list? 1
+Is the list empty? false
+[London, Xian, Paris, Seoul, Tokyo]
+Tokyo Seoul Paris Xian London
+The area of the circle? 12.566370614359172</pre><span class="tr">مساحة الدايرة = π × 2² = 12.566…</span></details>
+    <h4>15. Section: printing elements</h4>
+<pre class="cli">numbers = [10, 20, 30, 40]
+for (int i = 0; i &lt; numbers.size(); i++) System.out.println(numbers.get(i));
+System.out.println(numbers);</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">10
+20
+30
+40
+[10, 20, 30, 40]</pre><span class="tr">الـ for-each بيطبع نفس الأرقام، و println(list) بيطبعها بين أقواس. وللـ array العادية نستخدم Arrays.toString(arr).</span></details>
+  </div>
+
+  <div class="block">
+    <h3>Book and lab: linked list programs</h3>
+    <h4>1. Singly list: testing add() (book)</h4>
+<pre class="cli">list.add(10); display(); list.add(20); display(); list.add(30); display();</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">=== Testing add() ===
+After add(10):
+10 -> null
+After add(20):
+10 -> 20 -> null
+After add(30):
+10 -> 20 -> 30 -> null</pre></details>
+    <h4>2. Singly list: testing search() (book)</h4>
+<pre class="cli">add 10, 20, 30
+search(20); search(10); search(99);</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">Search 20 : true
+Search 10 : true
+Search 99 : false</pre></details>
+    <h4>3. Singly list: testing delete() (book)</h4>
+<pre class="cli">add 10, 20, 30, 40; display
+delete(20); display    // middle
+delete(10); display    // head
+delete(40); display    // tail</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">Before delete: 10 -> 20 -> 30 -> 40 -> null
+After delete(20): 10 -> 30 -> 40 -> null
+After delete(10): 30 -> 40 -> null
+After delete(40): 30 -> null</pre></details>
+    <h4>4. Singly list: testing size() (book)</h4>
+<pre class="cli">print size of empty list; add 1, 2, 3, 4; print size</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">Empty list size: 0
+After adding 4 elements: 4</pre></details>
+    <h4>5. Lab: testing in main</h4>
+<pre class="cli">add 10, 20, 30, 40; display();
+search(20); search(99);
+delete(20); delete(10); delete(40);
+display(); size();</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">10 -> 20 -> 30 -> 40 -> null
+true
+false
+30 -> null
+1</pre></details>
+    <h4>6. Doubly list: testing add() step by step (book)</h4>
+<pre class="cli">add(10), add(20), add(30): after each, displayForward + Head/Tail
+add(40): displayForward, displayBackward, Head/Tail</pre>
+    <details class="ans"><summary>Show output (as in the book)</summary><pre class="cli">--- Step 1: add(10) ---
+Forward : 10 &lt;-&gt; null
+Head = 10, Tail = 10
+--- Step 2: add(20) ---
+Forward : 10 &lt;-&gt; 20 &lt;-&gt; null
+Head = 10, Tail = 20
+--- Step 3: add(30) ---
+Forward : 10 &lt;-&gt; 20 &lt;-&gt; 30 &lt;-&gt; null
+Head = 10, Tail = 30
+--- Step 4: add(40) ---
+Forward : 10 &lt;-&gt; 20 &lt;-&gt; 30 &lt;-&gt; 40 &lt;-&gt; null
+Backward: 40 &lt;-&gt; 30 &lt;-&gt; 20 &lt;-&gt; 10 &lt;-&gt; null
+Head = 10, Tail = 40</pre><span class="tr">شوفي الملاحظة تحت: الكود الحقيقي للـ backward بيطبع null في الأول.</span></details>
+    <h4>7. Doubly list: testing delete(), search() and size() (book)</h4>
+<pre class="cli">add 10, 20, 30, 40; delete(20); delete(10); delete(40)  (display after each)
+new list: add 10, 20, 30; search(20), search(10), search(99)
+new list: size(); add 10, 20, 30, 40; size()</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">Before delete: 10 &lt;-&gt; 20 &lt;-&gt; 30 &lt;-&gt; 40 &lt;-&gt; null
+After delete(20): 10 &lt;-&gt; 30 &lt;-&gt; 40 &lt;-&gt; null
+After delete(10): 30 &lt;-&gt; 40 &lt;-&gt; null
+After delete(40): 30 &lt;-&gt; null
+Search 20 : true
+Search 10 : true
+Search 99 : false
+Empty list size: 0
+After adding 4 elements: 4</pre></details>
+    <h4>8. Java's built-in LinkedList program (book)</h4>
+<pre class="cli">LinkedList&lt;String&gt; list = new LinkedList&lt;&gt;();
+list.add("Apple"); list.add("Banana"); list.add(1, "Mango");
+list.addFirst("Kiwi"); list.addLast("Orange");
+println("After adding: " + list);
+getFirst(); getLast(); get(2); contains("Mango"); indexOf("Mango"); lastIndexOf("Apple");
+list.remove("Banana");  println
+isEmpty();
+list.removeFirst(); list.removeLast(); list.remove(1);  println
+size(); list.clear(); println</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">After adding: [Kiwi, Apple, Mango, Banana, Orange]
+First: Kiwi
+Last: Orange
+Element at index 2: Mango
+Contains Mango: true
+Index of Mango: 2
+Last index of Apple: 1
+After remove(Banana): [Kiwi, Apple, Mango, Orange]
+Is empty? false
+After removeFirst/removeLast/remove(1): [Apple]
+Size: 1
+After clear: []</pre><span class="tr">الكتاب مش كاتب الناتج ده، أنا حسبته من الكود. removeFirst شالت Kiwi، و removeLast شالت Orange، و remove(1) شالت Mango.</span></details>
+  </div>
+
+  <div class="block">
+    <h3>Book: stack programs</h3>
+    <h4>1. ArrayStack main (book page 59)</h4>
+<pre class="cli">ArrayStack myStack = new ArrayStack(3);
+myStack.push(10); myStack.push(20); myStack.push(30);
+myStack.display();
+myStack.push(40);
+System.out.println("Peek: " + myStack.peek());
+System.out.println("Popped: " + myStack.pop());
+myStack.display();
+System.out.println("Popped: " + myStack.pop());
+System.out.println("Popped: " + myStack.pop());
+System.out.println("Popped: " + myStack.pop());</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">Pushed: 10
+Pushed: 20
+Pushed: 30
+Stack (top to bottom): 30 20 10
+Stack Overflow! Cannot push 40
+Peek: 30
+Popped: 30
+Stack (top to bottom): 20 10
+Popped: 20
+Popped: 10
+Stack Underflow! The stack is empty.
+Popped: -1</pre><span class="tr">في آخر pop، رسالة الـ Underflow بتتطبع الأول، وبعدين "Popped: -1".</span></details>
+    <h4>2. Push and pop trace (book figures, capacity 5)</h4>
+<pre class="cli">new ArrayStack(5); push 10, 20, 30, 40, 50; push(60)
+then from full: pop ×5; pop()</pre>
+    <details class="ans"><summary>Show answer</summary><pre class="cli">top goes -1 → 0 → 1 → 2 → 3 → 4 (FULL, top = 4)
+push(60) → STACK OVERFLOW, rejected
+pops return 50, 40, 30, 20, 10 (top back to -1)
+pop() on empty → STACK UNDERFLOW, rejected</pre></details>
+    <h4>3. Java's built-in Stack (book page 60)</h4>
+<pre class="cli">Stack&lt;Integer&gt; s1 = new Stack&lt;&gt;();
+s1.push(6); s1.push(12); s1.push(22); s1.push(10); s1.push(99);
+println("After pushes: " + s1); println("Top element: " + s1.peek());
+println("Current size: " + s1.size());
+println("Popped: " + s1.pop()); println("Popped: " + s1.pop());
+println("After pops: " + s1);
+println("Is empty? " + s1.isEmpty()); s1.pop(); s1.pop(); s1.pop();
+println("Is empty? " + s1.isEmpty());
+try { s1.pop(); } catch (java.util.EmptyStackException e) { println("Caught: Stack is empty — cannot pop"); }</pre>
+    <details class="ans"><summary>Show output</summary><pre class="cli">After pushes: [6, 12, 22, 10, 99]
+Top element: 99
+Current size: 5
+Popped: 99
+Popped: 10
+After pops: [6, 12, 22]
+Is empty? false
+Is empty? true
+Caught: Stack is empty — cannot pop</pre></details>
+  </div>
   <div class="block">
     <h3>Lecture assignments (solved)</h3>
     <h4>1. Add a node at the beginning of a singly linked list</h4>
