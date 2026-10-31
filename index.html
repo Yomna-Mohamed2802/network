@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>ملخص أم سميحة لتجنب الفضيحة</title>
-<meta name="site-version" content="2026-10-31-r22">
+<meta name="site-version" content="2026-10-31-r23">
 <script>
 (function(){
   /* auto-update: if the server has a newer version than this cached copy, reload once */
   try{
-    var cur='2026-10-31-r22';
+    var cur='2026-10-31-r23';
     fetch(location.pathname+'?nocache='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():'';}).then(function(t){
       var m=t.match(/name="site-version" content="([^"]+)"/);
       if(m&&m[1]!==cur&&!sessionStorage.getItem('reloaded-'+m[1])){sessionStorage.setItem('reloaded-'+m[1],'1');location.reload();}
@@ -477,6 +477,27 @@ th{background:color-mix(in srgb,var(--k) 9%,var(--code))!important}
 .studied-row .tr{display:inline!important;border:0!important;padding:0 0 0 8px!important}
 .h3done{display:none;flex:0 0 auto;font:700 .72rem var(--f-display);color:var(--good);border:1px solid var(--good);border-radius:99px;padding:2px 9px}
 .block>h3.isdone .h3done{display:inline-block}
+
+/* ---------- Obsidian-style graph look (always dark canvas) ---------- */
+.mm{background:#1b1820!important;border-color:#2d2933!important}
+.mm .mm-hint,.mmg-bar .mm-hint{color:#a29ea8!important}
+.mmg-reset{background:#26222b!important;color:#d9d6dd!important;border-color:#3a3540!important}
+.mmg{background:radial-gradient(ellipse at 50% 45%,#2a2530 0%,#1b1820 70%)!important;border:0!important}
+.mmg-sky circle{fill:#d8d4dd}
+.mmg-link{stroke:rgba(225,220,230,.16)!important;stroke-width:1!important}
+.mmg-link.lit{stroke:var(--k)!important;stroke-width:1.6!important;opacity:1}
+.mmg-n circle{fill:#9d99a3!important;stroke:none!important}
+.mmg-n.t1 circle{fill:#cfccd4!important}
+.mmg-n.t0 circle{fill:#ece9ef!important;stroke:rgba(236,233,239,.18)!important;stroke-width:8!important}
+.mmg-n.hard circle{stroke:var(--k)!important;stroke-width:2!important}
+.mmg-n text{fill:#b9b5bf!important;stroke:#1b1820!important;stroke-width:3px!important;font-weight:500!important}
+.mmg-n.t0 text{fill:#f1eef4!important;font-size:13px!important;font-weight:700!important}
+.mmg-n.t1 text{fill:#d6d3db!important;font-size:11px!important;font-weight:600!important}
+.mmg-n.t2 text{font-size:9.5px!important}
+.mmg-n.lit circle{fill:var(--k)!important}
+.mmg-n.lit text{fill:#fff!important}
+.mmg-n:hover circle{filter:drop-shadow(0 0 6px var(--k))}
+.mmg .dim{opacity:.12}
 </style>
 
 <header class="top"><div class="wrap">
@@ -1711,8 +1732,9 @@ Switch# <b>copy running-config startup-config</b></pre>
       const hid='h'+i; nodes.push({id:hid,label:d.h,t:1,go:d.id,hard:d.hard}); links.push({source:'r',target:hid});
       d.chips.forEach((c,j)=>{const cid=hid+'c'+j; nodes.push({id:cid,label:c[0],t:2,go:c[1]}); links.push({source:hid,target:cid});});
     });
-    const R={0:16,1:9,2:4.5};
+    const R={0:13,1:7.5,2:3.6};
     const svg=d3.select(map).append('svg').attr('class','mmg').attr('viewBox',[0,0,W,H]).attr('role','img').attr('aria-label',root+' graph');
+    const sky=svg.append('g').attr('class','mmg-sky');for(let i=0;i<46;i++)sky.append('circle').attr('cx',Math.random()*W).attr('cy',Math.random()*H).attr('r',Math.random()*1.1+.3).attr('opacity',Math.random()*.5+.15);
     const g=svg.append('g');
     const zoom=d3.zoom().scaleExtent([.35,4]).on('zoom',e=>{g.attr('transform',e.transform);svg.classed('zoomed',e.transform.k>1.4);});
     svg.call(zoom).on('dblclick.zoom',null);
@@ -1737,10 +1759,10 @@ Switch# <b>copy running-config startup-config</b></pre>
       n.x=cx+Math.cos(a)*rr+(m[2]?(+m[3]-3)*6:0); n.y=cy+Math.sin(a)*rr+(m[2]?(+m[3]-3)*6:0);
     });
     const sim=d3.forceSimulation(nodes)
-      .force('link',d3.forceLink(links).id(d=>d.id).distance(l=>l.target.t===1?r1:50).strength(l=>l.target.t===1?.3:.8))
+      .force('link',d3.forceLink(links).id(d=>d.id).distance(l=>l.target.t===1?r1:34).strength(l=>l.target.t===1?.3:.8))
       .force('charge',d3.forceManyBody().strength(d=>d.t===0?-400:d.t===1?-350:-60).distanceMax(260))
-      .force('radial',d3.forceRadial(d=>d.t===1?r1:d.t===2?r1+55:0,cx,cy).strength(d=>d.t===1?.9:d.t===2?.12:0))
-      .force('collide',d3.forceCollide(d=>R[d.t]+(d.t===2?10:26)));
+      .force('radial',d3.forceRadial(d=>d.t===1?r1:d.t===2?r1+55:0,cx,cy).strength(d=>d.t===1?.55:d.t===2?.04:0))
+      .force('collide',d3.forceCollide(d=>R[d.t]+(d.t===2?7:22)));
     node.call(d3.drag().clickDistance(4)
       .on('start',(e,d)=>{if(!e.active)sim.alphaTarget(.25).restart();d.fx=d.x;d.fy=d.y;})
       .on('drag',(e,d)=>{d.fx=e.x;d.fy=e.y;})
