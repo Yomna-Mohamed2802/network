@@ -439,6 +439,10 @@ th{background:color-mix(in srgb,var(--k) 9%,var(--code))!important}
 .layer-stack div{border-left-color:var(--k)!important}
 .filters button[aria-pressed="true"]{background:var(--k)!important;color:#fff!important;border-color:var(--k)!important}
 .seg button[aria-pressed="true"]{background:var(--k)!important}
+.studied{font-size:.78rem!important;padding:6px 12px!important;border:1.5px solid var(--line)!important}
+.studied[aria-pressed="true"]{background:var(--good)!important;border-color:var(--good)!important;color:#fff!important}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);background:var(--fg);color:var(--bg);font:600 .88rem var(--f-body);padding:10px 16px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:20;max-width:calc(100vw - 32px)}
+.toast.show{opacity:1;transform:translateX(-50%)}
 </style>
 
 <header class="top"><div class="wrap">
@@ -1727,7 +1731,7 @@ Switch# <b>copy running-config startup-config</b></pre>
     if(window.d3) graph(map,root,idOf(head),data); else cards(map,root,data);
     map.addEventListener('click',e=>{const t=e.target.closest('[data-go]'); if(t) go(document.getElementById(t.dataset.go));});
   }
-  tabs.forEach(t=>t.addEventListener('click',()=>requestAnimationFrame(()=>buildMap(document.getElementById('v-'+t.dataset.v)))));
+  tabs.forEach(t=>t.addEventListener('click',()=>setTimeout(()=>buildMap(document.getElementById('v-'+t.dataset.v)),0)));
   const boot=()=>document.querySelectorAll('section.view').forEach(buildMap);
   if(document.readyState==='complete') setTimeout(boot,0); else addEventListener('load',boot);
 
@@ -2555,10 +2559,11 @@ Switch# <b>copy running-config startup-config</b></pre>
     const key=b.closest('section').id+'|'+h.textContent.trim();
     const t=document.createElement('span');t.className='h3t';while(h.firstChild)t.appendChild(h.firstChild);h.appendChild(t);
     const btn=document.createElement('button');btn.type='button';btn.className='studied';btn.dataset.key=key;
-    const paint=()=>{btn.setAttribute('aria-pressed',!!done[key]);btn.textContent=done[key]?'✓ Studied':'Mark as studied';};
-    btn.addEventListener('click',()=>{done[key]?delete done[key]:done[key]=1;save();paint();build();});
+    const paint=()=>{btn.setAttribute('aria-pressed',!!done[key]);btn.textContent=done[key]?'✓ Studied':'☐ Mark as studied';};
+    btn.addEventListener('click',()=>{if(done[key])delete done[key];else done[key]=1;save();paint();build();toast(done[key]?'✓ Marked as studied · اتعلّم إنه اتذاكر':'Unmarked · اتشال من المذاكر');});
     paint();h.appendChild(btn);
   });
+  function toast(t){let el=document.getElementById('toast');if(!el){el=document.createElement('div');el.id='toast';el.className='toast';el.setAttribute('role','status');document.body.appendChild(el);}el.textContent=t;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),1800);}
   const toc=document.getElementById('toc');let obs;
   function build(){
     const sec=[...document.querySelectorAll('section.view')].find(x=>!x.hidden);if(!sec)return;
@@ -2574,7 +2579,7 @@ Switch# <b>copy running-config startup-config</b></pre>
     obs=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting)toc.querySelectorAll('.toc-in a').forEach(a=>a.classList.toggle('cur',a.dataset.id===en.target.id));});},{rootMargin:'-80px 0px -70% 0px'});
     hs.forEach(h=>obs.observe(h.parentElement));
   }
-  document.querySelectorAll('nav.tabs button').forEach(b=>b.addEventListener('click',()=>requestAnimationFrame(build)));
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.addEventListener('click',()=>setTimeout(build,0)));
   build();
   const top=document.createElement('button');top.type='button';top.className='totop';top.textContent='↑ Top';
   top.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));document.body.appendChild(top);
