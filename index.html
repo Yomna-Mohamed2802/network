@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>ملخص أم سميحة لتجنب الفضيحة</title>
-<meta name="site-version" content="2026-10-31-r18">
+<meta name="site-version" content="2026-10-31-r19">
 <script>
 (function(){
   /* auto-update: if the server has a newer version than this cached copy, reload once */
   try{
-    var cur='2026-10-31-r18';
+    var cur='2026-10-31-r19';
     fetch(location.pathname+'?nocache='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():'';}).then(function(t){
       var m=t.match(/name="site-version" content="([^"]+)"/);
       if(m&&m[1]!==cur&&!sessionStorage.getItem('reloaded-'+m[1])){sessionStorage.setItem('reloaded-'+m[1],'1');location.reload();}
@@ -20,6 +20,12 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
 <style>
+/* base reset so the standalone copy (GitHub Pages) behaves like the hosted one */
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0}
+img{max-width:100%}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 /* Layout: soft blush page, rounded cards; each chapter has its own pastel (rose, lilac, peach, mint) */
 :root{
   --bg:#fff6f9; --panel:#ffffff; --fg:#3a2433; --muted:#86697b; --line:#f3d9e5;
