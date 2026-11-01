@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Data Structures in Java</title>
-<meta name="site-version" content="ds-2026-11-01-r2">
+<meta name="site-version" content="ds-2026-11-01-r3">
 <script>
 (function(){
   /* auto-update: if the server has a newer version than this cached copy, reload once */
   try{
-    var cur='ds-2026-11-01-r2';
+    var cur='ds-2026-11-01-r3';
     fetch(location.pathname+'?nocache='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():'';}).then(function(t){
       var m=t.match(/name="site-version" content="([^"]+)"/);
       if(m&&m[1]!==cur&&!sessionStorage.getItem('reloaded-'+m[1])){sessionStorage.setItem('reloaded-'+m[1],'1');location.reload();}
@@ -1413,6 +1413,491 @@ pop() on empty → Caught: Stack is empty — cannot pop</pre>
       <li>Write every print in order, exactly as Java prints it (spaces, brackets, arrows).<span class="tr">اكتبي كل طباعة بالترتيب وبنفس الشكل.</span></li>
       <li>Watch the traps: remove(1) on Integer lists is an index; indexOf returns the first match; loops stop at count, not length.<span class="tr">خلي بالك من الفخاخ المشهورة.</span></li>
     </ol>
+  </div>
+
+  <div class="block">
+    <h3>Section notes 1: counting steps (frequency count)</h3>
+    <p>Rule used in the sections: every simple statement (assignment, arithmetic, comparison, return, print) costs 1 step. A loop header is counted by how many times its condition is tested, and the body by how many times it runs.<span class="tr">القاعدة: كل سطر بسيط (تخزين، عملية حسابية، مقارنة، return، طباعة) = خطوة واحدة. سطر الـ loop بنعدّه بعدد مرات اختبار الشرط، وجسم الـ loop بعدد مرات تنفيذه. الـ loop اللي بتلف n مرة الشرط بتاعها بيتختبر n+1 مرة (المرة الزيادة هي اللي بتطلّعنا برّه).</span></p>
+    <div class="note"><b>مهم:</b> الرقم الدقيق (زي 4n+4 أو 4n+3) ممكن يفرق شوية حسب طريقة العدّ اللي الدكتور ماشي بيها، بس الـ Big-O عمره ما بيتغير. في الامتحان اكتبي جدول: السطر، عدد مرات تنفيذه، والمجموع.</div>
+
+    <h4>1. Is N prime? (two versions)</h4>
+<pre class="cli">// version A
+for (i = 2; i &lt;= N - 1; i++)
+    if (N % i == 0) return false;
+return true;
+
+// version B
+for (i = 2; i &lt;= sqrt(N); i++)
+    if (N % i == 0) return false;
+return true;</pre>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">Version A: i goes 2, 3, ..., N-1  → N - 2 iterations  → O(n)
+Version B: i goes 2, 3, ..., √N   → √N - 1 iterations → O(√n)</pre>
+    <span class="tr">عدد اللفّات = (آخر قيمة − أول قيمة) + 1. في A: ‏(N−1) − 2 + 1 = N − 2. في B: ‏√N − 2 + 1 = √N − 1. ليه نقف عند √N؟ لأن لو N ليه قاسم أكبر من √N يبقى أكيد ليه قاسم تاني أصغر من √N (مثلاً 36 = 4 × 9، والـ 4 أصغر من 6). يعني B أسرع بكتير: لـ N = 1,000,000 النسخة A ممكن تلف حوالي مليون مرة و B حوالي 1000 بس.</span></details>
+
+    <h4>2. EX1: sum of two numbers</h4>
+<pre class="cli">int sum(int a, int b) {
+    int s = a + b;   // + and =  → 2
+    return s;        // return   → 1
+}</pre>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">f(n) = 3  → O(1)</pre>
+    <span class="tr">مفيش أي loop، فعدد الخطوات ثابت (3) مهما كانت الأرقام. أي رقم ثابت = O(1) يعني constant time.</span></details>
+
+    <h4>3. EX2: sum of an array</h4>
+<pre class="cli">int s = 0;                       // 1
+for (int i = 0; i &lt; n; i++)      // i=0: 1,  i&lt;n: n+1,  i++: n
+    s = s + A[i];                // (+ and =) × n = 2n
+return s;                        // 1</pre>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">f(n) = 1 + 1 + (n+1) + n + 2n + 1 = 4n + 4  → O(n)</pre>
+    <span class="tr">اجمعي عمود العدّ: سطر s = 0 مرة، i = 0 مرة، الشرط i &lt; n بيتختبر n+1 مرة، i++ بيحصل n مرة، وسطر الجمع فيه عمليتين (جمع وتخزين) بيتكرروا n مرة = 2n، والـ return مرة. المجموع 4n + 4. أكبر حد هو 4n، نشيل الثوابت → O(n).</span></details>
+
+    <h4>4. EX3: print a 2D array (n × n)</h4>
+<pre class="cli">for (i = 0; i &lt; n; i++)              // 1 + (n+1) + n
+    for (j = 0; j &lt; n; j++)          // n × [1 + (n+1) + n]
+        System.out.print(A[i][j]);   // n × n</pre>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">outer : 2n + 2
+inner : n(2n + 2) = 2n² + 2n
+print : n²
+f(n)  = 3n² + 4n + 2  → O(n²)</pre>
+    <span class="tr">الـ loop الداخلية بتتعمل من الأول في كل لفّة من الخارجية، عشان كده بنضرب عدّها في n. سطر الطباعة بيتنفذ n مرة لكل i، يعني n × n = n². أكبر حد n² → O(n²). القاعدة: loop جوّه loop كل واحدة n → n².</span></details>
+
+    <h4>5. Growth of 6n² vs 100n + 300 (Lecture 2 graph)</h4>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">n = 10 : 6n² = 600    100n+300 = 1300   (linear is bigger)
+n = 20 : 6n² = 2400   100n+300 = 2300   (quadratic wins from here)
+n = 100: 6n² = 60000  100n+300 = 10300</pre>
+    <span class="tr">الدالة الخطية بتبدأ أكبر بسبب الثوابت الكبيرة (100 و 300)، بس من n ≈ 20 الـ n² بتعدّيها وتفضل تكبر أسرع بكتير. ده معنى إننا بنهتم بالـ n الكبيرة بس، والثوابت مش مهمة في الـ Big-O.</span></details>
+
+    <h4>6. Order of growth and the dominant term</h4>
+<pre class="cli">O(1) &lt; O(log n) &lt; O(n) &lt; O(n log n) &lt; O(n²) &lt; O(n³) &lt; O(2ⁿ) &lt; O(n!)
+
+f(n) = 6n² + 100n + 300      → ?
+f(n) = 2n³ + 3n² + 100n      → ?</pre>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">6n² + 100n + 300  → O(n²)
+2n³ + 3n² + 100n  → O(n³)</pre>
+    <span class="tr">خطوتين وبس: (1) خدي الحد اللي بيكبر أسرع حسب الترتيب اللي فوق. (2) شيلي المعامل اللي قدامه. فـ 6n² تبقى n²، و 2n³ تبقى n³.</span></details>
+    <div class="note"><b>Worst / Best / Average:</b> السكشن كاتب Worst = Big-O و Best = Ω و Average = Θ. اكتبيها كده لو اتسألتي زي ما الدكتور قال. بس للفهم: الـ O حد أعلى، والـ Ω حد أدنى، والـ Θ الاتنين مع بعض (حد مضبوط)، وأي واحدة منهم ممكن تتقال على أي حالة.</div>
+
+    <h4>7. Loop that doubles</h4>
+<pre class="cli">i = 1;               // 1
+while (i &lt; n)        // k + 1
+    i = i * 2;       // 2k  (× and =)</pre>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">i = 1, 2, 4, 8, ..., 2^k   stops when 2^k ≥ n  → k = log₂ n
+f(n) = 1 + (k+1) + 2k = 3k + 2 = 3 log₂ n + 2  → O(log n)</pre>
+    <span class="tr">بعد k لفّة قيمة i بتبقى 2^k. الـ loop بتقف لما 2^k توصل n، يعني k = log₂ n. أي loop بتضرب (أو بتقسم) في رقم ثابت كل لفّة = O(log n). مثال: n = 16 → i = 1، 2، 4، 8 → 4 لفّات = log₂ 16.</span></details>
+  </div>
+
+  <div class="block">
+    <h3>Section notes 2: Lab 2 problems (10/10)</h3>
+    <p>Each problem: write the code, count the steps, give the Big-O.<span class="tr">في كل مسألة: الكود، وعدّ الخطوات، والـ Big-O. نفس طريقة العدّ اللي فوق (الشرط n+1، والجسم n).</span></p>
+
+    <h4>1. Find the maximum of [8, 3, 19, 6, 10]</h4>
+<pre class="cli">int max = A[0];
+for (int i = 1; i &lt; n; i++)
+    if (A[i] &gt; max) max = A[i];
+return max;</pre>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">max: 8 → (3 no) → 19 → (6 no) → (10 no)   → 19
+one pass over the array  → O(n)</pre>
+    <span class="tr">بنفترض إن أول عنصر هو الأكبر، وبنقارن كل عنصر بعده بيه، ولو لقينا أكبر نحدّث. لفّة واحدة على الـ array كلها → O(n).</span></details>
+
+    <h4>2. Count the even numbers in [4, 7, 10, 3, 8]</h4>
+<pre class="cli">int count = 0;                  // 1
+for (int i = 0; i &lt; n; i++)     // 1 + (n+1) + n
+    if (A[i] % 2 == 0)          // n
+        count++;                // n (worst case: all even)
+return count;</pre>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">even: 4, 10, 8  → count = 3
+f(n) = 1 + 1 + (n+1) + n + n + n = 4n + 3  → O(n)</pre>
+    <span class="tr">الـ % 2 == 0 معناها الباقي من القسمة على 2 صفر، يعني الرقم زوجي. في أسوأ حالة كل الأرقام زوجية فـ count++ تتنفذ n مرة. المجموع 4n + 3 (الـ return مش محسوبة هنا في الكشكول، ولو حسبتيها تبقى 4n + 4، ونفس الـ O(n)).</span></details>
+
+    <h4>3. Check if the array is sorted</h4>
+<pre class="cli">for (int i = 0; i &lt; n - 1; i++)
+    if (A[i] &gt; A[i + 1]) return false;
+return true;</pre>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">worst case (array is sorted): n - 1 comparisons  → O(n)
+best case (first pair wrong): 1 comparison       → Ω(1)</pre>
+    <span class="tr">بنقارن كل عنصر باللي بعده. لو لقينا واحد أكبر من اللي بعده يبقى مش مترتبة ونخرج فوراً. بنقف عند n−1 عشان A[i+1] متطلعش برّه الـ array.</span></details>
+
+    <h4>4. Reverse the array [1, 2, 3, 4, 5] in place</h4>
+<pre class="cli">int i = 0, j = n - 1;
+while (i &lt; j) {
+    int t = A[i]; A[i] = A[j]; A[j] = t;   // swap
+    i++; j--;
+}</pre>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">i=0 j=4 : swap 1,5 → [5,2,3,4,1]
+i=1 j=3 : swap 2,4 → [5,4,3,2,1]
+i=2 j=2 : stop (i &lt; j is false)
+n/2 swaps  → O(n)</pre>
+    <span class="tr">مؤشر من الأول (i) ومؤشر من الآخر (j)، نبدّلهم ونقرّبهم من بعض لحد ما يتقابلوا في النص. عدد التبديلات n/2، ونشيل الـ ½ → O(n). العنصر اللي في النص (3) مبيتحركش.</span></details>
+
+    <h4>5. Multiplication table (n = 3)</h4>
+<pre class="cli">for (int i = 1; i &lt;= n; i++)          // n + 1 tests
+    for (int j = 1; j &lt;= n; j++)      // n(n + 1) tests
+        System.out.print(i * j + " ");  // n²</pre>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">1 2 3
+2 4 6
+3 6 9
+f(n) = (n+1) + n(n+1) + n² = 2n² + 2n + 1  → O(n²)</pre>
+    <span class="tr">هنا السكشن عدّ سطور الـ loop بعدد اختبارات الشرط بس. الخارجية: n+1. الداخلية: n+1 لكل i، يعني n(n+1). الطباعة n². المجموع 2n² + 2n + 1. للـ trace: i = 1 يطبع 1 2 3، i = 2 يطبع 2 4 6، i = 3 يطبع 3 6 9 (9 طباعات = 3²).</span></details>
+
+    <h4>6. Linear search</h4>
+<pre class="cli">for (int i = 0; i &lt; n; i++)     // n + 1
+    if (A[i] == key) return i;  // n
+return -1;                      // 1</pre>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">worst case (key not found): (n+1) + n + n (i++) + 1 = 3n + 2  → O(n)</pre>
+    <span class="tr">أسوأ حالة إن العنصر مش موجود فنلف على كل الـ array. الشرط n+1، والمقارنة n، والـ i++ n، والـ return −1 مرة → 3n + 2. أحسن حالة إنه أول عنصر → خطوة واحدة.</span></details>
+
+    <h4>7. A loop followed by a doubling loop</h4>
+<pre class="cli">for (int i = 0; i &lt; n; i++)  sum++;    // 2n + 1
+int k = 1;                             // 1
+while (k &lt; n)  k = k * 2;              // about log₂ n</pre>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">f(n) = 2n + log₂ n + 2  → O(n)</pre>
+    <span class="tr">لما يكون فيه جزئين ورا بعض (مش جوّه بعض) بنجمعهم: n + log n. والأكبر هو n، فـ O(n). الـ log n بيضيع جنب n.</span></details>
+
+    <h4>8. Two loops one after the other</h4>
+<pre class="cli">for (int i = 0; i &lt; n; i++) print(i);   // (n+1) + n
+for (int j = 0; j &lt; n; j++) print(j);   // (n+1) + n</pre>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">f(n) = (2n + 1) + (2n + 1) = 4n + 2  → O(n)   (NOT n²)</pre>
+    <span class="tr">فخ مشهور: loop ورا loop = جمع (n + n = 2n → O(n)). loop جوّه loop = ضرب (n × n → O(n²)).</span></details>
+
+    <h4>9. Triangle of stars (n = 4)</h4>
+<pre class="cli">for (int i = 1; i &lt;= n; i++) {
+    for (int j = 1; j &lt;= i; j++) System.out.print("*");
+    System.out.println();
+}</pre>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">*
+**
+***
+****
+stars = 1 + 2 + 3 + ... + n = n(n+1)/2  (n = 4 → 10)  → O(n²)</pre>
+    <span class="tr">الداخلية بتلف i مرة بس (مش n)، فعدد النجوم 1 + 2 + … + n = n(n+1)/2 = n²/2 + n/2. أكبر حد n²/2 ونشيل الـ ½ → O(n²). حتى لو هي نص المربع، لسه n².</span></details>
+
+    <h4>10. Common elements of A (size n) and B (size m)</h4>
+<pre class="cli">for (int i = 0; i &lt; n; i++)          // n + 1
+    for (int j = 0; j &lt; m; j++)      // n(m + 1)
+        if (A[i] == B[j]) print(A[i]); // nm</pre>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">f = (n+1) + n(m+1) + nm = 2nm + 2n + 1  → O(n × m)</pre>
+    <span class="tr">لما الـ arrays مختلفين في الحجم منكتبش n²، نكتب n × m لأن كل عنصر من A بيتقارن بكل عناصر B. لو n = m يبقى O(n²).</span></details>
+  </div>
+
+  <div class="block">
+    <h3>Section notes 3: summations (17/10 and 24/10)</h3>
+<pre class="cli">Σ c          (i = 1..n)  = c·n
+Σ i          (i = 1..n)  = n(n+1)/2
+Σ i²         (i = 1..n)  = n(n+1)(2n+1)/6
+Σ 2^i        (i = 0..n)  = 2^(n+1) − 1
+Σ 1/i        (i = 1..n)  ≈ ln n  = O(log n)</pre>
+    <span class="tr">دول القوانين اللي هنستخدمها في كل عدّ فيه loops متداخلة. Σ معناها "اجمعي" من القيمة اللي تحت لحد اللي فوق.</span>
+    <div class="note"><b>غلطة في الكشكول:</b> مكتوب Σ 2^i من 0 لـ n = 2^n − 1. الصح 2^(n+1) − 1 (جرّبي n = 2: ‏1 + 2 + 4 = 7 = 2³ − 1). الـ 2^n − 1 بتبقى صح لو الجمع لحد n − 1 بس.</div>
+
+    <h4>1. sum(n) with one loop</h4>
+<pre class="cli">int sum = 0;
+for (int i = 1; i &lt;= n; i++) sum += i;</pre>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">Σ 1 (i = 1..n) = n  → O(n)</pre>
+    <span class="tr">جسم الـ loop بيتنفذ مرة لكل i من 1 لـ n، فالمجموع n.</span></details>
+
+    <h4>2. printMatrixTriangular(n)</h4>
+<pre class="cli">for (int i = 1; i &lt;= n; i++)
+    for (int j = 1; j &lt;= i; j++)
+        print(A[i][j]);</pre>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">Σ (i = 1..n) Σ (j = 1..i) 1 = Σ i = n(n+1)/2  → O(n²)</pre>
+    <span class="tr">نحل من جوّه لبرّه: الجمع الداخلي Σ 1 من 1 لـ i = i. بعدين الخارجي Σ i = n(n+1)/2. ده نفس مثلث النجوم.</span></details>
+
+    <h4>3. squared(n): inner loop up to i·i</h4>
+<pre class="cli">for (int i = 1; i &lt;= n; i++)
+    for (int j = 1; j &lt;= i * i; j++)
+        count++;</pre>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">Σ (i = 1..n) i² = n(n+1)(2n+1)/6 = (2n³ + 3n² + n)/6  → O(n³)</pre>
+    <span class="tr">الداخلية بتلف i² مرة (i = 1 → مرة، i = 2 → 4، i = 3 → 9 …)، فنستخدم قانون مجموع المربعات. لما نفك القوس أكبر حد 2n³/6 = n³/3 → O(n³).</span></details>
+
+    <h4>4. Number sums (Section 4)</h4>
+<pre class="cli">(a) 1 + 2 + ... + 70
+(b) 1 + 3 + 5 + ... + 999
+(c) Σ (i = 3..5) 2
+(d) Σ (j = 0..n−1) n
+(e) Σ (i = 1..n−1) Σ (j = 1..n−1) i·j</pre>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">(a) 70·71/2 = 2485
+(b) odd numbers 1..999: 500 terms → 500² = 250000
+(c) 3 terms (i = 3, 4, 5) × 2 = 6
+(d) n terms × n = n²
+(e) (Σ i)·(Σ j) = [n(n−1)/2]·[n(n−1)/2] = [n(n−1)/2]²  → O(n⁴)</pre>
+    <span class="tr">(a) قانون n(n+1)/2 مع n = 70. ‏(b) مجموع أول k رقم فردي = k². الأرقام الفردية لحد 999 عددها (999 + 1)/2 = 500. ‏(c) الرقم ثابت (2) فبنضربه في عدد الحدود: من 3 لـ 5 يعني 3 حدود. ‏(d) نفس الفكرة: n حدود كل واحد قيمته n. ‏(e) الـ i مالهاش علاقة بـ j، فنطلع i برّه الجمع الداخلي ونضرب المجموعين.</span></details>
+    <div class="note"><b>ملاحظة على (e):</b> في الكشكول حد الـ j مكتوب n − 2. لو هو فعلاً n − 2 يبقى الناتج [n(n−1)/2]·[(n−2)(n−1)/2]، والـ Big-O لسه O(n⁴). الناتج [n(n−1)/2]² ده لما الاتنين لحد n − 1.</div>
+
+    <h4>5. Pseudocode exercises (Section 4)</h4>
+<pre class="cli">(1) x ← x + 1
+(2) for i ← 1 to n:  x ← x + 1
+(3) for i ← 1 to n:
+       for j ← 1 to n/2:  x ← x + 1;  y ← y + 1
+(4) for i ← 1 to n:
+       for j ← 1 to i:    x ← x + 1;  y ← y + 1
+(5) i ← n
+    while i ≥ 1:  x ← x + 1;  i ← i / 3</pre>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">(1) 1 step                          → O(1)
+(2) n                               → O(n)
+(3) n · (n/2) · 2 = n²              → O(n²)
+(4) 2 · Σ i = 2 · n(n+1)/2 = n² + n → O(n²)
+(5) i = n, n/3, n/9, ... → log₃ n   → O(log n)</pre>
+    <span class="tr">(3) الخارجية n، والداخلية n/2، وجوّاها جملتين فنضرب في 2: ‏n × n/2 × 2 = n². ‏(4) الداخلية بتلف i مرة وفيها جملتين → 2 × n(n+1)/2 = n² + n. ‏(5) كل لفّة بنقسم على 3، فبعد k لفّة i = n/3^k، وبتقف لما 3^k = n → k = log₃ n. أساس الـ log مش مهم في الـ Big-O، فـ O(log n).</span></details>
+  </div>
+
+  <div class="block">
+    <h3>Section notes 4: recurrences from recursive code</h3>
+    <p>T(n) = the time of the function on input n. Each recursive call becomes a T(...) term, and the non-recursive work becomes the added part.<span class="tr">الـ recurrence هي معادلة بتوصف وقت الدالة بدلالة وقتها على input أصغر. كل استدعاء للدالة جوّه نفسها = حد T(...)، والشغل العادي (مقارنة، جمع، loop) = الحد اللي بنزوّده.</span></p>
+<pre class="cli">fact(n-1)                       → T(n) = T(n−1) + 1
+fact(n/2)                       → T(n) = T(n/2) + 1
+fact(n/2) + fact(n/2)           → T(n) = 2T(n/2) + 1
+fact(n-1) + fact(n-2)           → T(n) = T(n−1) + T(n−2) + 1
+fact(n-1) + fact(n-2) + a loop 1..n → T(n) = T(n−1) + T(n−2) + n</pre>
+    <span class="tr">بصّي على اللي جوّه القوس في كل استدعاء: n−1 يبقى T(n−1)، و n/2 يبقى T(n/2). لو فيه استدعائين يبقى حدّين (ولو نفس الحجم نكتب 2T). والـ +1 هي الشغل الثابت (if + جمع + return). لو جوّه الدالة loop من 1 لـ n نكتب + n بدل + 1.</span>
+    <div class="note"><b>ملاحظة:</b> في الكشكول فيه مثال fact(n/2) + fact(3n/2). كده الـ recurrence تبقى T(n/2) + T(3n/2) + 1، بس 3n/2 أكبر من n فالاستدعاء مش هيوصل للـ base case. غالباً المقصود 3n/4، اتأكدي من السكشن.</div>
+  </div>
+
+  <div class="block">
+    <h3>Section notes 5: recursion tree</h3>
+    <p>Draw the calls as a tree, write the cost of each level, then add the levels. The level costs usually form a geometric series.<span class="tr">نرسم الاستدعاءات كشجرة، ونكتب تكلفة كل مستوى (level)، ونجمع المستويات. غالباً التكاليف بتطلع متتالية هندسية.</span></p>
+<pre class="cli">geometric series: a + ar + ar² + ... (h terms) = a(1 − r^h)/(1 − r)  = a(r^h − 1)/(r − 1)
+if r &lt; 1 and the series is long:              ≤ a/(1 − r)</pre>
+    <span class="tr">a = تكلفة أول مستوى، r = النسبة بين كل مستوى واللي قبله، h = عدد المستويات (ارتفاع الشجرة). لو r أكبر من 1 التكلفة بتكبر لتحت (آخر مستوى هو المهم). لو r أصغر من 1 التكلفة بتصغر (أول مستوى هو المهم).</span>
+
+    <h4>1. T(n) = 2T(n/2) + 10</h4>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">level 0:  1 node  × 10 = 10
+level 1:  2 nodes × 10 = 20
+level 2:  4 nodes × 10 = 40
+...       r = 2,  h = log₂ n levels
+sum = 10(2^h − 1)/(2 − 1) = 10(n − 1)  → O(n)</pre>
+    <span class="tr">كل node بتتقسم لاتنين، فعدد الـ nodes بيتضاعف كل مستوى وكل node تكلفتها 10. الحجم بيتقسم على 2 لحد ما يوصل 1، فعدد المستويات log₂ n، و 2^(log₂ n) = n. فالمجموع 10(n − 1) → O(n).</span></details>
+
+    <h4>2. T(n) = 3T(n/3) + n²</h4>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">level 0:  n²
+level 1:  3 × (n/3)² = n²/3
+level 2:  9 × (n/9)² = n²/9
+r = 1/3 &lt; 1
+sum ≤ n² / (1 − 1/3) = 3n²/2  → O(n²)</pre>
+    <span class="tr">كل مستوى فيه nodes أكتر بس كل واحدة أصغر بكتير لأن الـ n متربعة. (n/3)² = n²/9، ومضروبة في 3 nodes = n²/3. التكاليف بتقل (r = 1/3)، فنستخدم a/(1 − r) والمجموع أقل من 1.5 n² → O(n²). يعني أول مستوى هو اللي مسيطر.</span></details>
+
+    <h4>3. T(n) = T(n−1) + T(n−2) + 1</h4>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">level 0: 1,  level 1: 2,  level 2: 4, ...   r = 2
+height ≈ n (n goes down by 1 each level)
+sum ≤ (2^n − 1)/(2 − 1) = 2^n − 1  → O(2ⁿ)</pre>
+    <span class="tr">كل استدعاء بيعمل اتنين، فعدد الاستدعاءات بيتضاعف. والـ n بتقل بـ 1 بس كل مرة، فالشجرة طولها حوالي n. ده حد أعلى (الفرع بتاع n−2 بيخلص أسرع)، فنقول O(2ⁿ). ده سبب إن Fibonacci بالـ recursion بطيء جداً.</span></details>
+
+    <h4>4. T(n) = T(n−1) + n</h4>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">costs: n + (n−1) + (n−2) + ... + 1 = n(n+1)/2  → O(n²)</pre>
+    <span class="tr">هنا مفيش تفرّع، الشجرة خط واحد. كل مستوى تكلفته حجمه، فبنجمع n + (n−1) + … + 1 بقانون n(n+1)/2.</span></details>
+  </div>
+
+  <div class="block">
+    <h3>Section notes 6: master method</h3>
+<pre class="cli">T(n) = a·T(n/b) + n^d        (a ≥ 1, b &gt; 1)
+compare n^(log_b a) with n^d:
+  log_b a &gt; d  →  T(n) = O(n^(log_b a))
+  log_b a &lt; d  →  T(n) = O(n^d)
+  log_b a = d  →  T(n) = O(n^d · log n)</pre>
+    <span class="tr">a = عدد الاستدعاءات، b = بنقسم الحجم على كام، n^d = الشغل برّه الاستدعاءات. احسبي log_b a وقارنيه بـ d: اللي أكبر هو اللي يكسب. ولو متساويين نضرب في log n.</span>
+
+    <h4>1. T(n) = 4T(n/2) + n</h4>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">a = 4, b = 2, d = 1 → log₂ 4 = 2 &gt; 1  → O(n²)</pre>
+    <span class="tr">log₂ 4 = 2 لأن 2² = 4. الـ 2 أكبر من d = 1، فالحالة الأولى: O(n²).</span></details>
+
+    <h4>2. T(n) = 4T(n/2) + n²</h4>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">log₂ 4 = 2 = d  → O(n² log n)</pre>
+    <span class="tr">متساويين، فبناخد n^d ونضرب في log n.</span></details>
+
+    <h4>3. T(n) = 4T(n/2) + n³</h4>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">log₂ 4 = 2 &lt; 3  → O(n³)</pre>
+    <span class="tr">الشغل برّه (n³) أكبر، فهو اللي يكسب.</span></details>
+    <div class="note"><b>غلطة كتابة في الكشكول:</b> المثال مكتوب 4T(n/2) + 3 وبعدها "n² &lt; n³ → O(n³)". الحل ده بتاع 4T(n/2) + n³. لو فعلاً + 3 (ثابت، d = 0) يبقى 2 &gt; 0 والناتج O(n²).</div>
+
+    <h4>4. Extended master: T(n) = aT(n/b) + n^d · log^k n</h4>
+<pre class="cli">same three cases; only the equal case changes:
+  log_b a = d  →  O(n^d · log^(k+1) n)</pre>
+    <details class="ans"><summary>Show both examples</summary>
+<pre class="cli">T(n) = 2T(n/2) + n log n : a=2 b=2 d=1 k=1 → log₂ 2 = 1 = d → O(n log² n)
+T(n) = 2T(n/8) + ∛n       : a=2 b=8 d=1/3 k=0 → log₈ 2 = 1/3 = d → O(n^(1/3) log n)</pre>
+    <span class="tr">الـ k هي أُس الـ log في الشغل برّه. في الحالة المتساوية بنزوّد الـ log أُس واحد (k + 1). المثال التاني: log₈ 2 = 1/3 لأن 8^(1/3) = 2، و ∛n = n^(1/3)، فمتساويين و k = 0 → n^(1/3) log n.</span></details>
+  </div>
+
+  <div class="block">
+    <h3>Section notes 7: substitution method</h3>
+    <p>Guess the answer, assume it holds for smaller inputs, put it in the recurrence, and find the constant k that makes it true.<span class="tr">نخمّن الإجابة (مثلاً T(n) ≤ k log n)، ونفترض إنها صح للأحجام الأصغر، ونعوّض في المعادلة، ونشوف k لازم تبقى قد إيه عشان التخمين يفضل صح.</span></p>
+
+    <h4>1. T(n) = T(n/2) + c → guess O(log n)</h4>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">assume T(n/2) ≤ k log(n/2)
+T(n) ≤ k log(n/2) + c = k(log n − 1) + c = k log n − k + c
+     ≤ k log n   when  k ≥ c        → T(n) = O(log n)</pre>
+    <span class="tr">log(n/2) = log n − 1 (أساس 2). عشان نوصل لـ k log n محتاجين الباقي (−k + c) يبقى ≤ 0، يعني k ≥ c.</span></details>
+
+    <h4>2. T(n) = T(n−1) + c → guess O(n)</h4>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">assume T(n−1) ≤ k(n−1)
+T(n) ≤ k(n−1) + c = kn − k + c ≤ kn   when  k ≥ c   → O(n)</pre>
+    <span class="tr">نفس الفكرة: الحد الزيادة (−k + c) لازم يبقى سالب أو صفر.</span></details>
+
+    <h4>3. T(n) = T(n−1) + n → guess O(n²)</h4>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">assume T(n−1) ≤ k(n−1)²
+T(n) ≤ k(n² − 2n + 1) + n = kn² − 2kn + k + n
+     ≤ kn²  when  −2kn + k + n ≤ 0  →  n ≤ k(2n − 1)  →  k ≥ n/(2n − 1)
+n/(2n−1) ≤ 1 for n ≥ 1, so k = 1 works   → O(n²)</pre>
+    <span class="tr">فكّي (n−1)² = n² − 2n + 1. الباقي بعد kn² لازم يبقى ≤ 0. اعزلي k: ‏k ≥ n/(2n − 1). القيمة دي دايماً ≤ 1، فـ k = 1 كفاية.</span></details>
+  </div>
+
+  <div class="block">
+    <h3>Section notes 8: proving f(n) = O(g(n))</h3>
+    <p>f(n) = O(g(n)) means there are constants c &gt; 0 and n₀ with f(n) ≤ c·g(n) for every n ≥ n₀. Trick: raise every term to g(n), then add the coefficients.<span class="tr">التعريف: لازم نلاقي رقم c ورقم n₀ بحيث f(n) ≤ c·g(n) لكل n ≥ n₀. الطريقة السهلة: كل حد في f نكبّره لحد ما يبقى في صورة g(n) (ده مسموح لأننا بنقول ≤)، وبعدين نجمع المعاملات فيطلع c.</span></p>
+
+    <h4>1. 4n + 10 = O(n)</h4>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">4n + 10 ≤ 4n + 10n = 14n   for n ≥ 1   → c = 14, n₀ = 1</pre>
+    <span class="tr">10 ≤ 10n لما n ≥ 1، فبدّلنا 10 بـ 10n وجمعنا 4 + 10 = 14.</span></details>
+
+    <h4>2. 2n² + 50n + 100 = O(n²)</h4>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">2n² + 50n + 100 ≤ 2n² + 50n² + 100n² = 152n²   for n ≥ 1   → c = 152, n₀ = 1</pre>
+    <span class="tr">50n ≤ 50n² و 100 ≤ 100n² لما n ≥ 1. المعاملات: 2 + 50 + 100 = 152.</span></details>
+    <div class="note"><b>غلطة في الكشكول:</b> مكتوب c = 125، والصح 2 + 50 + 100 = 152. (أي c أكبر من 152 كمان صح، بس 125 مع n₀ = 1 غلط: عند n = 1 الطرف الشمال 152.)</div>
+
+    <h4>3. 5n log n + 20n = O(n log n)</h4>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">for n ≥ 2, log₂ n ≥ 1, so 20n ≤ 20 n log n
+5n log n + 20n ≤ 5n log n + 20n log n = 25 n log n   → c = 25, n₀ = 2</pre>
+    <span class="tr">ليه n₀ = 2؟ عند n = 1 الـ log = 0 فـ 20n مش هتبقى ≤ 20 n log n. من n = 2 الـ log₂ n ≥ 1 فينفع نضرب فيه.</span></details>
+    <div class="note"><b>ملاحظة:</b> الرقم في الكشكول شكله 29، والجمع الصح 5 + 20 = 25. (29 برضه بتنفع لأنها أكبر، بس 25 هي اللي طالعة من الخطوات.)</div>
+
+    <h4>4. n² + 3n log n + 1000 = O(n²)</h4>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">log n ≤ n  →  3n log n ≤ 3n² ;   1000 ≤ 1000n²
+n² + 3n log n + 1000 ≤ 1004n²   for n ≥ 2   → c = 1004, n₀ = 2</pre>
+    <span class="tr">الـ log n دايماً أصغر من n، فـ n log n ≤ n². والثابت 1000 ≤ 1000n². المعاملات 1 + 3 + 1000 = 1004.</span></details>
+
+    <h4>5. Assignment: n² − 1000 = O(n²)</h4>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">n² − 1000 ≤ n²   for every n ≥ 1   → c = 1, n₀ = 1</pre>
+    <span class="tr">طرح 1000 بيصغّر الدالة، فهي دايماً أقل من n² نفسها. لو الدكتور عايز f(n) تبقى موجبة كمان خدي n₀ = 32 (لأن 32² = 1024 أكبر من 1000).</span></details>
+  </div>
+
+  <div class="block">
+    <h3>Section notes 9: binary search (31/10)</h3>
+<pre class="cli">int low = 0, high = n - 1;
+while (low &lt;= high) {
+    int mid = (low + high) / 2;
+    if (A[mid] == key) return mid;
+    else if (A[mid] &lt; key) low = mid + 1;
+    else high = mid - 1;
+}
+return -1;</pre>
+    <span class="tr">لازم الـ array تكون مترتبة. كل خطوة بنبص على النص: لو أصغر من اللي بندوّر عليه نروح يمين، ولو أكبر نروح شمال. كل مرة بنرمي نص الـ array، فعدد الخطوات log₂ n. ‏T(n) = T(n/2) + 1 → O(log n).</span>
+
+    <h4>1. Search 39 in {3, 8, 12, 17, 21, 26, 31, 39, 44, 52, 60}</h4>
+    <details class="ans"><summary>Show trace</summary>
+<pre class="cli">low high mid A[mid]
+ 0   10   5   26   26 &lt; 39 → low = 6
+ 6   10   8   44   44 &gt; 39 → high = 7
+ 6    7   6   31   31 &lt; 39 → low = 7
+ 7    7   7   39   found → index 7   (4 iterations)</pre>
+    <span class="tr">الـ mid بيتحسب بالقسمة الصحيحة: ‏(6 + 7)/2 = 6 مش 6.5. اكتبي الجدول ده بالظبط في الامتحان: low و high و mid والمقارنة.</span></details>
+
+    <h4>2. First and last occurrence of 2 in [1, 2, 2, 2, 2, 5, 7, 7, 9]</h4>
+<pre class="cli">// first occurrence: when found, save it and keep searching LEFT
+if (A[mid] == key) { result = mid; high = mid - 1; }
+// last occurrence: when found, save it and keep searching RIGHT
+if (A[mid] == key) { result = mid; low = mid + 1; }</pre>
+    <details class="ans"><summary>Show trace</summary>
+<pre class="cli">FIRST:  (low,high,mid) = (0,8,4) A=2 save 4, high=3
+                         (0,3,1) A=2 save 1, high=0
+                         (0,0,0) A=1 &lt; 2,   low=1 → stop   → first = 1
+LAST:   (0,8,4) A=2 save 4, low=5
+        (5,8,6) A=7 &gt; 2,   high=5
+        (5,5,5) A=5 &gt; 2,   high=4 → stop                    → last = 4
+count of 2s = last − first + 1 = 4</pre>
+    <span class="tr">الفرق الوحيد عن الـ binary search العادي: لما نلاقي الرقم مش بنقف، بنحفظ مكانه ونكمّل ندوّر في الناحية اللي ممكن يكون فيها نسخة تانية منه (شمال للأول، يمين للآخر).</span></details>
+    <div class="note"><b>غلطة في الكشكول:</b> مكتوب T(n) = 2T(n/2) + 1. الصح T(n) = T(n/2) + 1 لأننا بنكمّل في نص واحد بس، والناتج O(log n). (2T(n/2) + 1 كانت هتدّي O(n).)</div>
+  </div>
+
+  <div class="block">
+    <h3>Section notes 10: divide and conquer</h3>
+    <p>Divide the problem into halves, solve each half recursively, then combine the answers.<span class="tr">قسّمي المشكلة نصين، حلّي كل نص بنفس الطريقة (recursion)، وبعدين ادمجي الإجابتين.</span></p>
+
+    <h4>1. Merge sort [29, 10, 14, 37, 13, 5, 22, 18]</h4>
+    <details class="ans"><summary>Show trace</summary>
+<pre class="cli">split:  [29 10 14 37]            [13 5 22 18]
+        [29 10]   [14 37]        [13 5]   [22 18]
+        [29][10]  [14][37]       [13][5]  [22][18]
+merge:  [10 29]   [14 37]        [5 13]   [18 22]
+        [10 14 29 37]            [5 13 18 22]
+        [5 10 13 14 18 22 29 37]
+T(n) = 2T(n/2) + n  → O(n log n)</pre>
+    <span class="tr">بنقسم لحد ما كل جزء يبقى عنصر واحد (العنصر الواحد مترتب لوحده). الدمج: نقارن أول عنصر في كل جزء ونحط الأصغر، ونكرر. الدمج بياخد n في كل مستوى، وعدد المستويات log n، فالمجموع n log n. وبالـ master: ‏a = 2، b = 2، d = 1 → متساويين → n log n.</span></details>
+
+    <h4>2. Counting inversions in [3, 1, 4, 2, 5]</h4>
+    <p>An inversion is a pair i &lt; j with A[i] &gt; A[j].<span class="tr">الـ inversion هو زوج أرقام الكبير فيهم جاي قبل الصغير.</span></p>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">brute force: check every pair → (3,1) (3,2) (4,2) = 3      O(n²)
+
+divide and conquer:
+  left  [3, 1]    → (3,1)              = 1   sorted → [1, 3]
+  right [4, 2, 5] → (4,2)              = 1   sorted → [2, 4, 5]
+  split (one from each side): 3 &gt; 2    = 1
+  total = 1 + 1 + 1 = 3                       O(n log n)</pre>
+    <span class="tr">الطريقة البطيئة: نقارن كل زوج (n² مقارنة). الطريقة السريعة زي الـ merge sort: نعدّ جوّه الشمال، وجوّه اليمين، وبعدين أثناء الدمج نعدّ الأزواج اللي واحد منها في كل ناحية. وإحنا بندمج [1, 3] مع [2, 4, 5]: لما الـ 2 من اليمين تتحط قبل الـ 3 من الشمال، كل اللي فاضل في الشمال (الـ 3) بيعمل inversion معاها.</span></details>
+
+    <h4>3. Maximum subarray of [-2, 1, -3, 4, -1, 2, 1, -5, 4]</h4>
+    <details class="ans"><summary>Show solution</summary>
+<pre class="cli">left half  [-2, 1, -3, 4, -1] → best = 4      ([4])
+right half [2, 1, -5, 4]      → best = 4      ([4] at the end)
+crossing: best sum ending at the middle going left  = 4 + (−1) = 3
+          best sum starting after the middle right  = 2 + 1     = 3
+          crossing = 3 + 3 = 6   ([4, −1, 2, 1])
+answer = max(4, 4, 6) = 6
+T(n) = 2T(n/2) + n → O(n log n)</pre>
+    <span class="tr">أكبر مجموع لعناصر ورا بعض موجود في واحد من 3 أماكن: كله في الشمال، أو كله في اليمين، أو بيعدّي النص. الـ crossing بنحسبه كده: نبدأ من النص ونمشي شمال ونجمع ونحفظ أكبر مجموع، ونفس الكلام يمين، ونجمع الاتنين. الإجابة أكبر واحد من التلاتة = 6.</span></details>
+
+    <h4>4. Quicksort: Lomuto partition of [9, 3, 7, 1, 8, 2, 5] (pivot = last = 5)</h4>
+<pre class="cli">pivot = A[high]; i = low - 1;
+for (j = low; j &lt; high; j++)
+    if (A[j] &lt;= pivot) { i++; swap(A[i], A[j]); }
+swap(A[i + 1], A[high]);
+return i + 1;</pre>
+    <details class="ans"><summary>Show trace</summary>
+<pre class="cli">i = -1
+j=0  9 &gt; 5   no swap                     [9 3 7 1 8 2 5]
+j=1  3 ≤ 5   i=0 swap A0,A1              [3 9 7 1 8 2 5]
+j=2  7 &gt; 5   no swap
+j=3  1 ≤ 5   i=1 swap A1,A3              [3 1 7 9 8 2 5]
+j=4  8 &gt; 5   no swap
+j=5  2 ≤ 5   i=2 swap A2,A5              [3 1 2 9 8 7 5]
+end: swap A[i+1]=A3 with pivot           [3 1 2 5 8 7 9]
+pivot index = 3</pre>
+    <span class="tr">الـ i بيعلّم آخر مكان في "منطقة الصغيرين". كل ما j يلاقي رقم ≤ الـ pivot بنزوّد i ونبدّله معاه، فالصغيرين يتجمعوا في الأول. في الآخر نحط الـ pivot بعد آخر صغير (i + 1). النتيجة: كل اللي شماله أصغر منه، وكل اللي يمينه أكبر، وهو في مكانه النهائي. بعد كده نعمل نفس الكلام على [3 1 2] و [8 7 9].</span></details>
   </div>
 
   <div class="block">
