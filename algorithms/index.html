@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Design &amp; Analysis of Algorithms</title>
-<meta name="site-version" content="algo-2026-11-02-r2">
+<meta name="site-version" content="algo-2026-11-02-r3">
 <script>
 (function(){
   /* auto-update: if the server has a newer version than this cached copy, reload once */
   try{
-    var cur='algo-2026-11-02-r2';
+    var cur='algo-2026-11-02-r3';
     fetch(location.pathname+'?nocache='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():'';}).then(function(t){
       var m=t.match(/name="site-version" content="([^"]+)"/);
       if(m&&m[1]!==cur&&!sessionStorage.getItem('reloaded-'+m[1])){sessionStorage.setItem('reloaded-'+m[1],'1');location.reload();}
@@ -589,20 +589,15 @@ details.ans .tr{border:0!important;padding:0!important}
 :root[data-theme="dark"] .doodle{filter:invert(1);mix-blend-mode:screen}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .doodle{filter:invert(1);mix-blend-mode:screen}}
 @media (max-width:640px){.chap-head:has(.doodle){padding-right:96px!important}.doodle{height:76px;max-width:84px;right:10px}}
-/* ---------- earthy palette: browns, nudes, calm tones (2026-11-02) ---------- */
-:root{--bg:#faf6f1;--panel:#fffdf9;--fg:#3b2a20;--muted:#7a6556;--line:#e6d9cc;--code:#f4ece3;
-  --accent:#8b5e3c;--c1:#8b5e3c;--c2:#8f6a4d;--c3:#a5715a;--c4:#6f7d5c;--lab:#86685a;--c5:#9a6152;--c6:#7d6845;--c7:#7b5a49;--c8:#66796f;
-  --good:#5f7a4e;--bad:#b0564a;--note:#f6eee5;--noteline:#e2cfbd;--hero1:#faf6f1;--hero2:#faf6f1;--shadow:none;color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c1714;--panel:#26201b;--fg:#f1e7dc;--muted:#b9a796;--line:#3d332b;--code:#26201b;
-  --accent:#d2a57f;--c1:#d2a57f;--c2:#c9a88a;--c3:#d8a990;--c4:#a9b791;--lab:#c4a594;--c5:#d39a89;--c6:#cdb58a;--c7:#c79a83;--c8:#9fb5aa;
-  --good:#a9c08f;--bad:#e08a7d;--note:#2a231d;--noteline:#4a3d32;--hero1:#1c1714;--hero2:#1c1714;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#1c1714;--panel:#26201b;--fg:#f1e7dc;--muted:#b9a796;--line:#3d332b;--code:#26201b;
-  --accent:#d2a57f;--c1:#d2a57f;--c2:#c9a88a;--c3:#d8a990;--c4:#a9b791;--lab:#c4a594;--c5:#d39a89;--c6:#cdb58a;--c7:#c79a83;--c8:#9fb5aa;
-  --good:#a9c08f;--bad:#e08a7d;--note:#2a231d;--noteline:#4a3d32;--hero1:#1c1714;--hero2:#1c1714;color-scheme:dark}
-.mm{background:#241d18!important;border-color:#3a2f27!important}
-.ios-term{background:#241d18!important;color:#f1e7dc!important}
+/*THEME*/
+:root{--bg:#fbfaf9;--panel:#ffffff;--fg:#2a221d;--muted:#70635c;--line:#e5dfdc;--code:#f7f4f3;--accent:#6d442c;--c1:#6d442c;--c2:#84633e;--c3:#945342;--c4:#715f3d;--lab:#79423e;--c5:#967354;--c6:#55362a;--c7:#816b4b;--c8:#905951;--good:#3f7f55;--bad:#b5483f;--note:#f7f4f2;--noteline:#ded4ce;--hero1:#fbfaf9;--hero2:#fbfaf9;--shadow:none;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#181411;--panel:#231d1a;--fg:#f0eceb;--muted:#b6aba5;--line:#453b36;--code:#231d1a;--accent:#d0ab95;--c1:#dbc0b0;--c2:#ceb89f;--c3:#ca9e93;--c4:#d0c4ac;--lab:#cea9a6;--c5:#bda691;--c6:#dec8c1;--c7:#c4b6a1;--c8:#c09b96;--good:#7cc49a;--bad:#e9877c;--note:#29221e;--noteline:#51453d;--hero1:#181411;--hero2:#181411;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#181411;--panel:#231d1a;--fg:#f0eceb;--muted:#b6aba5;--line:#453b36;--code:#231d1a;--accent:#d0ab95;--c1:#dbc0b0;--c2:#ceb89f;--c3:#ca9e93;--c4:#d0c4ac;--lab:#cea9a6;--c5:#bda691;--c6:#dec8c1;--c7:#c4b6a1;--c8:#c09b96;--good:#7cc49a;--bad:#e9877c;--note:#29221e;--noteline:#51453d;--hero1:#181411;--hero2:#181411;color-scheme:dark}
+.mm{background:#221a16!important;border-color:#3c312a!important}
+.mmg{background:radial-gradient(ellipse at 50% 45%,#392b23 0%,#1f1814 70%)!important}
+.ios-term{background:#221a16!important;color:#f0eceb!important}
 .view code{overflow-wrap:anywhere}
-.mmg{background:radial-gradient(ellipse at 50% 45%,#3a2e25 0%,#241d18 70%)!important}
+/*/THEME*/
 .cells.acells{margin-top:22px;row-gap:28px}
 .cell em{position:absolute;top:-19px;font:700 .66rem var(--f-mono);color:var(--k);white-space:nowrap;font-style:normal}
 .cell.dim{opacity:.32}
