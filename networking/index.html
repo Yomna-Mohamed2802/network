@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>ملخص أم سميحة لتجنب الفضيحة</title>
-<meta name="site-version" content="2026-11-02-r30">
+<meta name="site-version" content="2026-11-02-r31">
 <script>
 (function(){
   /* auto-update: if the server has a newer version than this cached copy, reload once */
   try{
-    var cur='2026-11-02-r30';
+    var cur='2026-11-02-r31';
     fetch(location.pathname+'?nocache='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():'';}).then(function(t){
       var m=t.match(/name="site-version" content="([^"]+)"/);
       if(m&&m[1]!==cur&&!sessionStorage.getItem('reloaded-'+m[1])){sessionStorage.setItem('reloaded-'+m[1],'1');location.reload();}
@@ -526,20 +526,15 @@ th{background:color-mix(in srgb,var(--k) 9%,var(--code))!important}
 :root[data-theme="dark"] .doodle{filter:invert(1);mix-blend-mode:screen}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .doodle{filter:invert(1);mix-blend-mode:screen}}
 @media (max-width:640px){.chap-head:has(.doodle){padding-right:96px!important}.doodle{height:76px;max-width:84px;right:10px}}
-/* ---------- earthy palette: browns, nudes, calm tones (2026-11-02) ---------- */
-:root{--bg:#faf6f1;--panel:#fffdf9;--fg:#3b2a20;--muted:#7a6556;--line:#e6d9cc;--code:#f4ece3;
-  --accent:#8b5e3c;--c1:#8b5e3c;--c2:#8f6a4d;--c3:#a5715a;--c4:#6f7d5c;--lab:#86685a;--c5:#9a6152;--c6:#7d6845;--c7:#7b5a49;--c8:#66796f;
-  --good:#5f7a4e;--bad:#b0564a;--note:#f6eee5;--noteline:#e2cfbd;--hero1:#faf6f1;--hero2:#faf6f1;--shadow:none;color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c1714;--panel:#26201b;--fg:#f1e7dc;--muted:#b9a796;--line:#3d332b;--code:#26201b;
-  --accent:#d2a57f;--c1:#d2a57f;--c2:#c9a88a;--c3:#d8a990;--c4:#a9b791;--lab:#c4a594;--c5:#d39a89;--c6:#cdb58a;--c7:#c79a83;--c8:#9fb5aa;
-  --good:#a9c08f;--bad:#e08a7d;--note:#2a231d;--noteline:#4a3d32;--hero1:#1c1714;--hero2:#1c1714;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#1c1714;--panel:#26201b;--fg:#f1e7dc;--muted:#b9a796;--line:#3d332b;--code:#26201b;
-  --accent:#d2a57f;--c1:#d2a57f;--c2:#c9a88a;--c3:#d8a990;--c4:#a9b791;--lab:#c4a594;--c5:#d39a89;--c6:#cdb58a;--c7:#c79a83;--c8:#9fb5aa;
-  --good:#a9c08f;--bad:#e08a7d;--note:#2a231d;--noteline:#4a3d32;--hero1:#1c1714;--hero2:#1c1714;color-scheme:dark}
-.mm{background:#241d18!important;border-color:#3a2f27!important}
-.ios-term{background:#241d18!important;color:#f1e7dc!important}
+/*THEME*/
+:root{--bg:#f9fafb;--panel:#ffffff;--fg:#1d232a;--muted:#5c6570;--line:#dce0e5;--code:#f3f5f7;--accent:#2c4a6d;--c1:#2c4a6d;--c2:#3e5384;--c3:#427694;--c4:#3d4571;--lab:#3e6b79;--c5:#546d96;--c6:#2a4355;--c7:#4b5881;--c8:#517d90;--good:#3f7f55;--bad:#b5483f;--note:#f2f5f7;--noteline:#ced6de;--hero1:#f9fafb;--hero2:#f9fafb;--shadow:none;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111418;--panel:#1a1e23;--fg:#ebedf0;--muted:#a5adb6;--line:#363d45;--code:#1a1e23;--accent:#95b1d0;--c1:#b0c4db;--c2:#9fadce;--c3:#93b6ca;--c4:#acb2d0;--lab:#a6c5ce;--c5:#91a1bd;--c6:#c1d1de;--c7:#a1a9c4;--c8:#96b3c0;--good:#7cc49a;--bad:#e9877c;--note:#1e2329;--noteline:#3d4751;--hero1:#111418;--hero2:#111418;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#111418;--panel:#1a1e23;--fg:#ebedf0;--muted:#a5adb6;--line:#363d45;--code:#1a1e23;--accent:#95b1d0;--c1:#b0c4db;--c2:#9fadce;--c3:#93b6ca;--c4:#acb2d0;--lab:#a6c5ce;--c5:#91a1bd;--c6:#c1d1de;--c7:#a1a9c4;--c8:#96b3c0;--good:#7cc49a;--bad:#e9877c;--note:#1e2329;--noteline:#3d4751;--hero1:#111418;--hero2:#111418;color-scheme:dark}
+.mm{background:#161c22!important;border-color:#2a323c!important}
+.mmg{background:radial-gradient(ellipse at 50% 45%,#232d39 0%,#14191f 70%)!important}
+.ios-term{background:#161c22!important;color:#ebedf0!important}
 .view code{overflow-wrap:anywhere}
-.mmg{background:radial-gradient(ellipse at 50% 45%,#3a2e25 0%,#241d18 70%)!important}
+/*/THEME*/
 </style>
 
 <header class="top"><div class="wrap">
