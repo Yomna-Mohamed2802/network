@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Design &amp; Analysis of Algorithms</title>
-<meta name="site-version" content="algo-2026-11-02-r1">
+<meta name="site-version" content="algo-2026-11-02-r2">
 <script>
 (function(){
   /* auto-update: if the server has a newer version than this cached copy, reload once */
   try{
-    var cur='algo-2026-11-02-r1';
+    var cur='algo-2026-11-02-r2';
     fetch(location.pathname+'?nocache='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():'';}).then(function(t){
       var m=t.match(/name="site-version" content="([^"]+)"/);
       if(m&&m[1]!==cur&&!sessionStorage.getItem('reloaded-'+m[1])){sessionStorage.setItem('reloaded-'+m[1],'1');location.reload();}
@@ -589,7 +589,21 @@ details.ans .tr{border:0!important;padding:0!important}
 :root[data-theme="dark"] .doodle{filter:invert(1);mix-blend-mode:screen}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .doodle{filter:invert(1);mix-blend-mode:screen}}
 @media (max-width:640px){.chap-head:has(.doodle){padding-right:96px!important}.doodle{height:76px;max-width:84px;right:10px}}
-.cells.ptr{margin-top:22px;row-gap:28px}
+/* ---------- earthy palette: browns, nudes, calm tones (2026-11-02) ---------- */
+:root{--bg:#faf6f1;--panel:#fffdf9;--fg:#3b2a20;--muted:#7a6556;--line:#e6d9cc;--code:#f4ece3;
+  --accent:#8b5e3c;--c1:#8b5e3c;--c2:#8f6a4d;--c3:#a5715a;--c4:#6f7d5c;--lab:#86685a;--c5:#9a6152;--c6:#7d6845;--c7:#7b5a49;--c8:#66796f;
+  --good:#5f7a4e;--bad:#b0564a;--note:#f6eee5;--noteline:#e2cfbd;--hero1:#faf6f1;--hero2:#faf6f1;--shadow:none;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c1714;--panel:#26201b;--fg:#f1e7dc;--muted:#b9a796;--line:#3d332b;--code:#26201b;
+  --accent:#d2a57f;--c1:#d2a57f;--c2:#c9a88a;--c3:#d8a990;--c4:#a9b791;--lab:#c4a594;--c5:#d39a89;--c6:#cdb58a;--c7:#c79a83;--c8:#9fb5aa;
+  --good:#a9c08f;--bad:#e08a7d;--note:#2a231d;--noteline:#4a3d32;--hero1:#1c1714;--hero2:#1c1714;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1c1714;--panel:#26201b;--fg:#f1e7dc;--muted:#b9a796;--line:#3d332b;--code:#26201b;
+  --accent:#d2a57f;--c1:#d2a57f;--c2:#c9a88a;--c3:#d8a990;--c4:#a9b791;--lab:#c4a594;--c5:#d39a89;--c6:#cdb58a;--c7:#c79a83;--c8:#9fb5aa;
+  --good:#a9c08f;--bad:#e08a7d;--note:#2a231d;--noteline:#4a3d32;--hero1:#1c1714;--hero2:#1c1714;color-scheme:dark}
+.mm{background:#241d18!important;border-color:#3a2f27!important}
+.ios-term{background:#241d18!important;color:#f1e7dc!important}
+.view code{overflow-wrap:anywhere}
+.mmg{background:radial-gradient(ellipse at 50% 45%,#3a2e25 0%,#241d18 70%)!important}
+.cells.acells{margin-top:22px;row-gap:28px}
 .cell em{position:absolute;top:-19px;font:700 .66rem var(--f-mono);color:var(--k);white-space:nowrap;font-style:normal}
 .cell.dim{opacity:.32}
 .cell.sorted{background:color-mix(in srgb,var(--good) 18%,var(--panel));border-color:var(--good)}
@@ -602,9 +616,6 @@ details.ans .tr{border:0!important;padding:0!important}
 .mrow.merge .grp{border-color:var(--good)}
 .mt{font:500 .95rem var(--f-mono);display:grid;gap:4px}
 .mt-res{margin-top:8px;font:800 1.4rem var(--f-mono);color:var(--k)}
-:root{--c8:#0a7d6f}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--c8:#3fc1ae}}
-:root[data-theme="dark"]{--c8:#3fc1ae}
 </style>
 
 <header class="top"><div class="wrap">
@@ -2687,7 +2698,7 @@ factorial: T = 2n + 4, S = 3        Add_matrix: T = 2n² + 2n + 1, S = 3n² + 3<
   const say=(log,rows)=>{log.innerHTML=rows.map(r=>`<p>${r[0]}<span class="tr">${r[1]}</span></p>`).join('');};
   const parseArr=(s,def)=>{const a=String(s).split(/[\s,]+/).filter(Boolean).map(Number).filter(Number.isFinite);return a.length?a.slice(0,12):def.slice();};
   /* cells: arr values, cls[i] extra class, tag[i] label above */
-  const cells=(arr,cls={},tag={})=>`<div class="cells ptr">${arr.map((v,i)=>`<div class="cell used${cls[i]?' '+cls[i]:''}">${tag[i]?`<em>${tag[i]}</em>`:''}<span>${esc(v)}</span><small>${i}</small></div>`).join('')}</div>`;
+  const cells=(arr,cls={},tag={})=>`<div class="cells acells">${arr.map((v,i)=>`<div class="cell used${cls[i]?' '+cls[i]:''}">${tag[i]?`<em>${tag[i]}</em>`:''}<span>${esc(v)}</span><small>${i}</small></div>`).join('')}</div>`;
   /* generic stepper: build() returns [{html,en,ar}] */
   function stepper(f,build,extraCtl){
     let steps=[],k=0,timer=null;
@@ -3037,7 +3048,7 @@ factorial: T = 2n + 4, S = 3        Add_matrix: T = 2n² + 2n + 1, S = 3n² + 3<
 <script>
 (function(){
   /* ---------- sidebar contents, studied progress, back to top ---------- */
-  const KEY='netStudied';let done={};
+  const KEY='studied:'+(location.pathname.split('/').filter(Boolean)[0]||'site');try{if(!localStorage.getItem(KEY)&&localStorage.getItem('netStudied'))localStorage.setItem(KEY,localStorage.getItem('netStudied'));}catch(e){}let done={};
   try{done=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){}
   const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(done));}catch(e){}};
   let n=0;
