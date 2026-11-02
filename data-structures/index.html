@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Data Structures in Java</title>
-<meta name="site-version" content="ds-2026-11-02-r6">
+<meta name="site-version" content="ds-2026-11-02-r7">
 <script>
 (function(){
   /* auto-update: if the server has a newer version than this cached copy, reload once */
   try{
-    var cur='ds-2026-11-02-r6';
+    var cur='ds-2026-11-02-r7';
     fetch(location.pathname+'?nocache='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():'';}).then(function(t){
       var m=t.match(/name="site-version" content="([^"]+)"/);
       if(m&&m[1]!==cur&&!sessionStorage.getItem('reloaded-'+m[1])){sessionStorage.setItem('reloaded-'+m[1],'1');location.reload();}
@@ -589,20 +589,15 @@ details.ans .tr{border:0!important;padding:0!important}
 :root[data-theme="dark"] .doodle{filter:invert(1);mix-blend-mode:screen}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .doodle{filter:invert(1);mix-blend-mode:screen}}
 @media (max-width:640px){.chap-head:has(.doodle){padding-right:96px!important}.doodle{height:76px;max-width:84px;right:10px}}
-/* ---------- earthy palette: browns, nudes, calm tones (2026-11-02) ---------- */
-:root{--bg:#faf6f1;--panel:#fffdf9;--fg:#3b2a20;--muted:#7a6556;--line:#e6d9cc;--code:#f4ece3;
-  --accent:#8b5e3c;--c1:#8b5e3c;--c2:#8f6a4d;--c3:#a5715a;--c4:#6f7d5c;--lab:#86685a;--c5:#9a6152;--c6:#7d6845;--c7:#7b5a49;--c8:#66796f;
-  --good:#5f7a4e;--bad:#b0564a;--note:#f6eee5;--noteline:#e2cfbd;--hero1:#faf6f1;--hero2:#faf6f1;--shadow:none;color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c1714;--panel:#26201b;--fg:#f1e7dc;--muted:#b9a796;--line:#3d332b;--code:#26201b;
-  --accent:#d2a57f;--c1:#d2a57f;--c2:#c9a88a;--c3:#d8a990;--c4:#a9b791;--lab:#c4a594;--c5:#d39a89;--c6:#cdb58a;--c7:#c79a83;--c8:#9fb5aa;
-  --good:#a9c08f;--bad:#e08a7d;--note:#2a231d;--noteline:#4a3d32;--hero1:#1c1714;--hero2:#1c1714;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#1c1714;--panel:#26201b;--fg:#f1e7dc;--muted:#b9a796;--line:#3d332b;--code:#26201b;
-  --accent:#d2a57f;--c1:#d2a57f;--c2:#c9a88a;--c3:#d8a990;--c4:#a9b791;--lab:#c4a594;--c5:#d39a89;--c6:#cdb58a;--c7:#c79a83;--c8:#9fb5aa;
-  --good:#a9c08f;--bad:#e08a7d;--note:#2a231d;--noteline:#4a3d32;--hero1:#1c1714;--hero2:#1c1714;color-scheme:dark}
-.mm{background:#241d18!important;border-color:#3a2f27!important}
-.ios-term{background:#241d18!important;color:#f1e7dc!important}
+/*THEME*/
+:root{--bg:#f9fbfa;--panel:#ffffff;--fg:#1d2a24;--muted:#5c7067;--line:#dce5e1;--code:#f3f7f5;--accent:#2c6d4f;--c1:#2c6d4f;--c2:#3e846f;--c3:#429460;--c4:#3d7168;--lab:#3e794c;--c5:#54967e;--c6:#2a553d;--c7:#4b8174;--c8:#519064;--good:#3f7f55;--bad:#b5483f;--note:#f2f7f5;--noteline:#ceded7;--hero1:#f9fbfa;--hero2:#f9fbfa;--shadow:none;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111815;--panel:#1a231f;--fg:#ebf0ed;--muted:#a5b6ae;--line:#36453e;--code:#1a231f;--accent:#95d0b4;--c1:#b0dbc7;--c2:#9fcec0;--c3:#93caa7;--c4:#acd0ca;--lab:#a6ceb0;--c5:#91bdad;--c6:#c1decd;--c7:#a1c4bc;--c8:#96c0a2;--good:#7cc49a;--bad:#e9877c;--note:#1e2924;--noteline:#3d5148;--hero1:#111815;--hero2:#111815;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#111815;--panel:#1a231f;--fg:#ebf0ed;--muted:#a5b6ae;--line:#36453e;--code:#1a231f;--accent:#95d0b4;--c1:#b0dbc7;--c2:#9fcec0;--c3:#93caa7;--c4:#acd0ca;--lab:#a6ceb0;--c5:#91bdad;--c6:#c1decd;--c7:#a1c4bc;--c8:#96c0a2;--good:#7cc49a;--bad:#e9877c;--note:#1e2924;--noteline:#3d5148;--hero1:#111815;--hero2:#111815;color-scheme:dark}
+.mm{background:#16221c!important;border-color:#2a3c34!important}
+.mmg{background:radial-gradient(ellipse at 50% 45%,#23392f 0%,#141f1a 70%)!important}
+.ios-term{background:#16221c!important;color:#ebf0ed!important}
 .view code{overflow-wrap:anywhere}
-.mmg{background:radial-gradient(ellipse at 50% 45%,#3a2e25 0%,#241d18 70%)!important}
+/*/THEME*/
 </style>
 
 <header class="top"><div class="wrap">
