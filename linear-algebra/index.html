@@ -1,0 +1,1971 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Linear Algebra</title>
+<meta name="site-version" content="la-2026-11-03-r1">
+<script>
+(function(){
+  /* auto-update: if the server has a newer version than this cached copy, reload once */
+  try{
+    var cur='la-2026-11-03-r1';
+    fetch(location.pathname+'?nocache='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():'';}).then(function(t){
+      var m=t.match(/name="site-version" content="([^"]+)"/);
+      if(m&&m[1]!==cur&&!sessionStorage.getItem('reloaded-'+m[1])){sessionStorage.setItem('reloaded-'+m[1],'1');location.reload();}
+    }).catch(function(){});
+  }catch(e){}
+})();
+</script>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* base reset so the standalone copy (GitHub Pages) behaves like the hosted one */
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0}
+img{max-width:100%}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+/* Layout: soft blush page, rounded cards; each chapter has its own pastel (rose, lilac, peach, mint) */
+:root{
+  --bg:#fff6f9; --panel:#ffffff; --fg:#3a2433; --muted:#86697b; --line:#f3d9e5;
+  --c1:#e0568f; --c2:#9b6ad6; --c3:#ea7a5f; --c4:#3fa58a; --lab:#c457b4;
+  --good:#3fa58a; --bad:#d9455f; --note:#fff0f6; --noteline:#f6b8d2; --code:#fbeef4;
+  --hero1:#ffd6e7; --hero2:#e9dcff; --shadow:0 6px 22px rgba(224,86,143,.10);
+  --f-display:"Plus Jakarta Sans","Tajawal",system-ui,sans-serif;
+  --f-body:"Plus Jakarta Sans","Tajawal",system-ui,sans-serif;
+  --f-ar:"Tajawal",Tahoma,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1e1520; --panel:#2a1d2c; --fg:#f6e7f0; --muted:#c3a6b8; --line:#47304a;
+  --c1:#ff86b6; --c2:#c4a0ff; --c3:#ffa489; --c4:#6fd3b4; --lab:#e98ad9;
+  --good:#6fd3b4; --bad:#ff7a90; --note:#33202f; --noteline:#7a3f62; --code:#35253a;
+  --hero1:#4a2140; --hero2:#2f2550; --shadow:0 6px 22px rgba(0,0,0,.35); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1e1520; --panel:#2a1d2c; --fg:#f6e7f0; --muted:#c3a6b8; --line:#47304a;
+  --c1:#ff86b6; --c2:#c4a0ff; --c3:#ffa489; --c4:#6fd3b4; --lab:#e98ad9;
+  --good:#6fd3b4; --bad:#ff7a90; --note:#33202f; --noteline:#7a3f62; --code:#35253a;
+  --hero1:#4a2140; --hero2:#2f2550; --shadow:0 6px 22px rgba(0,0,0,.35); color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--f-body)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--panel)}
+.wrap{max-width:980px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{padding-block:28px 12px}
+header.top h1{font:700 clamp(1.6rem,4vw,2.3rem)/1.15 var(--f-display);margin:0;text-wrap:balance}
+header.top p{margin:.4rem 0 0;color:var(--muted)}
+.ar{font-family:var(--f-ar);direction:rtl;text-align:right}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--panel);border-bottom:1px solid var(--line)}
+nav.tabs .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:8px;scrollbar-width:thin}
+nav.tabs button{flex:0 0 auto;font:600 .9rem var(--f-display);border:1px solid var(--line);background:var(--bg);color:var(--fg);padding:.45rem .8rem;border-radius:6px;cursor:pointer;display:flex;gap:.45rem;align-items:center}
+nav.tabs button i{width:10px;height:10px;border-radius:50%;background:var(--k);display:inline-block}
+nav.tabs button[aria-selected="true"]{background:var(--k);color:#fff;border-color:var(--k)}
+nav.tabs button[aria-selected="true"] i{background:#fff}
+nav.tabs button:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--c3);outline-offset:2px}
+main{padding-block:20px 60px}
+section.view{display:grid;gap:22px}
+.chap-head{border-left:6px solid var(--k);padding-left:14px}
+.chap-head small{font:600 .75rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--k)}
+.chap-head h2{font:700 1.7rem/1.2 var(--f-display);margin:.1rem 0 .2rem;text-wrap:balance}
+.chap-head p{margin:0;color:var(--muted)}
+h3{font:600 1.2rem/1.3 var(--f-display);margin:0 0 .6rem;color:var(--k);text-wrap:balance}
+h4{font:600 1rem var(--f-display);margin:1rem 0 .3rem}
+.block{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px 18px 14px;min-width:0}
+.block ul{margin:.3rem 0 .6rem;padding-left:1.2rem}
+.block li{margin:.15rem 0}
+.note{background:var(--note);border:1px solid var(--noteline);border-radius:6px;padding:.6rem .8rem;margin:.6rem 0;font-family:var(--f-ar);direction:rtl;text-align:right;line-height:1.8}
+.note b:first-child{color:var(--c1)}
+.tw{overflow-x:auto;margin:.5rem 0}
+table{border-collapse:collapse;width:100%;font-size:.92rem;font-variant-numeric:tabular-nums}
+th,td{border:1px solid var(--line);padding:.4rem .55rem;text-align:left;vertical-align:top}
+th{background:var(--code);font-family:var(--f-display);font-weight:600}
+code,.mono{font-family:var(--f-mono);font-size:.9em;background:var(--code);padding:.05rem .3rem;border-radius:4px}
+pre.cli{font:0.85rem/1.55 var(--f-mono);background:var(--code);border:1px solid var(--line);border-radius:6px;padding:.7rem .9rem;overflow-x:auto;margin:.5rem 0}
+pre.cli b{color:var(--k)}
+.mapbox{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px}
+.mapbox pre.mermaid{margin:0;background:transparent;text-align:center}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.pill{display:inline-block;font:600 .75rem var(--f-mono);padding:.05rem .45rem;border-radius:99px;border:1px solid var(--k);color:var(--k)}
+.essay summary{cursor:pointer;font-weight:600}
+.essay details{border-top:1px dashed var(--line);padding:.5rem 0}
+.essay details[open] summary{color:var(--k)}
+/* subnet calculator */
+.calc{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.calc input{font:1rem var(--f-mono);padding:.5rem .6rem;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg);min-width:0;flex:1 1 220px}
+.btn{font:600 .9rem var(--f-display);padding:.5rem .9rem;border-radius:6px;border:1px solid var(--k);background:var(--k);color:#fff;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--k)}
+.calc-out{margin-top:.6rem}
+.err{color:var(--bad);font-family:var(--f-ar)}
+/* quiz */
+.q{border-top:1px solid var(--line);padding:.8rem 0}
+.q:first-of-type{border-top:0}
+.q p{margin:0 0 .4rem;font-weight:600}
+.opts{display:grid;gap:6px}
+.opts button{text-align:left;font:inherit;padding:.45rem .7rem;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg);cursor:pointer}
+.opts button.right{border-color:var(--good);background:color-mix(in srgb,var(--good) 15%,var(--bg))}
+.opts button.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 15%,var(--bg))}
+.why{margin-top:.4rem}
+.score{font:600 1rem var(--f-display)}
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:.4rem}
+.filters button{font:600 .8rem var(--f-display);padding:.3rem .7rem;border-radius:99px;border:1px solid var(--line);background:var(--bg);color:var(--fg);cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.layer-stack{display:grid;gap:4px}
+.layer-stack div{display:grid;grid-template-columns:2.2rem 1fr 6rem;gap:8px;align-items:center;padding:.35rem .6rem;border-radius:5px;background:var(--code);border-left:5px solid var(--c2);font-size:.92rem}
+.layer-stack div span:first-child{font:700 1rem var(--f-mono);color:var(--c2)}
+.layer-stack div span:last-child{font:600 .8rem var(--f-mono);text-align:right}
+@media (max-width:520px){.layer-stack div{grid-template-columns:1.8rem 1fr}.layer-stack div span:last-child{grid-column:2;text-align:left}}
+.tr{display:block;font-family:var(--f-ar);direction:rtl;text-align:right;color:var(--muted);font-size:.95rem;line-height:1.8;margin-top:.2rem;padding-right:.6rem;border-right:3px solid var(--noteline)}
+td .tr{border:0;padding:0;font-size:.88rem}
+.chap-head .tr{border:0;padding:0;margin-top:.3rem}
+td.ar,th.ar{text-align:right}
+.vids{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.vid{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);text-decoration:none;min-width:0}
+.vid:hover{border-color:var(--k)}
+.vid .play{flex:0 0 32px;height:32px;border-radius:50%;background:var(--k);color:#fff;display:grid;place-items:center;font-size:.8rem}
+.vt{min-width:0}
+.vt b{display:block;font-family:var(--f-display);font-size:.95rem;line-height:1.35}
+.vt small{color:var(--muted)}
+.vid .tr{border:0;padding:0;font-size:.85rem}
+.muted{color:var(--muted);margin:.2rem 0 .7rem}
+header.top{background:linear-gradient(135deg,var(--hero1),var(--hero2));border-bottom-left-radius:28px;border-bottom-right-radius:28px;margin-bottom:6px}
+header.top h1{font-weight:800;font-size:clamp(1.9rem,5vw,2.8rem);color:var(--fg)}
+header.top h1::after{content:" ♡";color:var(--c1)}
+header.top .subtitle{font:700 clamp(1.1rem,3vw,1.4rem)/1.6 var(--f-ar);color:var(--c1);text-align:left;margin-top:.3rem}
+header.top .wrap{position:relative}
+.theme-btn{position:absolute;top:18px;right:max(16px,env(safe-area-inset-right,0px));display:inline-flex;gap:6px;align-items:center;font:700 .85rem var(--f-display);padding:6px 14px;border-radius:99px;border:1.5px solid color-mix(in srgb,var(--c1) 45%,transparent);background:var(--panel);color:var(--fg);cursor:pointer;box-shadow:var(--shadow)}
+.theme-btn:hover{border-color:var(--c1)}
+.theme-btn:focus-visible{outline:2px solid var(--c1);outline-offset:2px}
+.theme-btn .ti{color:var(--c1);font-size:1rem}
+@media (max-width:520px){.theme-btn{position:static;margin:4px 0 10px}.theme-btn .tl{display:inline}}
+header.top .byline{font:600 .95rem var(--f-display);color:var(--muted);font-style:italic;margin-top:.2rem}
+.block{border-radius:18px!important;box-shadow:var(--shadow);border-color:var(--line)!important}
+.mapbox{border-radius:18px!important;box-shadow:var(--shadow)}
+nav.tabs button{border-radius:99px!important}
+.chap-head{border-left:0!important;padding:14px 18px!important;border-radius:18px;background:color-mix(in srgb,var(--k) 12%,var(--panel))}
+.chap-head h2{font-weight:800}
+.note{border-radius:14px!important}
+th{background:color-mix(in srgb,var(--k) 12%,var(--panel))!important}
+table{border-radius:12px;overflow:hidden}
+.layer-stack div{border-left-color:var(--k)!important;border-radius:10px!important}
+.layer-stack div span:first-child{color:var(--k)!important}
+.btn,.vid{border-radius:14px!important}
+.opts button{border-radius:12px!important}
+.tr{border-right-color:color-mix(in srgb,var(--k) 45%,transparent)!important}
+td .tr,.vid .tr,.chap-head .tr{border:0!important}
+.watchrow{margin-top:14px;padding:12px;border-radius:14px;background:color-mix(in srgb,var(--k) 8%,var(--panel));border:1px dashed color-mix(in srgb,var(--k) 40%,transparent)}
+.watchrow.hard{background:color-mix(in srgb,var(--k) 14%,var(--panel));border-style:solid}
+.watchrow .wl{display:block;font:700 .9rem var(--f-ar);direction:rtl;text-align:right;color:var(--k);margin-bottom:8px}
+.wbtns{display:flex;flex-wrap:wrap;gap:8px}
+.watch{display:inline-flex;align-items:center;gap:8px;padding:7px 14px 7px 8px;border-radius:99px;background:var(--k);color:#fff;text-decoration:none;font:600 .88rem var(--f-display);max-width:100%;box-shadow:0 3px 10px color-mix(in srgb,var(--k) 30%,transparent)}
+.watch:hover{filter:brightness(1.08)}
+.watch:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+.watch .play{flex:0 0 26px;height:26px;border-radius:50%;background:rgba(255,255,255,.25);display:grid;place-items:center;font-size:.7rem}
+.watch small{opacity:.85;margin-left:6px;font-family:var(--f-mono);font-size:.75rem}
+.block{scroll-margin-top:84px}
+.block li,.block tr{scroll-margin-top:96px}
+.mm{background:var(--panel);border-radius:22px;box-shadow:var(--shadow);padding:22px 18px;border:1px solid var(--line)}
+.mm-head{display:flex;flex-direction:column;align-items:center;gap:4px;margin-bottom:18px}
+.mm-root{font:800 1.15rem var(--f-display);color:#fff;background:linear-gradient(135deg,var(--k),color-mix(in srgb,var(--k) 55%,var(--c2)));padding:10px 22px;border-radius:99px;box-shadow:0 6px 16px color-mix(in srgb,var(--k) 35%,transparent);text-align:center}
+.mm-hint{font:500 .85rem var(--f-ar);color:var(--muted)}
+.mm-stem{width:2px;height:16px;background:color-mix(in srgb,var(--k) 45%,transparent)}
+.mm-branches{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;position:relative;padding-top:14px;border-top:2px solid color-mix(in srgb,var(--k) 30%,transparent)}
+.mm-node{position:relative;background:color-mix(in srgb,var(--k) 7%,var(--panel));border:1.5px solid color-mix(in srgb,var(--k) 30%,transparent);border-radius:16px;padding:10px 12px 12px;min-width:0}
+.mm-node::before{content:"";position:absolute;top:-16px;left:22px;width:2px;height:16px;background:color-mix(in srgb,var(--k) 30%,transparent)}
+.mm-title{all:unset;cursor:pointer;display:flex;gap:8px;align-items:center;font:700 1rem/1.3 var(--f-display);color:var(--k)}
+.mm-title::before{content:"";flex:0 0 10px;height:10px;border-radius:50%;background:var(--k)}
+.mm-title:hover{text-decoration:underline}
+.mm-title:focus-visible,.mm-chip:focus-visible{outline:2px solid var(--k);outline-offset:2px;border-radius:8px}
+.mm-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.mm-chip{all:unset;cursor:pointer;font:600 .78rem var(--f-body);padding:3px 10px;border-radius:99px;background:var(--panel);border:1px solid color-mix(in srgb,var(--k) 25%,transparent);color:var(--fg);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mm-chip:hover{background:var(--k);color:#fff}
+.mm-hard{font-size:.7rem;margin-left:auto;color:var(--k)}
+@keyframes flash{0%{box-shadow:0 0 0 4px color-mix(in srgb,var(--k) 60%,transparent)}100%{box-shadow:var(--shadow)}}
+.flash{animation:flash 1.6s ease-out}
+li.flash,tr.flash{background:color-mix(in srgb,var(--k) 18%,transparent);border-radius:8px;animation:none;transition:background 1.5s}
+.mm:has(.mmg){padding:10px}
+.mmg-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;padding:4px 6px 8px}
+.mmg-reset{font:600 .8rem var(--f-display);border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:99px;padding:4px 12px;cursor:pointer}
+.mmg{display:block;width:100%;height:auto;border-radius:16px;background:radial-gradient(circle at 50% 45%,color-mix(in srgb,var(--k) 7%,var(--panel)),var(--panel) 70%);cursor:grab;touch-action:none}
+.mmg:active{cursor:grabbing}
+.mmg-link{stroke:color-mix(in srgb,var(--muted) 45%,transparent);stroke-width:1.1;transition:opacity .2s,stroke .2s}
+.mmg-link.lit{stroke:var(--k);stroke-width:1.8}
+.mmg-n{cursor:pointer;transition:opacity .2s;outline:none}
+.mmg-n circle{fill:color-mix(in srgb,var(--muted) 55%,var(--panel));stroke:var(--panel);stroke-width:1.5;transition:fill .2s}
+.mmg-n.t1 circle{fill:var(--k)}
+.mmg-n.t0 circle{fill:var(--k);stroke:color-mix(in srgb,var(--k) 35%,transparent);stroke-width:6}
+.mmg-n.hard circle{stroke:color-mix(in srgb,var(--k) 40%,transparent);stroke-width:5}
+.mmg-n text{fill:var(--fg);font:600 11px var(--f-body);paint-order:stroke;stroke:var(--panel);stroke-width:3px;stroke-linejoin:round;pointer-events:none}
+.mmg-n.t0 text{font:800 15px var(--f-display)}
+.mmg-n.t1 text{font:700 12.5px var(--f-display)}
+.mmg-n.t2 text{fill:var(--muted);font-size:10.5px}
+.mmg-n.lit circle{fill:var(--k)}
+.mmg-n.lit text{fill:var(--fg)}
+.mmg-n:focus-visible circle{stroke:var(--fg);stroke-width:2.5}
+.dim{opacity:.15}
+.mmg-n.t2 text{opacity:0;transition:opacity .2s}
+.mmg.zoomed .mmg-n.t2 text,.mmg-n.t2.lit text,.mmg-n.t2:hover text{opacity:1}
+.dg{margin-top:16px;border-radius:18px;padding:14px;background:color-mix(in srgb,var(--k) 5%,var(--panel));border:1.5px solid color-mix(in srgb,var(--k) 28%,transparent);min-width:0}
+.dg-h{margin-bottom:8px}
+.dg-h b{font:700 1.02rem var(--f-display)}
+.dg-tag{display:inline-block;font:700 .7rem var(--f-display);letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--k);border-radius:99px;padding:2px 9px;margin-right:8px;vertical-align:2px}
+.dg-svg{display:block;width:100%;height:auto;max-height:380px;background:var(--panel);border-radius:14px;border:1px solid var(--line)}
+.dg-ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+.dg-ctl label{font:600 .85rem var(--f-body);display:inline-flex;gap:6px;align-items:center}
+.dg-ctl select{font:inherit;padding:.3rem .4rem;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg)}
+.dg-ctl .chk{font-weight:500}
+.dg-log{margin-top:10px;min-height:1.5em}
+.dg-log p{margin:.25rem 0;padding:.45rem .7rem;border-radius:10px;background:var(--panel);border:1px solid var(--line)}
+.dg-log .tr{border:0;padding:0}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:99px;overflow:hidden;background:var(--bg)}
+.seg button{font:600 .85rem var(--f-display);border:0;background:transparent;color:var(--fg);padding:.4rem .9rem;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--k);color:#fff}
+.wire{stroke:color-mix(in srgb,var(--muted) 60%,transparent);stroke-width:2}
+.wire.bb{stroke-width:4}
+.wire.failed{stroke:var(--bad);stroke-dasharray:5 5;opacity:.6}
+.wire.blocked{stroke:var(--bad);stroke-dasharray:3 6;stroke-width:2.5}
+.dv-b{fill:var(--panel);stroke:var(--k);stroke-width:1.8}
+.dv-s{fill:color-mix(in srgb,var(--k) 22%,var(--panel))}
+.dv-a{stroke:var(--k);stroke-width:1.8;fill:none;stroke-linecap:round}
+.dv-d{fill:var(--k)}
+.dv{transition:opacity .25s}
+.dv.down{opacity:.25}
+.dv.root .dv-b{fill:color-mix(in srgb,var(--k) 25%,var(--panel));stroke-width:3}
+.dv.clickable{cursor:pointer}
+.dg-l{fill:var(--fg);font:700 11px var(--f-display)}
+.dg-s{fill:var(--muted);font:500 9.5px var(--f-mono)}
+.dg-port{fill:var(--k);font:700 11px var(--f-mono)}
+.pk rect{fill:var(--k);stroke:var(--panel);stroke-width:1.5}
+.pk path{stroke:#fff;fill:none;stroke-width:1.2}
+.pk.lost rect{fill:var(--bad)}
+.pk.bpdu rect{fill:var(--c2)}
+.bdg rect{fill:var(--good)}
+.bdg.no rect{fill:var(--bad)}
+.bdg-t{fill:#fff;font:700 10px var(--f-body);text-anchor:middle}
+.edge .hit{stroke:transparent;stroke-width:16;cursor:pointer}
+.edge .hit:focus-visible{stroke:color-mix(in srgb,var(--k) 30%,transparent)}
+.edge.broken .wire{stroke:var(--bad);stroke-dasharray:6 5}
+.cut{fill:var(--bad);font:800 14px var(--f-body)}
+.term{fill:var(--k)}
+.life{stroke:var(--line);stroke-width:2;stroke-dasharray:4 4}
+.msg line,.msg path{stroke:var(--k);stroke-width:2;fill:none}
+.msg.lost line{stroke:var(--bad);stroke-dasharray:4 3}
+.msg-t{fill:var(--fg);font:700 11px var(--f-mono);text-anchor:middle;paint-order:stroke;stroke:var(--panel);stroke-width:4px}
+.grp{fill:none;stroke:var(--c2);stroke-width:2;stroke-dasharray:4 3}
+.zone ellipse{fill:color-mix(in srgb,var(--zc) 16%,transparent);stroke:var(--zc);stroke-width:2}
+.zone circle{fill:var(--zc)}
+.zn{fill:#fff;font:800 11px var(--f-display)}
+.z0{--zc:var(--c1)}.z1{--zc:var(--c2)}.z2{--zc:var(--c3)}.z3{--zc:var(--c4)}.z4{--zc:var(--lab)}.z5{--zc:var(--bad)}
+.port rect{fill:var(--good)}
+.port.p-RP rect{fill:var(--c3)}
+.port.p-BLK rect{fill:var(--bad)}
+.dg-split{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:12px;align-items:start}
+@media (max-width:640px){.dg-split{grid-template-columns:1fr}}
+.mact{background:var(--panel);border-radius:12px}
+.mact caption{font:700 .9rem var(--f-display);text-align:left;padding:4px 2px;color:var(--k)}
+.mact tr.new td{background:color-mix(in srgb,var(--good) 25%,var(--panel));transition:background 1s}
+.mact .empty{color:var(--muted);text-align:center;font-style:italic}
+.enc{display:grid;grid-template-columns:150px minmax(0,1fr) 150px;gap:12px;align-items:center}
+@media (max-width:640px){.enc{grid-template-columns:1fr 1fr}.enc-mid{grid-column:1/-1;grid-row:1}}
+.stk{display:grid;gap:4px}
+.stk-h{font:700 .85rem var(--f-display);text-align:center;color:var(--k)}
+.lay{font:600 .8rem var(--f-body);padding:5px 8px;border-radius:8px;background:var(--panel);border:1px solid var(--line);transition:all .25s}
+.lay span{font:700 .75rem var(--f-mono);color:var(--muted);margin-right:6px}
+.lay.on{background:var(--k);color:#fff;border-color:var(--k);transform:scale(1.04)}
+.lay.on span{color:#fff}
+.enc-mid{display:grid;gap:10px;justify-items:center;text-align:center}
+.pdu-name{font:600 1rem var(--f-display)}
+.pdu{display:flex;flex-wrap:wrap;justify-content:center;gap:3px}
+.pd{font:700 .75rem var(--f-mono);padding:8px 8px;border-radius:7px;color:#fff;animation:pop .35s ease-out}
+.pd-data{background:var(--c2)}.pd-tcp{background:var(--c3)}.pd-ip{background:var(--c4)}.pd-mac{background:var(--c1)}.pd-fcs{background:var(--c1);opacity:.75}.pd-bits{background:var(--fg);color:var(--bg);letter-spacing:.1em}
+@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:none;opacity:1}}
+.enc-wire{width:100%;height:6px;border-radius:3px;background:var(--line)}
+.enc-wire.on{background:repeating-linear-gradient(90deg,var(--k) 0 10px,transparent 10px 20px);animation:mv .6s linear infinite}
+@keyframes mv{to{background-position:20px 0}}
+.bits-in{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-bottom:10px}
+.bits-in label{display:flex;gap:8px;align-items:center;font:600 .9rem var(--f-body)}
+.bits-in input[data-ip]{font-size:1rem;padding:.35rem .5rem;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg);width:11rem}
+.bits-in input[type=range]{accent-color:var(--k);width:200px;max-width:50vw}
+.bitrow{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0 10px}
+.oct{display:flex;gap:2px;align-items:flex-end;position:relative;padding-bottom:16px}
+.oct small{position:absolute;bottom:0;left:0;right:0;text-align:center;font:600 .75rem var(--f-mono);color:var(--muted)}
+.bit{width:18px;height:24px;display:grid;place-items:center;border-radius:4px;font:700 .8rem var(--f-mono)}
+.bit.n{background:var(--k);color:#fff}.bit.h{background:var(--code);color:var(--muted)}
+.bits-t th{width:42%}
+.ios-modes{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.ios-modes span{font:600 .78rem var(--f-display);padding:4px 10px;border-radius:99px;border:1px solid var(--line);background:var(--panel);display:inline-flex;gap:6px;align-items:center}
+.ios-modes small{font-family:var(--f-mono);color:var(--muted)}
+.ios-modes span.on{background:var(--k);color:#fff;border-color:var(--k)}
+.ios-modes span.on small{color:#fff}
+.ios-term{background:#1d1420;color:#f7d8e8;font:0.82rem/1.5 var(--f-mono);border-radius:12px;padding:10px 12px;height:210px;overflow:auto;margin:0;white-space:pre-wrap}
+.ios-in{display:flex;gap:6px;align-items:center;margin-top:6px;flex-wrap:wrap}
+.ios-pr{font-size:.85rem;color:var(--k);font-weight:700}
+.ios-in input{flex:1 1 180px;min-width:0;font-size:.9rem;padding:.4rem .5rem;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg)}
+.qcmd{font-size:.72rem;padding:4px 9px;border-radius:99px;border:1px solid color-mix(in srgb,var(--k) 35%,transparent);background:var(--panel);color:var(--fg);cursor:pointer}
+.qcmd:hover{background:var(--k);color:#fff}
+.ctl-l{font:600 .8rem var(--f-body);color:var(--muted);width:100%}
+.rj td{white-space:nowrap;font-size:.8rem}
+.rj i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px;background:var(--q);border:1px solid var(--line)}
+.rj i.o{--q:#e8832a}.rj i.g{--q:#3a9a4f}.rj i.b{--q:#2f6fd0}.rj i.br{--q:#7a5232}
+.rj i.w{background:repeating-linear-gradient(45deg,#fff 0 3px,var(--q) 3px 6px)}
+.ptab td[data-p]{cursor:pointer;font-weight:700;text-align:center}
+.ptab td{text-align:center}
+.ptab td.on{background:color-mix(in srgb,var(--k) 22%,var(--panel))}
+.ptab td[data-p]:hover{background:color-mix(in srgb,var(--k) 12%,var(--panel))}
+.ptab td[data-p]:focus-visible{outline:2px solid var(--k);outline-offset:-2px}
+.ptab .pt-k td{font-family:var(--f-mono)}
+.ptab-out p{margin:.3rem 0;padding:.5rem .7rem;border-radius:10px;background:var(--panel);border:1px solid var(--line)}
+.ptab-out .tr{border:0;padding:0}
+.qtabs{justify-self:start}
+.qs{display:grid;gap:22px}
+.mset{border-top:1px solid var(--line);padding-top:12px;margin-top:12px}
+.mset:first-child{border-top:0;margin-top:0;padding-top:0}
+.mgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+@media (max-width:640px){.mgrid{grid-template-columns:1fr}}
+.mrow{display:grid;grid-template-columns:minmax(0,1fr) auto 3.2rem;gap:8px;align-items:center;padding:4px 0;border-bottom:1px dashed var(--line)}
+.mrow select{font:inherit;padding:.2rem .3rem;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg)}
+.mA{font-weight:600}
+.mB{margin:0;padding-left:1.4rem}
+.mB li{padding:4px 0;border-bottom:1px dashed var(--line)}
+.mres.ok{color:var(--good);font-weight:700}.mres.no{color:var(--bad);font-weight:700}
+.mscore{font-weight:700}
+.eq{border-top:1px solid var(--line);padding:.8rem 0}
+.eq p{margin:0 0 .4rem;font-weight:600}
+.eq summary{cursor:pointer;color:var(--k);font-weight:700;font-size:.9rem}
+.ea{margin-top:.5rem;padding:.7rem .9rem;border-radius:12px;background:color-mix(in srgb,var(--k) 6%,var(--panel));border:1px solid var(--line)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ---------- study-site layout (docs style: sidebar contents, progress, calm cards) ---------- */
+:root{--bg:#fbf8fa;--line:#eee2e9;--shadow:0 1px 2px rgba(58,36,51,.05),0 4px 14px rgba(58,36,51,.04)}
+.wrap{max-width:1180px}
+body{font-size:16px;line-height:1.7}
+header.top{border-radius:0!important;background:linear-gradient(120deg,var(--hero1),var(--hero2) 70%)!important;padding-block:30px 22px}
+header.top h1{font-weight:800!important;letter-spacing:-.02em}
+nav.tabs{box-shadow:0 1px 0 var(--line)}
+nav.tabs .wrap{gap:2px;padding-block:0}
+nav.tabs button{border:0!important;background:transparent!important;color:var(--muted)!important;border-radius:0!important;padding:.85rem .9rem!important;border-bottom:3px solid transparent!important;font-weight:700}
+nav.tabs button[aria-selected="true"]{color:var(--fg)!important;border-bottom-color:var(--k)!important}
+nav.tabs button[aria-selected="true"] i{background:var(--k)!important}
+nav.tabs button:hover{color:var(--fg)!important}
+.layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:36px;align-items:start}
+.layout>section.view{grid-column:2;max-width:860px;width:100%}
+.toc{grid-column:1;grid-row:1/span 20;position:sticky;top:calc(env(safe-area-inset-top,0px) + 64px);max-height:calc(100vh - 84px);overflow:auto;padding:4px 4px 16px 0;font-size:.88rem}
+.toc-h{font:800 .72rem var(--f-display);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:6px 0 8px}
+.toc-prog{height:6px;border-radius:3px;background:var(--line);overflow:hidden;margin:4px 0 4px}
+.toc-prog i{display:block;height:100%;background:var(--k);width:0;transition:width .3s}
+.toc-pt{font-size:.78rem;color:var(--muted);margin-bottom:10px}
+.toc ol{list-style:none;margin:0;padding:0;border-left:2px solid var(--line)}
+.toc li a{display:flex;gap:8px;align-items:flex-start;padding:5px 10px;margin-left:-2px;border-left:2px solid transparent;color:var(--muted);text-decoration:none;line-height:1.35}
+.toc li a:hover{color:var(--fg)}
+.toc li a.cur{color:var(--k);border-left-color:var(--k);font-weight:700}
+.toc li a .dot{flex:0 0 14px;height:14px;border-radius:50%;border:1.5px solid var(--line);margin-top:2px;display:grid;place-items:center;font-size:9px;color:#fff}
+.toc li a.done .dot{background:var(--good);border-color:var(--good)}
+.toc li a.done .dot::after{content:"✓"}
+.toc .toc-mob{display:none}
+@media (max-width:960px){
+  .layout{grid-template-columns:1fr;gap:18px}
+  .layout>section.view{grid-column:1}
+  .toc{grid-column:1;grid-row:auto;position:static;max-height:none;padding:0}
+  .toc .toc-in{display:none}
+  .toc .toc-mob{display:block;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+  .toc .toc-mob summary{cursor:pointer;font-weight:700}
+}
+.chap-head{background:var(--panel)!important;border:1px solid var(--line);box-shadow:var(--shadow);padding:20px 22px!important;border-radius:16px!important;position:relative;overflow:hidden}
+.chap-head::before{content:"";position:absolute;inset:0 auto 0 0;width:6px;background:var(--k)}
+.chap-head h2{font-size:1.9rem!important;letter-spacing:-.02em}
+.block{border-radius:14px!important;box-shadow:var(--shadow)!important;padding:22px 24px 18px!important}
+.block>h3{font:800 1.22rem/1.35 var(--f-display);color:var(--fg);letter-spacing:-.01em;display:flex;gap:10px;align-items:center;justify-content:space-between;padding-bottom:10px;border-bottom:1px solid var(--line);margin-bottom:14px}
+.block>h3 .h3t{display:flex;gap:10px;align-items:center}
+.block>h3 .h3t::before{content:"";width:4px;height:1.1em;border-radius:2px;background:var(--k);flex:0 0 4px}
+.studied{all:unset;cursor:pointer;flex:0 0 auto;font:700 .72rem var(--f-display);padding:4px 10px;border-radius:99px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.studied:hover{border-color:var(--good);color:var(--good)}
+.studied[aria-pressed="true"]{background:var(--good);border-color:var(--good);color:#fff}
+.studied:focus-visible{outline:2px solid var(--good);outline-offset:2px}
+.block h4{font-size:1.02rem;margin-top:1.2rem}
+.block li{margin:.35rem 0}
+.tr{font-size:.93rem!important}
+table{border-radius:10px;font-size:.9rem}
+th{font-size:.85rem}
+.mm{border-radius:16px!important}
+.totop{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:6;border:1px solid var(--line);background:var(--panel);color:var(--fg);border-radius:99px;padding:8px 14px;font:700 .8rem var(--f-display);box-shadow:var(--shadow);cursor:pointer;opacity:0;pointer-events:none;transition:opacity .2s}
+.totop.show{opacity:1;pointer-events:auto}
+
+/* ---------- realistic palette: white docs look, one accent, GitHub-style neutrals ---------- */
+:root{--bg:#ffffff;--panel:#ffffff;--fg:#1f2328;--muted:#59636e;--line:#d1d9e0;--code:#f6f8fa;
+  --accent:#0969da;--c1:#0969da;--c2:#1a7f37;--c3:#bc4c00;--c4:#8250df;--lab:#0969da;--good:#1a7f37;--bad:#cf222e;
+  --note:#f6f8fa;--noteline:#d1d9e0;--hero1:#ffffff;--hero2:#ffffff;--shadow:none}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1117;--panel:#151b23;--fg:#f0f6fc;--muted:#9198a1;--line:#3d444d;--code:#151b23;
+  --accent:#4493f8;--c1:#4493f8;--c2:#3fb950;--c3:#db6d28;--c4:#ab7df8;--lab:#4493f8;--good:#3fb950;--bad:#f85149;
+  --note:#151b23;--noteline:#3d444d;--hero1:#0d1117;--hero2:#0d1117;--shadow:none;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1117;--panel:#151b23;--fg:#f0f6fc;--muted:#9198a1;--line:#3d444d;--code:#151b23;
+  --accent:#4493f8;--c1:#4493f8;--c2:#3fb950;--c3:#db6d28;--c4:#ab7df8;--lab:#4493f8;--good:#3fb950;--bad:#f85149;
+  --note:#151b23;--noteline:#3d444d;--hero1:#0d1117;--hero2:#0d1117;--shadow:none;color-scheme:dark}
+header.top{background:var(--bg)!important;border-bottom:1px solid var(--line);padding-block:26px 18px}
+header.top h1{color:var(--fg)}
+header.top h1::after{content:none!important}
+header.top .subtitle{color:var(--fg)!important;font-weight:500!important;font-size:1.05rem!important}
+header.top .byline{font-style:normal!important;color:var(--muted)}
+.theme-btn{border:1px solid var(--line)!important;box-shadow:none!important;border-radius:6px!important;font-weight:600!important}
+.theme-btn .ti{color:var(--fg)!important}
+nav.tabs{background:var(--bg)!important;border-bottom:1px solid var(--line)!important;box-shadow:none!important}
+nav.tabs button i{display:none!important}
+nav.tabs button[aria-selected="true"]{border-bottom-color:#fd8c73!important}
+.chap-head{background:transparent!important;border:0!important;box-shadow:none!important;padding:4px 0 14px!important;border-radius:0!important;border-bottom:1px solid var(--line)!important}
+.chap-head::before{content:none!important}
+.chap-head small{color:var(--muted)!important}
+.block{border:1px solid var(--line)!important;border-radius:8px!important;box-shadow:none!important}
+.block>h3 .h3t::before{content:none!important}
+.mm,.dg{border-radius:8px!important;box-shadow:none!important}
+.dg{background:var(--code)!important;border:1px solid var(--line)!important}
+.note{background:var(--code)!important;border:1px solid var(--line)!important;border-left:4px solid var(--accent)!important;border-radius:6px!important}
+.note b:first-child{color:var(--fg)!important}
+.watchrow,.watchrow.hard{background:var(--code)!important;border:1px solid var(--line)!important;border-radius:6px!important}
+.watchrow .wl{color:var(--fg)!important}
+.watch{border-radius:6px!important;box-shadow:none!important}
+.btn,.vid,.seg,.seg button,.filters button,.opts button,.qcmd,.studied{border-radius:6px!important}
+.pill{border-radius:4px!important}
+.dg-tag{border-radius:4px!important}
+.tr{border-right-color:var(--line)!important;color:var(--muted)!important}
+th{background:var(--code)!important}
+.ios-term{background:#0d1117!important;color:#e6edf3!important;border-radius:6px!important}
+.ios-modes span,.ios-modes span.on{border-radius:6px!important}
+.mmg{background:var(--panel)!important;border-radius:6px!important}
+.mm-root{background:var(--accent)!important;box-shadow:none!important}
+.layer-stack div{border-radius:4px!important}
+.toc li a.cur{color:var(--fg)!important;border-left-color:#fd8c73!important}
+.toc-prog i{background:var(--good)!important}
+.totop{border-radius:6px!important;box-shadow:none!important}
+
+/* ---------- chapter colour coding: solid colours, one per tab ---------- */
+:root{--lab:#0e7c86;--c5:#bf3989;--c6:#9a6700}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--lab:#39c5cf;--c5:#db61a2;--c6:#d29922}}
+:root[data-theme="dark"]{--lab:#39c5cf;--c5:#db61a2;--c6:#d29922}
+header.top{position:relative}
+header.top::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:4px;background:linear-gradient(90deg,var(--c1) 0 16.6%,var(--c2) 16.6% 33.3%,var(--c3) 33.3% 50%,var(--c4) 50% 66.6%,var(--c5) 66.6% 83.3%,var(--c6) 83.3%)}
+nav.tabs button i{display:inline-block!important;width:8px!important;height:8px!important;background:var(--k)!important}
+nav.tabs button[aria-selected="true"]{color:var(--k)!important;border-bottom-color:var(--k)!important}
+.chap-head{background:color-mix(in srgb,var(--k) 7%,var(--bg))!important;border:1px solid color-mix(in srgb,var(--k) 22%,var(--line))!important;border-top:4px solid var(--k)!important;border-radius:8px!important;padding:18px 20px!important}
+.chap-head small{color:var(--k)!important;font-weight:800}
+.chap-head h2{color:var(--fg)}
+.block>h3 .h3t::before{content:""!important;width:10px;height:10px;border-radius:2px;background:var(--k);flex:0 0 10px}
+.block{border-top:3px solid color-mix(in srgb,var(--k) 70%,var(--line))!important}
+th{background:color-mix(in srgb,var(--k) 9%,var(--code))!important}
+.note{border-left-color:var(--k)!important;background:color-mix(in srgb,var(--k) 5%,var(--code))!important}
+.toc li a.cur{color:var(--k)!important;border-left-color:var(--k)!important}
+.toc-prog i{background:var(--k)!important}
+.pill{color:var(--k);border-color:color-mix(in srgb,var(--k) 50%,transparent);background:color-mix(in srgb,var(--k) 8%,transparent)}
+.dg{background:color-mix(in srgb,var(--k) 4%,var(--code))!important;border-color:color-mix(in srgb,var(--k) 25%,var(--line))!important}
+.watchrow,.watchrow.hard{background:color-mix(in srgb,var(--k) 5%,var(--code))!important}
+.layer-stack div{border-left-color:var(--k)!important}
+.filters button[aria-pressed="true"]{background:var(--k)!important;color:#fff!important;border-color:var(--k)!important}
+.seg button[aria-pressed="true"]{background:var(--k)!important}
+.studied{font-size:.78rem!important;padding:6px 12px!important;border:1.5px solid var(--line)!important}
+.studied[aria-pressed="true"]{background:var(--good)!important;border-color:var(--good)!important;color:#fff!important}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);background:var(--fg);color:var(--bg);font:600 .88rem var(--f-body);padding:10px 16px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:20;max-width:calc(100vw - 32px)}
+.toast.show{opacity:1;transform:translateX(-50%)}
+.icg{display:grid;gap:10px;margin:.6rem 0}
+.icg-h{font:800 .76rem var(--f-display);color:var(--k);text-transform:uppercase;letter-spacing:.04em}
+.icbtn{justify-self:start;text-decoration:none;display:inline-block;margin-top:4px}
+.icg-h .tr{display:inline!important;border:0!important;padding:0 0 0 8px!important;margin:0}
+.icgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.icc{margin:0;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--panel);display:flex;flex-direction:column}
+.icimg{background:#fff;height:96px;display:grid;place-items:center;border-bottom:1px solid var(--line);padding:8px}
+.icimg img{max-height:80px;max-width:100%;object-fit:contain}
+.icc figcaption{padding:8px 10px;display:grid;gap:2px;font-size:.82rem;line-height:1.4}
+.icc figcaption b{font-size:.9rem}
+.icc figcaption .tr{border:0!important;padding:0!important;font-size:.8rem!important}
+.studied-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:18px;padding-top:12px;border-top:1px dashed var(--line);font:600 .88rem var(--f-body);color:var(--muted)}
+.studied-row .tr{display:inline!important;border:0!important;padding:0 0 0 8px!important}
+.h3done{display:none;flex:0 0 auto;font:700 .72rem var(--f-display);color:var(--good);border:1px solid var(--good);border-radius:99px;padding:2px 9px}
+.block>h3.isdone .h3done{display:inline-block}
+
+/* ---------- Obsidian-style graph look (always dark canvas) ---------- */
+.mm{background:#1b1820!important;border-color:#2d2933!important}
+.mm .mm-hint,.mmg-bar .mm-hint{color:#a29ea8!important}
+.mmg-reset{background:#26222b!important;color:#d9d6dd!important;border-color:#3a3540!important}
+.mmg{background:radial-gradient(ellipse at 50% 45%,#2a2530 0%,#1b1820 70%)!important;border:0!important}
+.mmg-sky circle{fill:#d8d4dd}
+.mmg-link{stroke:rgba(225,220,230,.16)!important;stroke-width:1!important}
+.mmg-link.lit{stroke:var(--k)!important;stroke-width:1.6!important;opacity:1}
+.mmg-n circle{fill:#9d99a3!important;stroke:none!important}
+.mmg-n.t1 circle{fill:#cfccd4!important}
+.mmg-n.t0 circle{fill:#ece9ef!important;stroke:rgba(236,233,239,.18)!important;stroke-width:8!important}
+.mmg-n.hard circle{stroke:var(--k)!important;stroke-width:2!important}
+.mmg-n text{fill:#b9b5bf!important;stroke:#1b1820!important;stroke-width:3px!important;font-weight:500!important}
+.mmg-n.t0 text{fill:#f1eef4!important;font-size:13px!important;font-weight:700!important}
+.mmg-n.t1 text{fill:#d6d3db!important;font-size:11px!important;font-weight:600!important}
+.mmg-n.t2 text{font-size:9.5px!important}
+.mmg-n.lit circle{fill:var(--k)!important}
+.mmg-n.lit text{fill:#fff!important}
+.mmg-n:hover circle{filter:drop-shadow(0 0 6px var(--k))}
+.mmg .dim{opacity:.12}
+.mmg-n.t2 circle{fill:#8f8a96!important}
+.mmg-link{stroke:rgba(225,220,230,.13)!important}
+
+/* ---------- flower mind map ---------- */
+.flowers .stem{fill:none;stroke:#4f8a5b;stroke-width:2.2;opacity:.75;transition:opacity .2s}
+.flowers .stem.lit{stroke:#7cc48a;stroke-width:3;opacity:1}
+.flowers .leaf{fill:#4f8a5b;opacity:.7}
+.flowers .rpetal{fill:var(--k);opacity:.35}
+.flowers .rcenter{fill:#f4c95d}
+.flowers .rlabel{fill:#f1eef4;font:800 14px var(--f-display);paint-order:stroke;stroke:#1b1820;stroke-width:4px}
+.fl-root{cursor:pointer}
+.flower{cursor:grab;transition:opacity .2s}
+.flower.dim{opacity:.25}
+.flower .petal{fill:var(--k);opacity:.45;stroke:#1b1820;stroke-width:1}
+.flower .petal.real{opacity:.9;cursor:pointer}
+.flower .petal.real:hover,.flower .petal.real:focus{fill:#ffffff;opacity:1;outline:none}
+.flower .center{fill:#f4c95d;stroke:#1b1820;stroke-width:1.5;cursor:pointer}
+.flower .center:hover,.flower .center:focus{fill:#ffe08a;outline:none}
+.flower.hard .center{fill:#ff9f6e}
+.flower .flabel{fill:#e2dfe6;font:600 11.5px var(--f-body);paint-order:stroke;stroke:#1b1820;stroke-width:3.5px;pointer-events:none}
+.flower .ptip{fill:#fff;font:700 11px var(--f-body);paint-order:stroke;stroke:#1b1820;stroke-width:4px;pointer-events:none}
+
+/* ---------- data structures additions ---------- */
+:root{--c7:#953800}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--c7:#f0883e}}
+:root[data-theme="dark"]{--c7:#f0883e}
+.hub-back{display:inline-block;margin-bottom:6px;font:600 .88rem var(--f-body);color:var(--muted);text-decoration:none}
+.hub-back:hover{color:var(--fg)}
+pre.cli{white-space:pre;tab-size:2}
+.ea pre.cli{margin:.4rem 0;font-size:.8rem}
+.cells{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.cell{width:62px;height:62px;border:2px solid var(--line);border-radius:8px;display:grid;place-items:center;position:relative;background:var(--panel);transition:all .25s}
+.cells.small .cell{width:46px;height:46px}
+.cell span{font:700 1rem var(--f-mono)}
+.cell small{position:absolute;bottom:-18px;font:600 .7rem var(--f-mono);color:var(--muted)}
+.cell.used{border-color:var(--k);background:color-mix(in srgb,var(--k) 10%,var(--panel))}
+.cell.new{background:var(--good);color:#fff;border-color:var(--good)}
+.cell.move{background:color-mix(in srgb,var(--k) 35%,var(--panel))}
+.cell.src{outline:2px dashed var(--k)}
+.cell.look{outline:3px solid var(--c3)}
+.meta{margin-top:24px;font:500 .9rem var(--f-mono);color:var(--muted)}
+.meta b{color:var(--fg)}
+.ll{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:26px 6px 8px;overflow-x:auto}
+.node{position:relative;display:flex;border:2px solid var(--k);border-radius:8px;overflow:hidden;background:var(--panel);transition:all .25s}
+.node .d{padding:8px 12px;font:700 1rem var(--f-mono)}
+.node .n{padding:8px 6px;font:600 .62rem var(--f-mono);color:var(--muted);border-left:1px solid var(--line);display:grid;place-items:center}
+.node.d2 .n:first-child{border-left:0;border-right:1px solid var(--line)}
+.node.new{background:color-mix(in srgb,var(--good) 25%,var(--panel));border-color:var(--good)}
+.node.look{outline:3px solid var(--c3)}
+.node.del{background:color-mix(in srgb,var(--bad) 25%,var(--panel));border-color:var(--bad);opacity:.7}
+.ptr{position:absolute;top:-20px;left:0;font:700 .68rem var(--f-mono);color:var(--k);font-style:normal}
+.node{overflow:visible}
+.ptr.t{left:auto;right:0;color:var(--c3)}
+.arr{font:700 1.1rem var(--f-mono);color:var(--muted)}
+.nul,.llempty{font:600 .85rem var(--f-mono);color:var(--muted)}
+.stk2{display:grid;gap:4px;max-width:280px}
+.scell{display:grid;grid-template-columns:40px 1fr 70px;align-items:center;gap:6px;border:2px solid var(--line);border-radius:6px;padding:6px 8px;background:var(--panel)}
+.scell small{font:600 .7rem var(--f-mono);color:var(--muted)}
+.scell span{font:700 1rem var(--f-mono)}
+.scell em{font:700 .75rem var(--f-mono);color:var(--k);font-style:normal}
+.scell.used{border-color:var(--k);background:color-mix(in srgb,var(--k) 10%,var(--panel))}
+.scell.new{background:var(--good);color:#fff;border-color:var(--good)}
+.bo-l{display:flex;gap:8px;align-items:center;font:600 .9rem var(--f-body);margin-bottom:8px}
+.bo-l input{accent-color:var(--k);width:220px;max-width:55vw}
+.bo{display:grid;gap:6px}
+.bo-row{display:grid;grid-template-columns:70px minmax(0,1fr) 90px;gap:8px;align-items:center}
+.bo-k{font:700 .85rem var(--f-mono)}
+.bo-bar{height:16px;background:var(--code);border-radius:4px;overflow:hidden}
+.bo-bar i{display:block;height:100%;background:var(--k);transition:width .25s}
+.bo-v{font:600 .8rem var(--f-mono);color:var(--muted)}
+.bo-a{grid-column:2/-1;font:500 .78rem var(--f-ar);color:var(--muted);direction:rtl;text-align:right;margin-top:-4px}
+.dg-ctl input[type=number]{width:5.5rem;font:inherit;padding:.3rem .4rem;border-radius:6px;border:1px solid var(--line);background:var(--bg);color:var(--fg)}
+details.ans{margin:.3rem 0 .9rem;border:1px solid var(--line);border-radius:6px;padding:.35rem .7rem;background:var(--panel)}
+details.ans summary{cursor:pointer;font:700 .85rem var(--f-body);color:var(--k)}
+details.ans pre.cli{margin:.4rem 0}
+details.ans .tr{border:0!important;padding:0!important}
+.chapvid{border:1px solid color-mix(in srgb,var(--k) 35%,var(--line));border-left:5px solid var(--k);border-radius:8px;padding:12px 14px;background:color-mix(in srgb,var(--k) 6%,var(--panel))}
+.cv-h{font:800 1rem var(--f-ar);direction:rtl;text-align:right;color:var(--fg);margin-bottom:8px}
+.cv-h span{display:block;font:500 .85rem var(--f-ar);color:var(--muted)}
+.cv-b{display:flex;flex-wrap:wrap;gap:8px}
+.cvid{display:flex;gap:10px;align-items:center;flex:1 1 260px;min-width:0;padding:10px 12px;border-radius:8px;background:var(--k);color:#fff;text-decoration:none}
+.cvid:hover{filter:brightness(1.08)}
+.cvid:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+.cvid .play{flex:0 0 34px;height:34px;border-radius:50%;background:rgba(255,255,255,.25);display:grid;place-items:center}
+.cvid b{display:block;font:700 .92rem var(--f-ar)}
+.cvid small{font:600 .76rem var(--f-body);opacity:.9}
+.chap-head:has(.doodle){padding-right:190px!important}
+.doodle{position:absolute;right:16px;top:50%;transform:translateY(-50%) rotate(-3deg);height:150px;width:auto;max-width:170px;object-fit:contain;pointer-events:none;mix-blend-mode:multiply}
+:root[data-theme="dark"] .doodle{filter:invert(1);mix-blend-mode:screen}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .doodle{filter:invert(1);mix-blend-mode:screen}}
+@media (max-width:640px){.chap-head:has(.doodle){padding-right:96px!important}.doodle{height:76px;max-width:84px;right:10px}}
+/*THEME*/
+:root{--bg:#faf9fb;--panel:#ffffff;--fg:#231d2a;--muted:#655c70;--line:#e0dce5;--code:#f5f3f7;--accent:#4a2c6d;--c1:#4a2c6d;--c2:#6a3e84;--c3:#5b4294;--c4:#653d71;--lab:#483e79;--c5:#7a5496;--c6:#3a2a55;--c7:#714b81;--c8:#5f5190;--good:#3f7f55;--bad:#b5483f;--note:#f5f2f7;--noteline:#d6cede;--hero1:#faf9fb;--hero2:#faf9fb;--shadow:none;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141118;--panel:#1e1a23;--fg:#edebf0;--muted:#ada5b6;--line:#3d3645;--code:#1e1a23;--accent:#b195d0;--c1:#c4b0db;--c2:#bd9fce;--c3:#a493ca;--c4:#c7acd0;--lab:#ada6ce;--c5:#aa91bd;--c6:#cbc1de;--c7:#baa1c4;--c8:#a096c0;--good:#7cc49a;--bad:#e9877c;--note:#231e29;--noteline:#473d51;--hero1:#141118;--hero2:#141118;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141118;--panel:#1e1a23;--fg:#edebf0;--muted:#ada5b6;--line:#3d3645;--code:#1e1a23;--accent:#b195d0;--c1:#c4b0db;--c2:#bd9fce;--c3:#a493ca;--c4:#c7acd0;--lab:#ada6ce;--c5:#aa91bd;--c6:#cbc1de;--c7:#baa1c4;--c8:#a096c0;--good:#7cc49a;--bad:#e9877c;--note:#231e29;--noteline:#473d51;--hero1:#141118;--hero2:#141118;color-scheme:dark}
+.mm{background:#1c1622!important;border-color:#322a3c!important}
+.mmg{background:radial-gradient(ellipse at 50% 45%,#2d2339 0%,#19141f 70%)!important}
+.ios-term{background:#1c1622!important;color:#edebf0!important}
+.view code{overflow-wrap:anywhere}
+/*/THEME*/
+.mx{border-collapse:separate;border-spacing:0;border-left:2px solid var(--fg);border-right:2px solid var(--fg);border-radius:6px;margin:4px 0;font:600 .95rem var(--f-mono)}
+.mx td{padding:5px 10px;text-align:center;min-width:2.2em;border:0!important;background:transparent!important}
+.mx td.bar{border-left:1.5px dashed var(--muted)!important}
+.mx td.hl{background:color-mix(in srgb,var(--k) 22%,transparent)!important;border-radius:4px}
+.mx td.hl2{background:var(--k)!important;color:#fff;border-radius:4px}
+.mx td.dim{opacity:.35}
+.mxrow{display:flex;flex-wrap:wrap;align-items:center;gap:10px;overflow-x:auto}
+.mxrow .op{font:700 1.3rem var(--f-mono);color:var(--muted)}
+/*ART*/
+.art.doodle{filter:none!important;mix-blend-mode:normal!important;transform:translateY(-50%)!important;height:112px;width:150px;max-width:150px}
+.art .s{fill:none;stroke:var(--k,var(--c1));stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.art .f{fill:color-mix(in srgb,var(--k,var(--c1)) 30%,transparent);stroke:var(--k,var(--c1));stroke-width:2.2;stroke-linejoin:round}
+.art .d{fill:var(--k,var(--c1))}
+.art .dash{stroke-dasharray:4 3}
+.art .t{fill:var(--k,var(--c1));stroke:none;font:700 11px var(--f-mono,monospace)}
+.art .t.s2{fill:var(--muted);font-weight:500}
+.art .t.big{font-size:17px}.art .t.huge{font-size:64px;font-weight:400}
+.chap-head{background:linear-gradient(120deg,color-mix(in srgb,var(--k) 14%,var(--panel)),color-mix(in srgb,var(--k) 4%,var(--panel)))!important;border-color:color-mix(in srgb,var(--k) 30%,var(--line))!important}
+.block>h3{color:color-mix(in srgb,var(--k) 75%,var(--fg))}
+@media (max-width:640px){.art.doodle{height:72px;width:96px}}
+.card .art.doodle{position:absolute;right:12px;bottom:12px;top:auto;transform:none!important;height:84px;width:112px}
+/*/ART*/
+</style>
+
+<header class="top"><div class="wrap">
+  <a class="hub-back" href="../">← All subjects</a>
+  <h1>Linear Algebra</h1>
+  <p class="ar subtitle">ملخص أم سميحة لتجنب الفضيحة</p>
+  <p class="byline">made by Yomna</p>
+  <button class="theme-btn" type="button" id="themeBtn" aria-label="Switch light or dark mode"><span class="ti" aria-hidden="true">☀</span><span class="tl">Light mode</span></button>
+  <script>
+  (function(){
+    const root=document.documentElement,btn=document.getElementById('themeBtn');
+    try{const t=localStorage.getItem('netTheme');if(t==='light'||t==='dark')root.dataset.theme=t;}catch(e){}
+    const isDark=()=>root.dataset.theme?root.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+    const paint=()=>{const d=isDark();btn.querySelector('.ti').textContent=d?'☀':'☾';btn.querySelector('.tl').textContent=d?'Light mode':'Dark mode';};
+    btn.addEventListener('click',()=>{const next=isDark()?'light':'dark';root.dataset.theme=next;try{localStorage.setItem('netTheme',next);}catch(e){}paint();});
+    matchMedia('(prefers-color-scheme: dark)').addEventListener('change',paint);
+    paint();
+  })();
+  </script>
+</div></header>
+
+<nav class="tabs" aria-label="Sections"><div class="wrap" role="tablist">
+  <button role="tab" data-v="ch1" style="--k:var(--c1)"><i></i>Matrices</button>
+  <button role="tab" data-v="ch2" style="--k:var(--c2)"><i></i>Systems &amp; EROs</button>
+  <button role="tab" data-v="ch3" style="--k:var(--c3)"><i></i>Gaussian Elimination</button>
+  <button role="tab" data-v="ch4" style="--k:var(--c4)"><i></i>Inverse</button>
+  <button role="tab" data-v="ch5" style="--k:var(--lab)"><i></i>Determinants</button>
+  <button role="tab" data-v="lab" style="--k:var(--c7)"><i></i>Problem Lab</button>
+  <button role="tab" data-v="quiz" style="--k:var(--c5)"><i></i>Quiz</button>
+  <button role="tab" data-v="review" style="--k:var(--c6)"><i></i>Night Before</button>
+</div></nav>
+
+<main class="wrap layout">
+<aside class="toc" id="toc" aria-label="On this page"></aside>
+<!-- ================= CH1 MATRICES ================= -->
+<section class="view" id="v-ch1" style="--k:var(--c1)">
+  <div class="chap-head"><svg class="doodle art" viewBox="0 0 160 120" role="img" aria-label="a 3 by 3 matrix"><path class="s" d="M14 20h-4v70h4M84 20h4v70h-4"/><text class="t" x="27.0" y="34" text-anchor="middle">2</text><text class="t" x="49.0" y="34" text-anchor="middle">5</text><text class="t" x="71.0" y="34" text-anchor="middle">1</text><text class="t" x="27.0" y="56" text-anchor="middle">0</text><text class="t" x="49.0" y="56" text-anchor="middle">-1</text><text class="t" x="71.0" y="56" text-anchor="middle">4</text><text class="t" x="27.0" y="78" text-anchor="middle">3</text><text class="t" x="49.0" y="78" text-anchor="middle">7</text><text class="t" x="71.0" y="78" text-anchor="middle">2</text><text class="t big" x="104" y="58">3×3</text><text class="t" x="96" y="84">aᵢⱼ</text></svg><small>Chapter 1 · Section 1.1 · Lecture 1</small><h2>Matrices</h2><p>What a matrix is, equality, addition, subtraction, scalar multiplication, special matrices, multiplication, powers, transpose and symmetric matrices.</p><span class="tr">يعني إيه مصفوفة، والتساوي، والجمع والطرح، والضرب في رقم، والمصفوفات الخاصة، والضرب، والأُسس، والـ transpose، والمصفوفة المتماثلة.</span></div>
+  <div class="chapvid"><div class="cv-h">🎬 شرح بالعربي (فيديو)<span>اتفرجي عليه الأول، وبعدين ذاكري من الملخص تحت.</span></div><div class="cv-b"><a class="cvid" href="https://www.youtube.com/watch?v=VhGEjEduOE4" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span><b>العمليات على المصفوفات</b><small>17:00 · Dr. Ahmed Hagag</small></span></a><a class="cvid" href="https://www.youtube.com/watch?v=h9LC7bYkOfI" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span><b>ضرب المصفوفات</b><small>35:42 · Dr. Ahmed Hagag</small></span></a><a class="cvid" href="https://www.youtube.com/watch?v=Hs5N8BMdKXU" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span><b>الـ Transpose</b><small>15:48 · Dr. Ahmed Hagag</small></span></a></div></div>
+  <div class="mm" data-map></div>
+
+  <div class="block">
+    <h3>1.1 What is a matrix?</h3>
+    <ul>
+      <li>An <b>m × n matrix</b> is a rectangular array of real numbers with <b>m rows</b> and <b>n columns</b>. Its <b>size</b> is "m by n".<span class="tr">المصفوفة جدول أرقام: m صفوف و n أعمدة. الحجم بيتقري "m في n"، والصفوف دايماً الأول.</span></li>
+      <li>The entry in row i and column j is written <b>a<sub>ij</sub></b>, and we write A = [a<sub>ij</sub>].<span class="tr">العنصر a<sub>ij</sub>: ‏i رقم الصف و j رقم العمود. مثلاً a<sub>23</sub> = العنصر في الصف التاني والعمود التالت.</span></li>
+    </ul>
+<pre class="cli">A = | 2  5  1 |      size 2 × 3   (2 rows, 3 columns)
+    | 0 -1  4 |      a₁₂ = 5,  a₂₃ = 4,  a₂₁ = 0</pre>
+    <div class="note"><b>خلي بالك:</b> الحجم بيتكتب صفوف × أعمدة. مصفوفة 3 × 2 يعني 3 صفوف وعمودين، ومش زي 2 × 3.</div>
+  </div>
+
+  <div class="block">
+    <h3>1.2 Equality of matrices</h3>
+    <ul>
+      <li>A = B if and only if they have the <b>same size</b> and every pair of <b>corresponding entries</b> is equal (a<sub>ij</sub> = b<sub>ij</sub>).<span class="tr">المصفوفتين يتساووا لو نفس الحجم وكل عنصر يساوي اللي في نفس مكانه.</span></li>
+    </ul>
+    <details class="ans"><summary>Lecture example: find x and y</summary><pre class="cli">A = | x    4 |     B = | 5    4 |     A = B
+    | 2    3 |         | x+y  3 |
+a₁₁: x = 5
+a₂₁: 2 = x + y  →  2 = 5 + y  →  y = −3</pre><span class="tr">بنساوي كل عنصر باللي قصاده: أول عنصر بيدّينا x = 5، والعنصر اللي تحته 2 = x + y، نعوّض x فتطلع y = −3.</span></details>
+  </div>
+
+  <div class="block">
+    <h3>1.3 Addition, subtraction and scalar multiplication</h3>
+    <ul>
+      <li><b>Addition / subtraction:</b> only for matrices of the <b>same size</b>; add (or subtract) the corresponding entries: (A + B)<sub>ij</sub> = a<sub>ij</sub> + b<sub>ij</sub>.<span class="tr">الجمع والطرح لازم نفس الحجم، وبنجمع كل عنصر مع اللي قصاده.</span></li>
+      <li><b>Scalar multiplication:</b> cA multiplies <b>every entry</b> by the number c. −A = (−1)A.<span class="tr">الضرب في رقم: نضرب كل العناصر في الرقم ده.</span></li>
+    </ul>
+    <details class="ans"><summary>Lecture examples</summary><pre class="cli">A = | 2  5 |    B = | 3  2 |
+    |-1  0 |        | 1  4 |
+A + B = | 2+3   5+2 | = | 5  7 |
+        |-1+1   0+4 |   | 0  4 |
+A − B = | 2−3   5−2 | = |-1  3 |
+        |-1−1   0−4 |   |-2 -4 |
+3A    = | 6  15 |
+        |-3   0 |</pre><span class="tr">كل عنصر مع اللي في نفس مكانه. والضرب في 3 بيتعمل لكل العناصر من غير استثناء.</span></details>
+    <h4>Properties of addition (Theorem 1.1.5) and scalar multiplication (1.1.6)</h4>
+    <div class="tw"><table>
+      <tr><th>Property</th><th>Name</th><th class="ar">بالعربي</th></tr>
+      <tr><td>A + B = B + A</td><td>Commutative</td><td class="ar">الترتيب مش فارق في الجمع</td></tr>
+      <tr><td>(A + B) + C = A + (B + C)</td><td>Associative</td><td class="ar">التجميع مش فارق</td></tr>
+      <tr><td>A + 0 = A</td><td>Zero matrix = additive identity</td><td class="ar">مصفوفة الأصفار زي الصفر</td></tr>
+      <tr><td>A + (−A) = 0</td><td>Additive inverse</td><td class="ar">المعكوس الجمعي</td></tr>
+      <tr><td>c(A + B) = cA + cB ; (c + d)A = cA + dA</td><td>Distributive</td><td class="ar">التوزيع</td></tr>
+      <tr><td>(cd)A = c(dA) ; 1A = A</td><td>—</td><td class="ar"></td></tr>
+    </table></div>
+  </div>
+
+  <div class="block">
+    <h3>1.4 Special matrices</h3>
+    <div class="tw"><table>
+      <tr><th>Matrix</th><th>Meaning</th><th>Example</th><th class="ar">بالعربي</th></tr>
+      <tr><td><b>Zero matrix</b> 0</td><td>All entries are 0</td><td>[0 0; 0 0]</td><td class="ar">كل عناصرها أصفار</td></tr>
+      <tr><td><b>Square matrix</b></td><td>Number of rows = number of columns (n × n, "order n")</td><td>A<sub>2×2</sub>, A<sub>3×3</sub></td><td class="ar">عدد الصفوف = عدد الأعمدة</td></tr>
+      <tr><td><b>Identity</b> I<sub>n</sub></td><td>Square, 1s on the main diagonal, 0 elsewhere</td><td>[1 0; 0 1]</td><td class="ar">واحايد على القطر الرئيسي وأصفار في الباقي</td></tr>
+      <tr><td><b>Upper triangular</b></td><td>All entries <b>below</b> the main diagonal are 0</td><td>[a d e; 0 b f; 0 0 c]</td><td class="ar">اللي تحت القطر أصفار</td></tr>
+      <tr><td><b>Lower triangular</b></td><td>All entries <b>above</b> the main diagonal are 0</td><td>[a 0 0; d b 0; e f c]</td><td class="ar">اللي فوق القطر أصفار</td></tr>
+      <tr><td><b>Symmetric</b></td><td>A = Aᵀ (mirror around the diagonal)</td><td>[1 2; 2 5]</td><td class="ar">متماثلة حوالين القطر</td></tr>
+      <tr><td><b>Skew-symmetric</b></td><td>A = −Aᵀ (diagonal must be 0)</td><td>[0 3; −3 0]</td><td class="ar">ضد المتماثلة</td></tr>
+    </table></div>
+    <span class="tr">القطر الرئيسي = العناصر a<sub>11</sub>، a<sub>22</sub>، a<sub>33</sub>… (من فوق شمال لتحت يمين).</span>
+  </div>
+
+  <div class="block">
+    <h3>1.5 Matrix multiplication</h3>
+    <ul>
+      <li>AB is defined only when the <b>number of columns of A = number of rows of B</b>: A<sub>m×k</sub> · B<sub>k×n</sub> = (AB)<sub>m×n</sub>.<span class="tr">شرط الضرب: أعمدة الأولى = صفوف التانية. والناتج: صفوف الأولى × أعمدة التانية.</span></li>
+      <li>Entry (i, j) of AB = (row i of A) · (column j of B) = a<sub>i1</sub>b<sub>1j</sub> + a<sub>i2</sub>b<sub>2j</sub> + … + a<sub>ik</sub>b<sub>kj</sub>.<span class="tr">كل عنصر في الناتج = صف من الأولى "في" عمود من التانية: نضرب أول في أول وتاني في تاني… ونجمع.</span></li>
+      <li>In general <b>AB ≠ BA</b> (not commutative). Sometimes BA does not even exist.<span class="tr">الضرب مش تبديلي: AB غالباً مش زي BA، وأحياناً BA مش موجودة أصلاً.</span></li>
+      <li>Properties (Theorem 1.1.8): (AB)C = A(BC); A(B + C) = AB + AC; (B + C)A = BA + CA; α(AB) = (αA)B = A(αB); AIₙ = A and IₘA = A.<span class="tr">التجميع والتوزيع شغالين، والـ I زي الواحد في الضرب.</span></li>
+    </ul>
+    <details class="ans"><summary>Lecture example 1: A (2×3) times B (3×2)</summary><pre class="cli">A = | 2  3  5 |      B = | 3  4 |
+    | 1  0  4 |          |-1  2 |
+                         | 0  3 |
+2×3 · 3×2 → 2×2 ✓
+AB₁₁ = 2·3 + 3·(−1) + 5·0 = 6 − 3 + 0 = 3
+AB₁₂ = 2·4 + 3·2   + 5·3 = 8 + 6 + 15 = 29
+AB₂₁ = 1·3 + 0·(−1) + 4·0 = 3
+AB₂₂ = 1·4 + 0·2   + 4·3 = 4 + 0 + 12 = 16
+AB = | 3  29 |
+     | 3  16 |</pre><span class="tr">الصف الأول من A مع العمود الأول من B: ‏2×3 و 3×(−1) و 5×0 ونجمع = 3. وهكذا لكل خانة.</span></details>
+    <details class="ans"><summary>Lecture example 2: AB exists but BA does not</summary><pre class="cli">A = | 5  0 |    B = | 2 |
+    | 2  3 |        | 4 |      A: 3×2,  B: 2×1
+    | 1 -1 |
+AB (3×2 · 2×1 = 3×1):  | 5·2 + 0·4 |   | 10 |
+                       | 2·2 + 3·4 | = | 16 |
+                       | 1·2 −1·4  |   | -2 |
+BA: 2×1 · 3×2 → 1 ≠ 3 → does NOT exist</pre><span class="tr">في BA أعمدة B (1) مش زي صفوف A (3)، فمينفعش نضرب. وده مثال إن الضرب مش تبديلي.</span></details>
+    <div class="dg" data-dg="matmul"></div>
+  </div>
+
+  <div class="block">
+    <h3>1.6 Powers of a square matrix</h3>
+    <ul>
+      <li>For a square matrix A: A⁰ = Iₙ, A¹ = A, A² = AA, A³ = AAA, and A<sup>k+1</sup> = A<sup>k</sup>A.<span class="tr">الأُس للمصفوفة المربعة بس: A² يعني A × A (ضرب مصفوفات، مش تربيع كل عنصر).</span></li>
+      <li>A<sup>m</sup>A<sup>k</sup> = A<sup>m+k</sup> and (A<sup>m</sup>)<sup>k</sup> = A<sup>mk</sup>.<span class="tr">نفس قواعد الأُسس العادية.</span></li>
+    </ul>
+    <details class="ans"><summary>Example: A² for A = [1 2; 3 4]</summary><pre class="cli">A² = | 1 2 | | 1 2 | = | 1+6   2+8  | = |  7  10 |
+     | 3 4 | | 3 4 |   | 3+12  6+16 |   | 15  22 |   (NOT [1 4; 9 16])</pre><span class="tr">فخ مشهور: A² مش إننا نربّع كل عنصر.</span></details>
+  </div>
+
+  <div class="block">
+    <h3>1.7 Transpose</h3>
+    <ul>
+      <li>The <b>transpose</b> Aᵀ of an m × n matrix is the n × m matrix whose <b>columns are the rows of A</b>: (Aᵀ)<sub>ij</sub> = a<sub>ji</sub>.<span class="tr">الـ transpose: الصفوف بتبقى أعمدة. مصفوفة 3 × 2 تبقى 2 × 3.</span></li>
+    </ul>
+<pre class="cli">A = | 3  2 |        Aᵀ = | 3  5  0 |
+    | 5  4 |   3×2       | 2  4  1 |   2×3
+    | 0  1 |</pre>
+    <div class="tw"><table>
+      <tr><th>Rule (Theorem 1.1.13)</th><th class="ar">بالعربي</th></tr>
+      <tr><td>(Aᵀ)ᵀ = A</td><td class="ar">مرتين يرجّعها زي ما كانت</td></tr>
+      <tr><td>(A + B)ᵀ = Aᵀ + Bᵀ</td><td class="ar">transpose الجمع = جمع الـ transposes</td></tr>
+      <tr><td>(cA)ᵀ = cAᵀ</td><td class="ar">الرقم يطلع برّه</td></tr>
+      <tr><td>(AB)ᵀ = BᵀAᵀ</td><td class="ar">في الضرب الترتيب بيتعكس</td></tr>
+    </table></div>
+    <details class="ans"><summary>Lecture example: check (A + B)ᵀ = Aᵀ + Bᵀ</summary><pre class="cli">A = | 2  1  0 |    B = | 0 -1  2 |
+    | 2  3 -1 |        | 3  4  5 |
+A + B = | 2  0  2 |      (A + B)ᵀ = | 2  5 |
+        | 5  7  4 |                 | 0  7 |
+                                    | 2  4 |
+Aᵀ + Bᵀ = | 2  2 | + | 0  3 | = | 2  5 |
+          | 1  3 |   |-1  4 |   | 0  7 |
+          | 0 -1 |   | 2  5 |   | 2  4 |   ✓ L.H.S = R.H.S</pre><span class="tr">حسبنا الطرف الشمال والطرف اليمين لوحدهم، وطلعوا نفس المصفوفة.</span></details>
+    <ul>
+      <li>Theorem 1.1.15: AAᵀ is always symmetric; B + Bᵀ is symmetric for any square B.<span class="tr">AAᵀ دايماً متماثلة، و B + Bᵀ متماثلة.</span></li>
+    </ul>
+  </div>
+
+  <div class="block essay">
+    <h3>Expected essay questions</h3>
+    <details><summary>Define a matrix, its size and the entry aᵢⱼ. When are two matrices equal?</summary><p>An m × n matrix is a rectangular array of real numbers with m rows and n columns; aᵢⱼ is the entry in row i, column j. A = B iff same size and aᵢⱼ = bᵢⱼ for all i, j.<span class="tr">التعريف + شرط التساوي.</span></p></details>
+    <details><summary>When is the product AB defined? What is its size? Is multiplication commutative?</summary><p>When columns of A = rows of B; A(m×k)·B(k×n) is m×n. Not commutative: AB ≠ BA in general (example: A 3×2, B 2×1, AB exists, BA does not).<span class="tr">الشرط + الحجم + مثال.</span></p></details>
+    <details><summary>Define the transpose and state its properties.</summary><p>Aᵀ has the rows of A as columns. (Aᵀ)ᵀ = A, (A+B)ᵀ = Aᵀ+Bᵀ, (cA)ᵀ = cAᵀ, (AB)ᵀ = BᵀAᵀ.<span class="tr">التعريف + الأربع خواص.</span></p></details>
+    <details><summary>Define identity, upper/lower triangular, symmetric and skew-symmetric matrices with examples.</summary><p>From the table in 1.4.<span class="tr">الجدول.</span></p></details>
+  </div>
+</section>
+
+<!-- ================= CH2 SYSTEMS + EROs ================= -->
+<section class="view" id="v-ch2" style="--k:var(--c2)" hidden>
+  <div class="chap-head"><svg class="doodle art" viewBox="0 0 160 120" role="img" aria-label="two lines crossing at the solution"><path class="s" d="M18 104L146 16"/><path class="s" d="M18 20L146 100"/><circle class="d" cx="81" cy="60" r="6"/><text class="t" x="96" y="64">(x, y)</text><text class="t" x="8" y="116">x + y = 2</text><text class="t" x="96" y="116">x − y = 0</text></svg><small>Chapter 1 · Sections 1.2 – 1.3</small><h2>Systems &amp; Row Operations</h2><p>Linear equations, systems and their solutions, the augmented matrix, the three elementary row operations, row-echelon and reduced row-echelon form.</p><span class="tr">المعادلات الخطية، والأنظمة وحلولها، والمصفوفة الممتدة، والعمليات التلاتة على الصفوف، والـ REF والـ RREF.</span></div>
+  <div class="chapvid"><div class="cv-h">🎬 شرح بالعربي (فيديو)<span>اتفرجي عليه الأول، وبعدين ذاكري من الملخص تحت.</span></div><div class="cv-b"><a class="cvid" href="https://www.youtube.com/watch?v=spiGq99jQ7c" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span><b>تمثيل الأنظمة: Coefficient و Augmented Matrices</b><small>25:21 · Dr. Ahmed Hagag</small></span></a></div></div>
+  <div class="mm" data-map></div>
+
+  <div class="block">
+    <h3>2.1 Linear equations and their solutions</h3>
+    <ul>
+      <li>A <b>linear equation</b> in n variables: a₁x₁ + a₂x₂ + … + aₙxₙ = b, where the aᵢ (coefficients) and b (constant term) are fixed real numbers.<span class="tr">المعادلة الخطية: كل متغير أُسه 1، ومفيش ضرب متغيرين في بعض، ولا جذور، ولا متغير تحت كسر.</span></li>
+      <li>Linear: 2x − 3y + z = 7. <b>Not linear:</b> xy = 4, x² + y = 1, √x + y = 2, 1/x = 3, sin x = 0.<span class="tr">أمثلة على اللي مش خطي: ضرب متغيرين، أو أُس 2، أو جذر، أو المتغير في المقام، أو sin.</span></li>
+      <li>A <b>solution</b> is a sequence (s₁, …, sₙ) that satisfies the equation; the set of all solutions is the <b>solution set</b>.<span class="tr">الحل = أرقام لما نعوّضها المعادلة تتحقق.</span></li>
+      <li>A <b>system</b> is a finite list of linear equations; a solution of the system satisfies <b>all</b> the equations at the same time.<span class="tr">النظام = كذا معادلة، والحل لازم يحقق كلهم مع بعض.</span></li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <h3>2.2 Consistent and inconsistent systems</h3>
+    <ul>
+      <li><b>Inconsistent</b>: no solution. <b>Consistent</b>: at least one solution.<span class="tr">inconsistent = مالوش حل. consistent = ليه حل واحد على الأقل.</span></li>
+      <li><b>Theorem 1.2.6:</b> every system has exactly one of: (i) no solution, (ii) exactly one solution, (iii) infinitely many solutions.<span class="tr">أي نظام: يا مالوش حل، يا حل واحد، يا عدد لا نهائي من الحلول. مفيش حاجة تانية (مينفعش حلّين بس مثلاً).</span></li>
+    </ul>
+<pre class="cli">x + y = 2,  x − y = 0     → one solution (1, 1)        two lines cross once
+x + y = 2,  2x + 2y = 5   → no solution                parallel lines
+x + y = 2,  2x + 2y = 4   → infinitely many (x = 2 − t, y = t)   same line</pre>
+    <span class="tr">في معادلتين بمتغيرين: كل معادلة خط مستقيم. يتقاطعوا مرة = حل واحد. متوازيين = مفيش حل. نفس الخط = حلول لا نهائية.</span>
+    <div class="dg" data-dg="lines"></div>
+  </div>
+
+  <div class="block">
+    <h3>2.3 The augmented matrix</h3>
+    <ul>
+      <li>The system AX = B is written as the <b>augmented matrix [A | B]</b>: the coefficient matrix A with the constants column B added.<span class="tr">بنكتب النظام كمصفوفة: المعاملات، وخط، وعمود الثوابت.</span></li>
+    </ul>
+<pre class="cli"> x +  y + 2z = 9          | 1  1  2 | 9 |        A = coefficient matrix
+2x + 4y − 3z = 1    →     | 2  4 -3 | 1 |        X = [x y z]ᵀ
+3x + 6y − 5z = 0          | 3  6 -5 | 0 |        B = [9 1 0]ᵀ</pre>
+  </div>
+
+  <div class="block">
+    <h3>2.4 Elementary row operations (EROs)</h3>
+    <p>Two systems are <b>equivalent</b> if they have the same solution set. Each ERO gives an equivalent system (Theorem 1.3.2):<span class="tr">نظامين متكافئين = ليهم نفس الحلول. والعمليات دي مش بتغيّر الحلول:</span></p>
+    <div class="tw"><table>
+      <tr><th>Type</th><th>Operation</th><th>Notation</th><th class="ar">بالعربي</th></tr>
+      <tr><td>I</td><td>Interchange two rows</td><td>Rᵢ ↔ Rⱼ</td><td class="ar">نبدّل صفين</td></tr>
+      <tr><td>II</td><td>Multiply a row by a <b>nonzero</b> number</td><td>cRᵢ → Rᵢ (c ≠ 0)</td><td class="ar">نضرب صف في رقم مش صفر</td></tr>
+      <tr><td>III</td><td>Add a multiple of another row to a row</td><td>Rᵢ + cRⱼ → Rᵢ</td><td class="ar">نزوّد على صف مضاعف صف تاني</td></tr>
+    </table></div>
+    <ul>
+      <li>A is <b>row-equivalent</b> to B if B comes from A by finitely many EROs. Row-equivalence is reflexive, symmetric and transitive (an equivalence relation).<span class="tr">لو قدرنا نوصل من A لـ B بعمليات صفوف، يبقوا row-equivalent.</span></li>
+      <li>Row-equivalent augmented matrices represent equivalent systems (Lemma 1.3.4).<span class="tr">عشان كده بنحل على المصفوفة بدل المعادلات.</span></li>
+    </ul>
+    <div class="note"><b>غلطة شائعة:</b> الضرب في صفر مش مسموح (هيمسح المعادلة). وفي Type III بنغيّر الصف اللي على الشمال بس، والصف التاني بيفضل زي ما هو.</div>
+  </div>
+
+  <div class="block">
+    <h3>2.5 Row-echelon form (REF) and reduced row-echelon form (RREF)</h3>
+    <p><b>REF</b> conditions:<span class="tr">شروط الـ REF:</span></p>
+    <ol>
+      <li>All zero rows are at the <b>bottom</b>.<span class="tr">صفوف الأصفار تحت خالص.</span></li>
+      <li>The first nonzero entry of every nonzero row is <b>1</b> (the <b>leading 1</b> or pivot).<span class="tr">أول عنصر مش صفر في كل صف = 1 (اسمه leading 1).</span></li>
+      <li>Each leading 1 is to the <b>right</b> of the leading 1 in the row above (staircase).<span class="tr">كل leading 1 على يمين اللي فوقه (شكل سلّم).</span></li>
+    </ol>
+    <p><b>RREF</b> = REF + every column that contains a leading 1 has <b>zeros everywhere else</b> (above and below).<span class="tr">الـ RREF = REF + عمود كل leading 1 باقي عناصره أصفار، فوق وتحت.</span></p>
+<pre class="cli">REF:   | 1  3 -2 | 5 |        RREF:  | 1  0  0 | 4 |
+       | 0  1  4 | 2 |               | 0  1  0 | 2 |
+       | 0  0  1 | 3 |               | 0  0  1 | 3 |
+NOT REF: | 0  1 | ... |   zero row above?  | 0 0 |  must be at the bottom
+         | 2  1 |      leading entry 2 ≠ 1</pre>
+    <ul>
+      <li>Every row and every column of a REF matrix has at most one leading 1; a square matrix in REF is <b>upper triangular</b>; a square matrix in RREF is either <b>Iₙ</b> or has a <b>row of zeros</b>.<span class="tr">مصفوفة مربعة REF = upper triangular. ولو RREF يا تبقى I يا فيها صف أصفار.</span></li>
+    </ul>
+  </div>
+
+  <div class="block essay">
+    <h3>Expected essay questions</h3>
+    <details><summary>Define a linear equation and give examples of non-linear equations.</summary><p>a₁x₁ + … + aₙxₙ = b with real constants. Non-linear: xy = 4, x² + y = 1, √x = 2, 1/x = 3.<span class="tr">التعريف + أمثلة.</span></p></details>
+    <details><summary>What are consistent and inconsistent systems? State the theorem about the number of solutions.</summary><p>Consistent: at least one solution; inconsistent: none. Exactly one of: no solution, one solution, infinitely many.<span class="tr">التعريفين + النظرية.</span></p></details>
+    <details><summary>List the three elementary row operations.</summary><p>Rᵢ ↔ Rⱼ; cRᵢ → Rᵢ (c ≠ 0); Rᵢ + cRⱼ → Rᵢ.<span class="tr">التلاتة.</span></p></details>
+    <details><summary>State the conditions of REF and RREF and give an example of each.</summary><p>Zero rows at bottom; leading 1; staircase; RREF adds zeros above and below each leading 1.<span class="tr">الشروط.</span></p></details>
+  </div>
+</section>
+
+<!-- ================= CH3 GAUSSIAN ELIMINATION ================= -->
+<section class="view" id="v-ch3" style="--k:var(--c3)" hidden>
+  <div class="chap-head"><svg class="doodle art" viewBox="0 0 160 120" role="img" aria-label="row echelon staircase"><path class="s" d="M14 14h-4v76h4M128 14h4v76h-4"/><text class="t" x="27.0" y="28" text-anchor="middle">1</text><text class="t" x="49.0" y="28" text-anchor="middle">*</text><text class="t" x="71.0" y="28" text-anchor="middle">*</text><text class="t" x="93.0" y="28" text-anchor="middle">|</text><text class="t" x="115.0" y="28" text-anchor="middle">*</text><text class="t" x="27.0" y="52" text-anchor="middle">0</text><text class="t" x="49.0" y="52" text-anchor="middle">1</text><text class="t" x="71.0" y="52" text-anchor="middle">*</text><text class="t" x="93.0" y="52" text-anchor="middle">|</text><text class="t" x="115.0" y="52" text-anchor="middle">*</text><text class="t" x="27.0" y="76" text-anchor="middle">0</text><text class="t" x="49.0" y="76" text-anchor="middle">0</text><text class="t" x="71.0" y="76" text-anchor="middle">1</text><text class="t" x="93.0" y="76" text-anchor="middle">|</text><text class="t" x="115.0" y="76" text-anchor="middle">*</text><path class="s dash" d="M10 40h26v24h22v24h24"/></svg><small>Chapter 1 · Section 1.4</small><h2>Gaussian Elimination</h2><p>Solving systems by reducing the augmented matrix: Gaussian elimination with back-substitution, Gauss-Jordan elimination, free variables and homogeneous systems.</p><span class="tr">حل الأنظمة بتبسيط المصفوفة الممتدة: Gauss مع التعويض لورا، وGauss-Jordan، والمتغيرات الحرة، والأنظمة المتجانسة.</span></div>
+  <div class="chapvid"><div class="cv-h">🎬 شرح بالعربي (فيديو)<span>اتفرجي عليه الأول، وبعدين ذاكري من الملخص تحت.</span></div><div class="cv-b"><a class="cvid" href="https://www.youtube.com/watch?v=DKjRfgfQbGY" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span><b>Reduced Row-Echelon Form وحل الأنظمة</b><small>13:03 · Dr. Ahmed Hagag</small></span></a><a class="cvid" href="https://www.youtube.com/watch?v=AQCekpMUrjo" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span><b>Homogeneous System</b><small>16:41 · Dr. Ahmed Hagag</small></span></a></div></div>
+  <div class="mm" data-map></div>
+
+  <div class="block">
+    <h3>3.1 The strategy</h3>
+    <ol>
+      <li>Write the augmented matrix [A | B].<span class="tr">اكتبي المصفوفة الممتدة.</span></li>
+      <li>Work column by column from the left: get a <b>leading 1</b> (swap rows or divide), then make all entries <b>below</b> it zero with Type III operations.<span class="tr">عمود عمود من الشمال: اعملي 1 في مكان الـ pivot، وبعدين صفّري اللي تحته.</span></li>
+      <li>You now have REF → <b>Gaussian elimination</b>: solve the last equation and substitute backwards (back-substitution).<span class="tr">لما توصلي REF: حلّي من آخر معادلة وعوّضي لفوق (ده Gauss).</span></li>
+      <li>Or continue: make the entries <b>above</b> each leading 1 zero too → RREF → <b>Gauss-Jordan</b>: read the answer directly.<span class="tr">أو كمّلي وصفّري فوق كمان لحد RREF وتقري الحل على طول (ده Gauss-Jordan).</span></li>
+    </ol>
+    <div class="note"><b>نصيحة:</b> اكتبي العملية جنب كل خطوة (زي R₂ − 2R₁ → R₂). ده جزء من الدرجة، وبيخليكي تلاقي غلطتك بسرعة.</div>
+  </div>
+
+  <div class="block">
+    <h3>3.2 Worked example: Gaussian elimination</h3>
+<pre class="cli"> x +  y + 2z = 9
+2x + 4y − 3z = 1
+3x + 6y − 5z = 0</pre>
+    <details class="ans" open><summary>Solution step by step</summary><pre class="cli">| 1  1   2 |   9 |
+| 2  4  -3 |   1 |
+| 3  6  -5 |   0 |
+R₂ − 2R₁ → R₂ ,  R₃ − 3R₁ → R₃
+| 1  1   2 |   9 |
+| 0  2  -7 | -17 |
+| 0  3 -11 | -27 |
+½R₂ → R₂
+| 1  1   2   |    9   |
+| 0  1  -7/2 | -17/2  |
+| 0  3  -11  |  -27   |
+R₃ − 3R₂ → R₃
+| 1  1   2   |    9   |
+| 0  1  -7/2 | -17/2  |
+| 0  0  -1/2 |  -3/2  |
+−2R₃ → R₃          (now REF)
+| 1  1   2   |    9   |
+| 0  1  -7/2 | -17/2  |
+| 0  0   1   |    3   |
+back-substitution:
+z = 3
+y − (7/2)(3) = −17/2  →  y = −17/2 + 21/2 = 2
+x + 2 + 2(3) = 9      →  x = 1
+solution (x, y, z) = (1, 2, 3)     check: 1+2+6 = 9 ✓  2+8−9 = 1 ✓  3+12−15 = 0 ✓</pre><span class="tr">كل خطوة بنصفّر عنصر تحت الـ leading 1. لما وصلنا لشكل السلّم (REF) بدأنا من آخر صف: z = 3، وعوّضنا فوق. وفي الآخر اتأكدنا بالتعويض في المعادلات الأصلية.</span></details>
+    <details class="ans"><summary>Same example with Gauss-Jordan (continue to RREF)</summary><pre class="cli">R₂ + (7/2)R₃ → R₂ ,  R₁ − 2R₃ → R₁
+| 1  1  0 | 3 |
+| 0  1  0 | 2 |
+| 0  0  1 | 3 |
+R₁ − R₂ → R₁
+| 1  0  0 | 1 |
+| 0  1  0 | 2 |
+| 0  0  1 | 3 |     → x = 1, y = 2, z = 3 (read directly)</pre><span class="tr">في Gauss-Jordan بنصفّر فوق كمان، فالإجابة بتبان على طول من غير تعويض.</span></details>
+    <div class="dg" data-dg="rref"></div>
+  </div>
+
+  <div class="block">
+    <h3>3.3 Reading the result: one, none or infinitely many</h3>
+    <div class="tw"><table>
+      <tr><th>What you see in REF</th><th>Meaning</th><th class="ar">بالعربي</th></tr>
+      <tr><td>A row [0 0 … 0 | c] with c ≠ 0</td><td><b>No solution</b> (inconsistent): 0 = c is impossible</td><td class="ar">صف أصفار وآخره رقم مش صفر = مفيش حل</td></tr>
+      <tr><td>A leading 1 in every variable column</td><td><b>Unique solution</b></td><td class="ar">كل متغير ليه leading 1 = حل واحد</td></tr>
+      <tr><td>Some variable column without a leading 1 (and consistent)</td><td><b>Infinitely many</b>: that variable is <b>free</b> (a parameter t)</td><td class="ar">متغير مالوش leading 1 = متغير حر = حلول لا نهائية</td></tr>
+    </table></div>
+    <details class="ans"><summary>Example with a free variable</summary><pre class="cli">| 1  2  -1 | 3 |       x + 2y − z = 3
+| 0  0   1 | 2 |   →   z = 2
+| 0  0   0 | 0 |       (0 = 0, fine)
+y has no leading 1 → free: y = t
+z = 2,  x = 3 − 2t + z = 5 − 2t
+solution: (5 − 2t, t, 2), t any real number → infinitely many</pre><span class="tr">الـ y مالهاش leading 1، فبنسيبها حرة ونسميها t. كل قيمة لـ t بتدّي حل مختلف.</span></details>
+    <details class="ans"><summary>Example with no solution</summary><pre class="cli">| 1  1 | 2 |   R₂ − 2R₁ → R₂   | 1  1 | 2 |
+| 2  2 | 5 |                   | 0  0 | 1 |   →  0 = 1  impossible → no solution</pre><span class="tr">طلع صف بيقول 0 = 1، وده مستحيل، فالنظام inconsistent.</span></details>
+  </div>
+
+  <div class="block">
+    <h3>3.4 Homogeneous systems</h3>
+    <ul>
+      <li>A system whose constant terms are <b>all zero</b> (AX = 0) is <b>homogeneous</b>.<span class="tr">النظام المتجانس: كل الثوابت أصفار.</span></li>
+      <li>It is <b>always consistent</b>: x₁ = x₂ = … = 0 (the <b>trivial solution</b>) always works.<span class="tr">ليه حل دايماً: الكل أصفار (اسمه الحل التافه trivial).</span></li>
+      <li><b>Theorem 1.4.7:</b> a homogeneous system with <b>fewer equations than variables</b> has infinitely many solutions (non-trivial ones too).<span class="tr">لو عدد المعادلات أقل من عدد المتغيرات، يبقى فيه حلول لا نهائية.</span></li>
+      <li><b>Theorem 1.4.8:</b> more generally, any <b>consistent</b> system with fewer equations than variables has infinitely many solutions.<span class="tr">وده صح لأي نظام consistent، مش المتجانس بس.</span></li>
+    </ul>
+    <details class="ans"><summary>Example</summary><pre class="cli">x + y − z = 0
+2x − y + z = 0        2 equations, 3 variables → infinitely many
+| 1  1 -1 | 0 |  R₂ − 2R₁  | 1  1 -1 | 0 |  −⅓R₂  | 1 1 -1 | 0 |  R₁ − R₂  | 1 0  0 | 0 |
+| 2 -1  1 | 0 |            | 0 -3  3 | 0 |         | 0 1 -1 | 0 |           | 0 1 -1 | 0 |
+z = t free → y = t, x = 0  → (0, t, t)</pre><span class="tr">معادلتين وتلات متغيرات، فلازم متغير حر. الحل (0، t، t)، ولما t = 0 بيطلع الحل التافه.</span></details>
+  </div>
+
+  <div class="block essay">
+    <h3>Expected essay questions</h3>
+    <details><summary>Solve a 3×3 system by Gaussian elimination and by Gauss-Jordan.</summary><p>As in 3.2: write [A|B], reduce to REF, back-substitute; or continue to RREF and read the solution. Always check in the original equations.<span class="tr">الخطوات + التحقق.</span></p></details>
+    <details><summary>What is the difference between Gaussian elimination and Gauss-Jordan elimination?</summary><p>Gauss stops at REF and uses back-substitution; Gauss-Jordan continues to RREF (zeros above and below leading 1s) and reads the answer directly.<span class="tr">REF ضد RREF.</span></p></details>
+    <details><summary>How do you know from REF whether a system has no, one or infinitely many solutions?</summary><p>Row [0…0|c≠0] → none; every variable has a leading 1 → one; a free variable → infinitely many.<span class="tr">الجدول.</span></p></details>
+    <details><summary>Define a homogeneous system. Why is it always consistent?</summary><p>All constants zero; the zero vector is always a solution (trivial). Fewer equations than variables → infinitely many.<span class="tr">التعريف + النظرية.</span></p></details>
+  </div>
+</section>
+
+<!-- ================= CH4 INVERSE ================= -->
+<section class="view" id="v-ch4" style="--k:var(--c4)" hidden>
+  <div class="chap-head"><svg class="doodle art" viewBox="0 0 160 120" role="img" aria-label="A inverse times A equals I"><text class="t huge" x="6" y="76" style="font-size:44px">A</text><text class="t" x="40" y="44">-1</text><text class="t big" x="58" y="70">·</text><text class="t huge" x="68" y="76" style="font-size:44px">A</text><text class="t big" x="104" y="70">=</text><path class="s" d="M122 44h-4v36h4M154 44h4v36h-4"/><text class="t" x="131.0" y="58" text-anchor="middle">1</text><text class="t" x="145.0" y="58" text-anchor="middle">0</text><text class="t" x="131.0" y="74" text-anchor="middle">0</text><text class="t" x="145.0" y="74" text-anchor="middle">1</text></svg><small>Chapter 2 · Section 2.1 · Lecture 4</small><h2>Inverse of a Matrix</h2><p>Invertible matrices, the 2×2 formula, the Gauss method [A | I] → [I | A⁻¹], when a matrix has no inverse, properties of the inverse and solving AX = B with A⁻¹.</p><span class="tr">المعكوس: إمتى يبقى موجود، وقانون الـ 2×2، وطريقة Gauss، والخواص، وحل الأنظمة بيه.</span></div>
+  <div class="chapvid"><div class="cv-h">🎬 شرح بالعربي (فيديو)<span>اتفرجي عليه الأول، وبعدين ذاكري من الملخص تحت.</span></div><div class="cv-b"><a class="cvid" href="https://www.youtube.com/watch?v=bBILX_s0Bio" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span><b>معكوس المصفوفة: إمتى يبقى موجود وإزاي نحسبه</b><small>39:34 · Dr. Ahmed Hagag</small></span></a></div></div>
+  <div class="mm" data-map></div>
+
+  <div class="block">
+    <h3>4.1 Invertible matrix</h3>
+    <ul>
+      <li>A <b>square</b> n × n matrix A is <b>invertible</b> if there is a matrix B with <b>AB = Iₙ and BA = Iₙ</b>. B is the inverse, written <b>A⁻¹</b>.<span class="tr">المعكوس موجود للمصفوفة المربعة بس: A × A⁻¹ = I، و A⁻¹ × A = I.</span></li>
+      <li>A matrix with no inverse is <b>noninvertible</b> or <b>singular</b>. If the inverse exists it is <b>unique</b> (Lemma 2.1.2).<span class="tr">اللي مالهاش معكوس اسمها singular. ولو ليها معكوس فهو واحد بس.</span></li>
+      <li>Theorem 2.1.4: for square matrices, AB = Iₙ already implies BA = Iₙ.<span class="tr">يكفي نتأكد من جهة واحدة.</span></li>
+      <li>A matrix with a <b>row of zeros</b> or a <b>column of zeros</b> is <b>not invertible</b> (Lemma 2.1.3).<span class="tr">لو فيها صف أو عمود كله أصفار يبقى مالهاش معكوس (لأن الـ det = 0).</span></li>
+      <li><b>Theorem 2.1.5:</b> A is invertible ⇔ A is row-equivalent to Iₙ.<span class="tr">المعكوس موجود لو قدرنا نوصّل A لـ I بعمليات صفوف.</span></li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <h3>4.2 The 2×2 formula</h3>
+<pre class="cli">A = | a  b |     |A| = det(A) = ad − bc
+    | c  d |
+A is invertible ⇔ ad − bc ≠ 0, and then
+A⁻¹ = 1/(ad − bc) · |  d  -b |      swap the main diagonal,
+                    | -c   a |      change the signs of the other two</pre>
+    <span class="tr">الطريقة: الـ det = ضرب القطر الرئيسي − ضرب القطر التاني. لو مش صفر: بدّلي عنصرين القطر الرئيسي، وغيّري إشارة الاتنين التانيين، واقسمي على الـ det.</span>
+    <details class="ans"><summary>Lecture example: A = [1 4; 2 3]</summary><pre class="cli">|A| = 1·3 − 4·2 = 3 − 8 = −5  ≠ 0 → invertible
+A⁻¹ = 1/(−5) · |  3  -4 |  = | -3/5   4/5 |
+               | -2   1 |    |  2/5  -1/5 |
+check: A·A⁻¹ = −1/5 · | 1 4 | | 3 -4 | = −1/5 · | -5  0 | = | 1 0 | = I ✓
+                      | 2 3 | |-2  1 |          |  0 -5 |   | 0 1 |</pre><span class="tr">بنتأكد بضرب A في المعكوس، لازم يطلع I.</span></details>
+  </div>
+
+  <div class="block">
+    <h3>4.3 The Gauss method: [A | I] → [I | A⁻¹]</h3>
+    <ol>
+      <li>Write A next to the identity: [A | I].<span class="tr">اكتبي A وجنبها I.</span></li>
+      <li>Apply EROs to the <b>whole</b> row until the left side becomes I.<span class="tr">اعملي عمليات صفوف على الصف كله (الناحيتين) لحد ما الشمال يبقى I.</span></li>
+      <li>The right side is then A⁻¹. If a zero row appears on the left, A is <b>not invertible</b>.<span class="tr">اللي على اليمين هو المعكوس. لو طلع صف أصفار على الشمال يبقى مالهاش معكوس.</span></li>
+    </ol>
+    <details class="ans"><summary>Lecture example 1: A = [1 4; 2 3]</summary><pre class="cli">| 1  4 | 1  0 |
+| 2  3 | 0  1 |
+−2R₁ + R₂ → R₂
+| 1  4 |  1  0 |
+| 0 -5 | -2  1 |
+−⅕R₂ → R₂
+| 1  4 |  1    0   |
+| 0  1 | 2/5 -1/5  |
+−4R₂ + R₁ → R₁
+| 1  0 | -3/5  4/5 |
+| 0  1 |  2/5 -1/5 |   → A⁻¹ = −1/5 · | 3 -4 |   same as the formula ✓
+                                       |-2  1 |</pre><span class="tr">نصفّر تحت الـ 1 الأول، وبعدين نخلي القطر 1، وبعدين نصفّر فوق. نفس الإجابة اللي طلعت بالقانون.</span></details>
+    <details class="ans"><summary>Lecture example 2: A = [1 −1 0; 1 0 −1; −6 2 3]</summary><pre class="cli">|  1 -1  0 | 1 0 0 |
+|  1  0 -1 | 0 1 0 |
+| -6  2  3 | 0 0 1 |
+−R₁ + R₂ → R₂ ,  6R₁ + R₃ → R₃
+| 1 -1  0 | 1 0 0 |
+| 0  1 -1 |-1 1 0 |
+| 0 -4  3 | 6 0 1 |
+R₁ + R₂ → R₁ ,  4R₂ + R₃ → R₃
+| 1  0 -1 | 0 1 0 |
+| 0  1 -1 |-1 1 0 |
+| 0  0 -1 | 2 4 1 |
+−R₃ → R₃
+| 1  0 -1 |  0  1  0 |
+| 0  1 -1 | -1  1  0 |
+| 0  0  1 | -2 -4 -1 |
+R₁ + R₃ → R₁ ,  R₂ + R₃ → R₂
+| 1 0 0 | -2 -3 -1 |
+| 0 1 0 | -3 -3 -1 |
+| 0 0 1 | -2 -4 -1 |
+A⁻¹ = | -2 -3 -1 |
+      | -3 -3 -1 |
+      | -2 -4 -1 |</pre><span class="tr">نفس الفكرة على 3×3: نصفّر العمود الأول تحت، وبعدين التاني، وبعدين نخلي آخر عنصر 1 ونصفّر فوقه. في كشكول شهد الخطوات بأرقام تانية في النص (فيها ‎1/7) بس الإجابة النهائية واحدة، ودي طريقة أقصر.</span></details>
+    <div class="dg" data-dg="inverse"></div>
+  </div>
+
+  <div class="block">
+    <h3>4.4 Properties of the inverse</h3>
+    <div class="tw"><table>
+      <tr><th>Rule</th><th class="ar">بالعربي</th></tr>
+      <tr><td>(A⁻¹)⁻¹ = A</td><td class="ar">معكوس المعكوس = الأصلية</td></tr>
+      <tr><td>(Aᵏ)⁻¹ = (A⁻¹)ᵏ = A⁻ᵏ</td><td class="ar">معكوس الأُس = أُس المعكوس</td></tr>
+      <tr><td>(cA)⁻¹ = (1/c)·A⁻¹ (c ≠ 0)</td><td class="ar">الرقم بيتقلب</td></tr>
+      <tr><td>(Aᵀ)⁻¹ = (A⁻¹)ᵀ</td><td class="ar">الترتيب مش فارق بين الاتنين</td></tr>
+      <tr><td>(AB)⁻¹ = B⁻¹A⁻¹</td><td class="ar">الترتيب بيتعكس (زي الـ transpose)</td></tr>
+      <tr><td>(A₁A₂…Aₖ)⁻¹ = Aₖ⁻¹…A₂⁻¹A₁⁻¹</td><td class="ar">لأي عدد، بالعكس</td></tr>
+      <tr><td>AB = AC ⇒ B = C (A invertible)</td><td class="ar">ممكن نشطب A (cancellation)</td></tr>
+      <tr><td>A or B noninvertible ⇒ AB noninvertible</td><td class="ar">لو واحدة singular يبقى الضرب singular</td></tr>
+    </table></div>
+    <details class="ans"><summary>Lecture proof: (AB)⁻¹ = B⁻¹A⁻¹</summary><pre class="cli">(AB)(B⁻¹A⁻¹) = A(BB⁻¹)A⁻¹ = A·I·A⁻¹ = AA⁻¹ = I   ✓</pre><span class="tr">بنضرب AB في المرشح B⁻¹A⁻¹، والـ B جنب B⁻¹ بيبقوا I، وبعدين A جنب A⁻¹ = I. فهو المعكوس فعلاً.</span></details>
+  </div>
+
+  <div class="block">
+    <h3>4.5 Solving AX = B with the inverse</h3>
+    <p>Theorem 2.1.16: if A is invertible, AX = B has the <b>unique</b> solution <b>X = A⁻¹B</b>.<span class="tr">لو A ليها معكوس: X = A⁻¹B، والحل واحد بس.</span></p>
+    <details class="ans"><summary>Lecture example</summary><pre class="cli">  x − y      = 4                |  1 -1  0 |       | 4 |
+  x     − z  = 3       A =      |  1  0 -1 |   B = | 3 |
+−6x + 2y + 3z = 2               | -6  2  3 |       | 2 |
+A⁻¹ (from 4.3) = | -2 -3 -1 |
+                 | -3 -3 -1 |
+                 | -2 -4 -1 |
+X = A⁻¹B:  x = −2·4 − 3·3 − 1·2 = −19
+           y = −3·4 − 3·3 − 1·2 = −23
+           z = −2·4 − 4·3 − 1·2 = −22
+check: −19 − (−23) = 4 ✓   −19 − (−22) = 3 ✓   114 − 46 − 66 = 2 ✓</pre><span class="tr">AX = B → نضرب الناحيتين من الشمال في A⁻¹ → X = A⁻¹B. ضربنا المعكوس (3×3) في B (3×1) فطلع عمود فيه x و y و z.</span></details>
+    <div class="note"><b>الترتيب مهم:</b> X = A⁻¹B مش BA⁻¹ (B عمود 3×1 ومينفعش تتضرب قبل 3×3).</div>
+  </div>
+
+  <div class="block essay">
+    <h3>Expected essay questions</h3>
+    <details><summary>Define an invertible matrix. Prove that the inverse is unique.</summary><p>A (n×n) is invertible if AB = BA = Iₙ for some B. If B and C are both inverses: B = BI = B(AC) = (BA)C = IC = C.<span class="tr">التعريف + الإثبات.</span></p></details>
+    <details><summary>Find the inverse of a 2×2 matrix by the formula and by the Gauss method.</summary><p>As in 4.2 and 4.3.<span class="tr">الطريقتين.</span></p></details>
+    <details><summary>Prove (AB)⁻¹ = B⁻¹A⁻¹.</summary><p>(AB)(B⁻¹A⁻¹) = A(BB⁻¹)A⁻¹ = AIA⁻¹ = I.<span class="tr">الإثبات.</span></p></details>
+    <details><summary>Show that a matrix with a row of zeros has no inverse.</summary><p>If row i of A is zero, row i of AB is zero for every B, so AB ≠ I.<span class="tr">صف الأصفار بيفضل أصفار.</span></p></details>
+    <details><summary>Solve a system using X = A⁻¹B.</summary><p>As in 4.5.<span class="tr">المثال.</span></p></details>
+  </div>
+</section>
+
+<!-- ================= CH5 DETERMINANTS ================= -->
+<section class="view" id="v-ch5" style="--k:var(--lab)" hidden>
+  <div class="chap-head"><svg class="doodle art" viewBox="0 0 160 120" role="img" aria-label="determinant of a 2 by 2"><path class="s" d="M30 22v64M118 22v64"/><text class="t big" x="52" y="46">a</text><text class="t big" x="88" y="46">b</text><text class="t big" x="52" y="78">c</text><text class="t big" x="88" y="78">d</text><path class="s" d="M48 32l46 52"/><path class="s dash" d="M96 32l-46 52"/><text class="t" x="74" y="110" text-anchor="middle">det = ad − bc</text></svg><small>Chapter 2 · Sections 2.3 – 2.5 · Lecture 4</small><h2>Determinants</h2><p>Determinant of 2×2 and 3×3 matrices, minors and cofactors, expansion along any row or column, Sarrus' rule, the adjoint formula for A⁻¹, determinants and row operations, and det(AB) = det(A)·det(B).</p><span class="tr">المحدد للـ 2×2 والـ 3×3، والـ minors والـ cofactors، والفك على أي صف أو عمود، وطريقة Sarrus، والمعكوس بالـ adjoint، وتأثير عمليات الصفوف، وdet(AB).</span></div>
+  <div class="chapvid"><div class="cv-h">🎬 شرح بالعربي (فيديو)<span>اتفرجي عليه الأول، وبعدين ذاكري من الملخص تحت.</span></div><div class="cv-b"><a class="cvid" href="https://www.youtube.com/watch?v=mNFevMZcb5g" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span><b>أساسيات المحددات</b><small>29:21 · Dr. Ahmed Hagag</small></span></a></div></div>
+  <div class="mm" data-map></div>
+
+  <div class="block">
+    <h3>5.1 Determinant of a 2×2 matrix</h3>
+<pre class="cli">det | a  b | = ad − bc        det | 1  4 | = 1·3 − 4·2 = −5
+    | c  d |                      | 2  3 |</pre>
+    <span class="tr">ضرب القطر الرئيسي ناقص ضرب القطر التاني. الـ det رقم واحد بس، وبنكتبه det(A) أو |A|.</span>
+  </div>
+
+  <div class="block">
+    <h3>5.2 Minors, cofactors and the sign rule</h3>
+    <ul>
+      <li>The <b>minor</b> Mᵢⱼ is the determinant of the matrix left after deleting <b>row i and column j</b>.<span class="tr">الـ minor: نشطب صف العنصر وعموده، ونحسب det اللي فاضل.</span></li>
+      <li>The <b>cofactor</b> Cᵢⱼ = (−1)<sup>i+j</sup> Mᵢⱼ: if i + j is <b>even</b> the sign is <b>+</b>, if <b>odd</b> the sign is <b>−</b>.<span class="tr">الـ cofactor = الـ minor بإشارة: i + j زوجي → موجب، فردي → سالب.</span></li>
+    </ul>
+<pre class="cli">sign pattern:  | +  -  + |
+               | -  +  - |
+               | +  -  + |</pre>
+  </div>
+
+  <div class="block">
+    <h3>5.3 Cofactor expansion (3×3 and bigger)</h3>
+    <ul>
+      <li>det(A) = sum of (each entry of <b>any one row</b> × its cofactor): det(A) = aᵢ₁Cᵢ₁ + aᵢ₂Cᵢ₂ + … + aᵢₙCᵢₙ. The same works along <b>any column</b> (Theorem 2.3.2).<span class="tr">نختار أي صف أو عمود، ونضرب كل عنصر في الـ cofactor بتاعه، ونجمع. كل الصفوف والأعمدة بتدّي نفس الإجابة.</span></li>
+      <li>Choose the row or column with the <b>most zeros</b>: their terms vanish.<span class="tr">اختاري الصف أو العمود اللي فيه أصفار أكتر، عشان حدودها بتطير.</span></li>
+    </ul>
+    <details class="ans"><summary>Lecture example: det of A = [1 −1 0; 1 0 −1; −6 2 3] along row 1</summary><pre class="cli">det(A) = a₁₁C₁₁ + a₁₂C₁₂ + a₁₃C₁₃
+C₁₁ = + | 0 -1 | = 0·3 − (−1)·2 = 2
+        | 2  3 |
+C₁₂ = − | 1 -1 | = −(1·3 − (−1)(−6)) = −(3 − 6) = 3
+        |-6  3 |
+C₁₃ = + | 1  0 | = 1·2 − 0·(−6) = 2
+        |-6  2 |
+det(A) = 1·2 + (−1)·3 + 0·2 = 2 − 3 = −1</pre><span class="tr">الـ cofactor الأول إشارته +، التاني −، التالت +. وفي الآخر بنضرب كل cofactor في العنصر بتاعه ونجمع. مهم: الضرب في العنصر نفسه بإشارته (a₁₂ = −1).</span></details>
+    <details class="ans"><summary>Lecture example: a 4×4 with a column of zeros</summary><pre class="cli">A = |  1 -2  3  0 |
+    | -1  1  0  2 |      column 3 has only one nonzero entry (a₁₃ = 3)
+    |  0  2  0  3 |
+    |  3  4  0 -2 |
+det(A) = 3·C₁₃ + 0 + 0 + 0,    C₁₃ = (+)·det | -1  1  2 |
+                                             |  0  2  3 |
+                                             |  3  4 -2 |
+= −1(2·(−2) − 3·4) − 1(0·(−2) − 3·3) + 2(0·4 − 2·3)
+= −1(−16) − 1(−9) + 2(−6) = 16 + 9 − 12 = 13
+det(A) = 3 · 13 = 39</pre><span class="tr">العمود التالت كله أصفار إلا الـ 3، فبدل ما نفك 4 حدود بنفك حد واحد. الإشارة لـ (1،3): ‏1 + 3 = 4 زوجي → موجب.</span></details>
+    <div class="dg" data-dg="det"></div>
+  </div>
+
+  <div class="block">
+    <h3>5.4 Sarrus' rule (3×3 only)</h3>
+<pre class="cli">copy the first two columns to the right, then
+det = (sum of the 3 down-right diagonals) − (sum of the 3 up-right diagonals)
+
+|  1 -1  0 |  1 -1
+|  1  0 -1 |  1  0
+| -6  2  3 | -6  2
+down: 1·0·3 + (−1)(−1)(−6) + 0·1·2 = 0 − 6 + 0 = −6
+up:   0·0·(−6) + 1·(−1)·2 + (−1)·1·3 = 0 − 2 − 3 = −5
+det = −6 − (−5) = −1   ✓ same as the cofactor expansion</pre>
+    <span class="tr">طريقة سريعة للـ 3×3 بس: نكرر أول عمودين على اليمين، ونجمع ضرب الأقطار النازلة، ونطرح منها ضرب الأقطار الطالعة. متنفعش مع 4×4.</span>
+  </div>
+
+  <div class="block">
+    <h3>5.5 Inverse with the adjoint (cofactor) formula</h3>
+<pre class="cli">A⁻¹ = (1/|A|) · adj(A),     adj(A) = (cofactor matrix of A)ᵀ</pre>
+    <details class="ans"><summary>Lecture example: A = [1 −1 0; 1 0 −1; −6 2 3], |A| = −1</summary><pre class="cli">C₁₁ = +(0·3 − (−1)·2) = 2      C₁₂ = −(1·3 − (−1)(−6)) = 3     C₁₃ = +(1·2 − 0) = 2
+C₂₁ = −((−1)·3 − 0·2) = 3      C₂₂ = +(1·3 − 0·(−6)) = 3       C₂₃ = −(1·2 − (−1)(−6)) = 4
+C₃₁ = +((−1)(−1) − 0·0) = 1    C₃₂ = −(1·(−1) − 0·1) = 1       C₃₃ = +(1·0 − (−1)·1) = 1
+cofactor matrix = | 2 3 2 |      adj(A) = (cof)ᵀ = | 2 3 1 |
+                  | 3 3 4 |                        | 3 3 1 |
+                  | 1 1 1 |                        | 2 4 1 |
+A⁻¹ = 1/(−1) · adj(A) = | -2 -3 -1 |
+                        | -3 -3 -1 |     same as the Gauss method ✓
+                        | -2 -4 -1 |</pre><span class="tr">لكل عنصر: نشطب صفه وعموده، نحسب det الـ 2×2 اللي فاضل، ونحط الإشارة. بعدين نعمل transpose، ونقسم على الـ det. الإجابة نفس اللي طلعت بطريقة Gauss.</span></details>
+  </div>
+
+  <div class="block">
+    <h3>5.6 Quick rules for determinants</h3>
+    <div class="tw"><table>
+      <tr><th>Rule</th><th class="ar">بالعربي</th></tr>
+      <tr><td>A row or a column of zeros ⇒ det(A) = 0</td><td class="ar">صف أو عمود أصفار = صفر</td></tr>
+      <tr><td>Triangular (upper or lower) ⇒ det = product of the diagonal entries; det(Iₙ) = 1</td><td class="ar">المثلثية: ضرب عناصر القطر بس</td></tr>
+      <tr><td>Two equal rows/columns, or one a multiple of another ⇒ det = 0</td><td class="ar">صفين زي بعض أو مضاعفات بعض = صفر</td></tr>
+      <tr><td>det(Aᵀ) = det(A)</td><td class="ar">الـ transpose مش بيغيّر الـ det</td></tr>
+      <tr><td>det(cA) = cⁿ·det(A) for n × n</td><td class="ar">الرقم بيطلع أُس n</td></tr>
+      <tr><td>det(AB) = det(A)·det(B)</td><td class="ar">det الضرب = ضرب الـ dets</td></tr>
+      <tr><td>det(A⁻¹) = 1/det(A)</td><td class="ar">det المعكوس = مقلوب الـ det</td></tr>
+      <tr><td>A invertible ⇔ det(A) ≠ 0 ; AX = B has a unique solution ⇔ det(A) ≠ 0</td><td class="ar">المعكوس موجود لو الـ det مش صفر</td></tr>
+    </table></div>
+    <div class="note"><b>فخ:</b> det(A + B) ≠ det(A) + det(B) غالباً. وdet(2A) لـ 3×3 = ‎8·det(A) مش 2·det(A).</div>
+  </div>
+
+  <div class="block">
+    <h3>5.7 Determinant and row operations (Theorem 2.4.1)</h3>
+    <div class="tw"><table>
+      <tr><th>ERO</th><th>Effect on det</th><th class="ar">بالعربي</th></tr>
+      <tr><td>Rᵢ ↔ Rⱼ</td><td>det(B) = −det(A)</td><td class="ar">تبديل صفين بيقلب الإشارة</td></tr>
+      <tr><td>cRᵢ → Rᵢ</td><td>det(B) = c·det(A)</td><td class="ar">ضرب صف في c بيضرب الـ det في c</td></tr>
+      <tr><td>Rᵢ + cRⱼ → Rᵢ</td><td>det(B) = det(A)</td><td class="ar">إضافة مضاعف صف مش بتغيّر حاجة</td></tr>
+    </table></div>
+    <details class="ans"><summary>Example: det by reducing to triangular form</summary><pre class="cli">| 2  4  6 |   ½R₁ (det × ½)      | 1  2  3 |
+| 1  3  5 |   → so det(A) = 2·det | 1  3  5 |
+| 1  1  4 |                       | 1  1  4 |
+R₂ − R₁, R₃ − R₁ (no change)     | 1  2  3 |
+                                 | 0  1  2 |
+                                 | 0 -1  1 |
+R₃ + R₂ (no change)              | 1  2  3 |
+                                 | 0  1  2 |
+                                 | 0  0  3 |   triangular → 1·1·3 = 3
+det(A) = 2 · 3 = 6</pre><span class="tr">بنحوّلها لمثلثية بعمليات صفوف ونتابع تأثير كل عملية. لما طلّعنا 2 من الصف الأول، الـ det الأصلي = 2 × det الجديدة.</span></details>
+  </div>
+
+  <div class="block essay">
+    <h3>Expected essay questions</h3>
+    <details><summary>Define the minor and the cofactor of an entry. Compute det of a 3×3 matrix by cofactor expansion.</summary><p>Mᵢⱼ = det after deleting row i and column j; Cᵢⱼ = (−1)^(i+j) Mᵢⱼ. Example in 5.3 (det = −1).<span class="tr">التعريفين + المثال.</span></p></details>
+    <details><summary>Compute the inverse of a 3×3 matrix using the adjoint.</summary><p>A⁻¹ = (1/|A|)(cofactor matrix)ᵀ, example in 5.5.<span class="tr">الخطوات.</span></p></details>
+    <details><summary>State the effect of each elementary row operation on the determinant.</summary><p>Swap → −det; multiply a row by c → c·det; add a multiple of a row → unchanged.<span class="tr">الجدول.</span></p></details>
+    <details><summary>Prove: if A is invertible then det(A⁻¹) = 1/det(A).</summary><p>AA⁻¹ = I ⇒ det(A)·det(A⁻¹) = det(I) = 1 ⇒ det(A⁻¹) = 1/det(A).<span class="tr">من det(AB) = det(A)det(B).</span></p></details>
+    <details><summary>Show that a 3×3 with det = 0 is not invertible, and give det(2A) if det(A) = 5.</summary><p>A invertible ⇔ det ≠ 0. det(2A) = 2³·5 = 40.<span class="tr">cⁿ.</span></p></details>
+  </div>
+</section>
+
+<!-- ================= LAB / PRACTICE ================= -->
+<section class="view" id="v-lab" style="--k:var(--c7)" hidden>
+  <div class="chap-head"><svg class="doodle art" viewBox="0 0 160 120" role="img" aria-label="notebook table and pencil"><rect class="f" x="18" y="8" width="104" height="104" rx="6"/><path class="s" d="M28 30h84"/><path class="s" d="M28 48h84"/><path class="s" d="M28 66h84"/><path class="s" d="M28 84h84"/><path class="s" d="M60 22v74"/><text class="t" x="32" y="43">i</text><text class="t" x="66" y="43">T(n)</text><path class="f" d="M128 30l14 14-44 44-18 4 4-18z"/></svg><small>Practice · Shahd's notes + extra exam-style problems</small><h2>Problem Lab</h2><p>Every example from the lecture notes plus extra problems, each solved step by step.</p><span class="tr">كل أمثلة كشكول شهد ومسائل زيادة شكل الامتحان، محلولة خطوة خطوة.</span></div>
+  
+
+  <div class="block">
+    <h3>How to write a full-mark answer</h3>
+    <ol>
+      <li>Write the size of every matrix before multiplying, and check the rule (columns of A = rows of B).<span class="tr">اكتبي حجم كل مصفوفة قبل الضرب.</span></li>
+      <li>Write every row operation next to the step (R₂ − 2R₁ → R₂).<span class="tr">اكتبي كل عملية صفوف جنب الخطوة.</span></li>
+      <li>In cofactors write the sign first, then the 2×2 determinant.<span class="tr">في الـ cofactor: الإشارة الأول وبعدين الـ det.</span></li>
+      <li>Always check: A·A⁻¹ = I, or substitute the solution in the equations.<span class="tr">اتأكدي في الآخر بالضرب أو بالتعويض.</span></li>
+    </ol>
+  </div>
+
+  <div class="block">
+    <h3>Part 1: Matrix operations (Lecture 1)</h3>
+    <h4>1. A = [2 5; −1 0], B = [3 2; 1 4]. Find A + B, A − B, 3A.</h4>
+    <details class="ans"><summary>Show solution</summary><pre class="cli">A + B = [5 7; 0 4]     A − B = [−1 3; −2 −4]     3A = [6 15; −3 0]</pre><span class="tr">عنصر بعنصر.</span></details>
+    <h4>2. A = [x 4; 2 3] = B = [5 4; x+y 3]. Find x, y.</h4>
+    <details class="ans"><summary>Show solution</summary><pre class="cli">x = 5 ;  2 = x + y → y = −3</pre><span class="tr">نساوي العناصر المتقابلة.</span></details>
+    <h4>3. A = [2 3 5; 1 0 4], B = [3 4; −1 2; 0 3]. Find AB.</h4>
+    <details class="ans"><summary>Show solution</summary><pre class="cli">2×3 · 3×2 = 2×2:  AB = [3 29; 3 16]</pre><span class="tr">صف في عمود.</span></details>
+    <h4>4. A = [5 0; 2 3; 1 −1], B = [2; 4]. Find AB and BA.</h4>
+    <details class="ans"><summary>Show solution</summary><pre class="cli">AB = [10; 16; −2]  (3×1)       BA: 2×1 · 3×2 → not defined</pre><span class="tr">BA مش موجودة لأن 1 ≠ 3.</span></details>
+    <h4>5. A = [3 2; 5 4; 0 1]. Find Aᵀ and (Aᵀ)ᵀ.</h4>
+    <details class="ans"><summary>Show solution</summary><pre class="cli">Aᵀ = [3 5 0; 2 4 1]  (2×3)      (Aᵀ)ᵀ = A</pre><span class="tr">الصفوف بقت أعمدة.</span></details>
+    <h4>6. A = [2 1 0; 2 3 −1], B = [0 −1 2; 3 4 5]. Verify (A + B)ᵀ = Aᵀ + Bᵀ.</h4>
+    <details class="ans"><summary>Show solution</summary><pre class="cli">(A+B)ᵀ = [2 0 2; 5 7 4]ᵀ = [2 5; 0 7; 2 4]
+Aᵀ + Bᵀ = [2 2; 1 3; 0 −1] + [0 3; −1 4; 2 5] = [2 5; 0 7; 2 4]  ✓</pre><span class="tr">الطرفين متساويين.</span></details>
+    <h4>7. A = [1 2; 3 4], B = [0 1; 1 0]. Show AB ≠ BA.</h4>
+    <details class="ans"><summary>Show solution</summary><pre class="cli">AB = [1·0+2·1  1·1+2·0; 3·0+4·1  3·1+4·0] = [2 1; 4 3]
+BA = [0·1+1·3  0·2+1·4; 1·1+0·3  1·2+0·4] = [3 4; 1 2]      AB ≠ BA</pre><span class="tr">مثال يثبت إن الضرب مش تبديلي.</span></details>
+  </div>
+
+  <div class="block">
+    <h3>Part 2: Systems and row reduction</h3>
+    <h4>8. Solve: x + 2y = 5, 3x − y = 1.</h4>
+    <details class="ans"><summary>Show solution</summary><pre class="cli">| 1  2 | 5 |  R₂ − 3R₁  | 1  2 |   5 |  −⅐R₂  | 1 2 | 5 |  R₁ − 2R₂  | 1 0 | 1 |
+| 3 -1 | 1 |            | 0 -7 | -14 |        | 0 1 | 2 |            | 0 1 | 2 |
+x = 1, y = 2      check: 1 + 4 = 5 ✓   3 − 2 = 1 ✓</pre><span class="tr">صفّرنا تحت، وخلينا القطر 1، وصفّرنا فوق.</span></details>
+    <h4>9. Is [1 0 2 | 3; 0 1 −1 | 4; 0 0 0 | 0] in RREF? Solve the system.</h4>
+    <details class="ans"><summary>Show solution</summary><pre class="cli">Yes (leading 1s with zeros above/below, zero row at the bottom).
+z free = t:  x = 3 − 2t,  y = 4 + t,  z = t   → infinitely many solutions</pre><span class="tr">الـ z مالهاش leading 1 فهي حرة.</span></details>
+    <h4>10. For which k does x + y = 2, 2x + 2y = k have (a) no solution (b) infinitely many?</h4>
+    <details class="ans"><summary>Show solution</summary><pre class="cli">R₂ − 2R₁ → [0 0 | k − 4]
+(a) k ≠ 4 → 0 = k − 4 ≠ 0 → no solution
+(b) k = 4 → 0 = 0 → infinitely many (x = 2 − t, y = t)
+(never exactly one solution)</pre><span class="tr">الصف الأخير بيقرر: لو آخره مش صفر مفيش حل.</span></details>
+  </div>
+
+  <div class="block">
+    <h3>Part 3: Inverse and determinant (Lecture 4)</h3>
+    <h4>11. A = [1 4; 2 3]. Find |A| and A⁻¹.</h4>
+    <details class="ans"><summary>Show solution</summary><pre class="cli">|A| = 3 − 8 = −5 ;  A⁻¹ = −⅕[3 −4; −2 1] = [−3/5 4/5; 2/5 −1/5]</pre><span class="tr">بدّلي القطر، وغيّري الإشارات، واقسمي على −5.</span></details>
+    <h4>12. A = [1 −1 0; 1 0 −1; −6 2 3]. Find det(A), the cofactor matrix, adj(A) and A⁻¹.</h4>
+    <details class="ans"><summary>Show solution</summary><pre class="cli">det(A) = −1
+cof = [2 3 2; 3 3 4; 1 1 1]      adj = [2 3 1; 3 3 1; 2 4 1]
+A⁻¹ = −adj = [−2 −3 −1; −3 −3 −1; −2 −4 −1]</pre><span class="tr">التفاصيل في تاب Determinants (5.5).</span></details>
+    <h4>13. Solve x − y = 4, x − z = 3, −6x + 2y + 3z = 2 using A⁻¹.</h4>
+    <details class="ans"><summary>Show solution</summary><pre class="cli">X = A⁻¹B = [−2 −3 −1; −3 −3 −1; −2 −4 −1]·[4; 3; 2] = [−19; −23; −22]</pre><span class="tr">x = −19، y = −23، z = −22.</span></details>
+    <h4>14. Find det of A = [1 −2 3 0; −1 1 0 2; 0 2 0 3; 3 4 0 −2].</h4>
+    <details class="ans"><summary>Show solution</summary><pre class="cli">expand along column 3: det = 3·(+1)·det[−1 1 2; 0 2 3; 3 4 −2] = 3·13 = 39</pre><span class="tr">العمود التالت فيه عنصر واحد مش صفر.</span></details>
+    <h4>15. If A and B are 3×3 with det(A) = 2 and det(B) = −3, find det(AB), det(A⁻¹), det(Aᵀ), det(2A), det(A²B⁻¹).</h4>
+    <details class="ans"><summary>Show solution</summary><pre class="cli">det(AB) = 2·(−3) = −6        det(A⁻¹) = 1/2        det(Aᵀ) = 2
+det(2A) = 2³·2 = 16          det(A²B⁻¹) = 2·2·(1/(−3)) = −4/3</pre><span class="tr">طبّقي القواعد: الضرب = ضرب، والمعكوس = مقلوب، والرقم أُسه 3.</span></details>
+    <h4>16. Without expanding, why is det [1 2 3; 2 4 6; 7 8 9] = 0?</h4>
+    <details class="ans"><summary>Show solution</summary><pre class="cli">R₂ = 2R₁ (one row is a multiple of another) → det = 0 → not invertible</pre><span class="tr">صف مضاعف صف تاني = الـ det صفر.</span></details>
+    <h4>17. Is A = [2 6; 1 3] invertible?</h4>
+    <details class="ans"><summary>Show solution</summary><pre class="cli">det = 2·3 − 6·1 = 0 → NOT invertible (singular)</pre><span class="tr">الـ det صفر.</span></details>
+  </div>
+</section>
+
+<section class="view" id="v-quiz" style="--k:var(--c5)" hidden>
+  <div class="chap-head"><svg class="doodle art" viewBox="0 0 160 120" role="img" aria-label="quiz checklist"><rect class="f" x="40" y="14" width="80" height="96" rx="8"/><rect class="d" x="64" y="8" width="32" height="12" rx="4"/><rect class="s" x="52" y="32" width="12" height="12" rx="2"/><path class="s" d="M54 38l4 4 8-10"/><path class="s" d="M72 38h36"/><rect class="s" x="52" y="54" width="12" height="12" rx="2"/><path class="s" d="M54 60l4 4 8-10"/><path class="s" d="M72 60h36"/><rect class="s" x="52" y="76" width="12" height="12" rx="2"/><path class="s" d="M54 82l4 4 8-10"/><path class="s" d="M72 82h36"/></svg><small>Practice</small><h2>Quiz</h2><p>Two sections: objective questions (MCQ, True/False, matching) and written questions (definitions, proofs, calculations) with model answers.</p><span class="tr">قسمين: أسئلة اختيار بتتصحح لوحدها، وأسئلة مقالي ومسائل ليها إجابات نموذجية.</span></div>
+  <div class="qtabs seg" role="group" aria-label="Quiz section"><button type="button" data-qs="obj" aria-pressed="true">MCQ section</button><button type="button" data-qs="essay" aria-pressed="false">Essay &amp; calculation section</button></div>
+  <div id="qsObj" class="qs">
+    <div class="block">
+      <h3>MCQ and True/False</h3>
+      <div class="filters" id="qFilters">
+        <button data-f="all" aria-pressed="true">All</button>
+        <button data-f="1" aria-pressed="false">Matrices</button>
+        <button data-f="2" aria-pressed="false">Systems</button>
+        <button data-f="3" aria-pressed="false">Gauss</button>
+        <button data-f="4" aria-pressed="false">Inverse</button>
+        <button data-f="5" aria-pressed="false">Determinants</button>
+      </div>
+      <p class="score" id="qScore">Score: 0 / 0</p>
+      <button class="btn ghost" id="qReset" type="button">Reset answers</button>
+      <div id="qList"></div>
+    </div>
+    <div class="block">
+      <h3>Matching</h3>
+      <div id="mList"></div>
+    </div>
+  </div>
+  <div id="qsEssay" class="qs" hidden>
+    <div class="block">
+      <h3>Essay &amp; calculation questions (<span id="eCount"></span>)</h3>
+      <p>Answer on paper first, then open the model answer.<span class="tr">جاوبي في ورقة الأول، وبعدين افتحي الإجابة النموذجية.</span></p>
+      <div class="filters" id="eFilters">
+        <button data-f="all" aria-pressed="true">All</button>
+        <button data-f="1" aria-pressed="false">Matrices</button>
+        <button data-f="2" aria-pressed="false">Systems</button>
+        <button data-f="3" aria-pressed="false">Gauss</button>
+        <button data-f="4" aria-pressed="false">Inverse</button>
+        <button data-f="5" aria-pressed="false">Determinants</button>
+      </div>
+      <div class="dg-ctl"><label>Type <select id="eType"></select></label><span class="muted">Showing <b id="eShown"></b></span><button class="btn ghost" type="button" id="eOpen">Open all answers</button><button class="btn ghost" type="button" id="eClose">Close all</button></div>
+      <div id="eList"></div>
+    </div>
+  </div>
+</section>
+<!-- ================= NIGHT BEFORE ================= -->
+<section class="view" id="v-review" style="--k:var(--c6)" hidden>
+  <div class="chap-head"><svg class="doodle art" viewBox="0 0 160 120" role="img" aria-label="night before: moon and open book"><path class="f" d="M108 14a26 26 0 1 0 20 42a22 22 0 1 1-20-42z"/><path class="d" d="M40 20l2 5 5 2-5 2-2 5-2-5-5-2 5-2z M62 36l1.5 3.5 3.5 1.5-3.5 1.5-1.5 3.5-1.5-3.5-3.5-1.5 3.5-1.5z"/><path class="f" d="M24 82q28-10 56 0v26q-28-10-56 0z"/><path class="f" d="M80 82q28-10 56 0v26q-28-10-56 0z"/><path class="s" d="M34 88q18-6 36 0M34 96q18-6 36 0M90 88q18-6 36 0M90 96q18-6 36 0"/></svg><small>Last look</small><h2>Night Before the Exam</h2><p>Every rule and formula on one page.</p><span class="tr">كل القواعد والقوانين في صفحة واحدة.</span></div>
+
+  <div class="block">
+    <h3>Matrices</h3>
+<pre class="cli">size = rows × columns          A = B ⇔ same size and same entries
+A ± B: same size only           cA: multiply every entry
+AB: A(m×k)·B(k×n) = m×n         entry = row · column       AB ≠ BA in general
+(AB)C = A(BC)   A(B+C) = AB+AC   AI = IA = A    A² = A·A (not squaring entries)
+(Aᵀ)ᵀ = A   (A+B)ᵀ = Aᵀ+Bᵀ   (cA)ᵀ = cAᵀ   (AB)ᵀ = BᵀAᵀ
+symmetric: A = Aᵀ     skew: A = −Aᵀ     upper triangular: zeros below the diagonal</pre>
+  </div>
+  <div class="block">
+    <h3>Systems</h3>
+<pre class="cli">always: no solution  OR  exactly one  OR  infinitely many
+EROs:  Rᵢ ↔ Rⱼ    cRᵢ → Rᵢ (c ≠ 0)    Rᵢ + cRⱼ → Rᵢ
+REF: zero rows at bottom, leading 1s, staircase      RREF: + zeros above and below leading 1s
+[0 … 0 | c≠0] → no solution        free variable → infinitely many
+homogeneous AX = 0: always consistent; fewer equations than variables → infinitely many</pre>
+  </div>
+  <div class="block">
+    <h3>Inverse</h3>
+<pre class="cli">2×2: A⁻¹ = 1/(ad−bc) · [d −b; −c a]     exists ⇔ ad − bc ≠ 0
+Gauss: [A | I] → [I | A⁻¹]   (zero row on the left → no inverse)
+adjoint: A⁻¹ = (1/|A|)·(cofactor matrix)ᵀ
+(A⁻¹)⁻¹ = A   (AB)⁻¹ = B⁻¹A⁻¹   (Aᵀ)⁻¹ = (A⁻¹)ᵀ   (cA)⁻¹ = (1/c)A⁻¹   (Aᵏ)⁻¹ = (A⁻¹)ᵏ
+AX = B → X = A⁻¹B</pre>
+  </div>
+  <div class="block">
+    <h3>Determinant</h3>
+<pre class="cli">2×2: ad − bc        Cᵢⱼ = (−1)^(i+j)·Mᵢⱼ      signs | + − + / − + − / + − + |
+expand along the row/column with most zeros       Sarrus: 3×3 only
+zero row/column → 0   equal or proportional rows → 0   triangular → product of the diagonal
+swap rows → −det   cRᵢ → c·det   Rᵢ + cRⱼ → same det
+det(AB) = det A·det B   det(Aᵀ) = det A   det(A⁻¹) = 1/det A   det(cA) = cⁿ det A
+A invertible ⇔ det A ≠ 0 ⇔ AX = B has a unique solution</pre>
+  </div>
+  <div class="note"><b>آخر نصيحة:</b> اكتبي حجم كل مصفوفة، وكل عملية صفوف، وكل إشارة cofactor. وفي الآخر اتأكدي: A·A⁻¹ = I أو عوّضي الحل في المعادلات.</div>
+</section>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script>
+(function(){
+  /* ---------- tabs ---------- */
+  const tabs=[...document.querySelectorAll('nav.tabs button')];
+  const ids=tabs.map(t=>t.dataset.v);
+  function show(v){
+    if(!ids.includes(v)) v='ch1';
+    tabs.forEach(t=>t.setAttribute('aria-selected',t.dataset.v===v));
+    ids.forEach(id=>document.getElementById('v-'+id).hidden=(id!==v));
+    try{localStorage.setItem('netTab',v)}catch(e){}
+  }
+  tabs.forEach(t=>t.addEventListener('click',()=>{show(t.dataset.v);window.scrollTo({top:0})}));
+  let start=(location.hash||'').slice(1);
+  if(!start){try{start=localStorage.getItem('netTab')||''}catch(e){}}
+  show(start);
+
+
+  /* ---------- interactive mind maps (Obsidian-style graph) ---------- */
+  let uid=0;
+  const idOf=el=>el.id||(el.id='n'+(++uid));
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function go(el){
+    if(!el) return;
+    el.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+    el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');
+    if(el.matches('li,tr')) setTimeout(()=>el.classList.remove('flash'),1600);
+  }
+  function collect(sec){
+    const blocks=[...sec.querySelectorAll('.block')].filter(b=>b.querySelector('h3'));
+    return blocks.map(b=>{
+      const seen=new Set(), chips=[];
+      b.querySelectorAll(':scope > ul > li, :scope > ol > li').forEach(li=>{
+        const t=li.querySelector(':scope > b'); if(!t) return;
+        const x=t.textContent.replace(/[:：]\s*$/,'').trim(); if(!x||seen.has(x)||x.length>40) return;
+        seen.add(x); chips.push([x,idOf(li)]);
+      });
+      if(chips.length<2) b.querySelectorAll('table tr').forEach(tr=>{
+        const td=tr.querySelector('td'); if(!td) return;
+        const x=(td.querySelector('b')||td).childNodes[0].textContent.trim(); if(!x||seen.has(x)||x.length>32||/^[0-9…]+$/.test(x)) return;
+        seen.add(x); chips.push([x,idOf(tr)]);
+      });
+      return {h:(b.querySelector('h3 .h3t')||b.querySelector('h3')).textContent.trim(),id:idOf(b),hard:!!b.querySelector('.watchrow.hard'),chips:chips.slice(0,7)};
+    });
+  }
+  function cards(map,root,data){
+    map.innerHTML='<div class="mm-head"><div class="mm-root">'+root+'</div></div><div class="mm-branches">'+data.map(d=>
+      '<div class="mm-node"><button class="mm-title" type="button" data-go="'+d.id+'">'+d.h+(d.hard?' ★':'')+'</button><div class="mm-chips">'+
+      d.chips.map(c=>'<button class="mm-chip" type="button" data-go="'+c[1]+'">'+c[0]+'</button>').join('')+'</div></div>').join('')+'</div>';
+  }
+  function graph(map,root,rootId,data){
+    map.innerHTML='<div class="mmg-bar"><span class="mm-hint">كل وردة = عنوان، والبتلات = النقط اللي تحته. دوسي على الوردة أو على أي بتلة وهتنزلي على شرحها. تقدري تسحبي الورد وتكبّري بالعجلة أو بصباعين.</span><button class="mmg-reset" type="button">Reset view</button></div>';
+    const W=Math.round(Math.max(320,(map.getBoundingClientRect().width||map.closest('main').getBoundingClientRect().width||900)-24)), H=Math.round(Math.max(440,Math.min(640,W*.72)));
+    const svg=d3.select(map).append('svg').attr('class','mmg flowers').attr('viewBox',[0,0,W,H]).attr('role','img').attr('aria-label',root+' mind map');
+    const sky=svg.append('g').attr('class','mmg-sky');for(let i=0;i<40;i++)sky.append('circle').attr('cx',Math.random()*W).attr('cy',Math.random()*H).attr('r',Math.random()*1.1+.3).attr('opacity',Math.random()*.45+.1);
+    const g=svg.append('g');
+    const zoom=d3.zoom().scaleExtent([.4,4]).on('zoom',e=>g.attr('transform',e.transform));
+    svg.call(zoom).on('dblclick.zoom',null);
+    map.querySelector('.mmg-reset').onclick=()=>svg.transition().duration(reduce?0:400).call(zoom.transform,d3.zoomIdentity);
+    const cx=W/2, cy=H/2, rr=Math.min(W,H)*.36, n=data.length;
+    const rootN={id:'r',fx:cx,fy:cy,x:cx,y:cy};
+    const fl=data.map((d,i)=>{const a=i/n*Math.PI*2-Math.PI/2;return {id:'f'+i,d,x:cx+Math.cos(a)*rr,y:cy+Math.sin(a)*rr};});
+    const nodes=[rootN,...fl], links=fl.map(f=>({source:'r',target:f.id}));
+    const stems=g.append('g').selectAll('path').data(links).join('path').attr('class','stem');
+    const leaves=g.append('g').selectAll('path').data(links).join('path').attr('class','leaf');
+    const rootG=g.append('g').attr('class','fl-root').attr('transform',`translate(${cx},${cy})`).attr('tabindex',0).attr('role','button').attr('aria-label',root);
+    for(let k=0;k<10;k++){const a=k/10*360;rootG.append('ellipse').attr('class','rpetal').attr('cx',0).attr('cy',-26).attr('rx',10).attr('ry',20).attr('transform',`rotate(${a})`);}
+    rootG.append('circle').attr('class','rcenter').attr('r',17);
+    rootG.append('text').attr('class','rlabel').attr('dy',66).attr('text-anchor','middle').text(root);
+    rootG.on('click',()=>go(document.getElementById(rootId)));
+    const flower=g.append('g').selectAll('g').data(fl).join('g').attr('class',f=>'flower'+(f.d.hard?' hard':''));
+    flower.each(function(f){
+      const G=d3.select(this),chips=f.d.chips,m=Math.max(6,chips.length);
+      for(let k=0;k<m;k++){
+        const a=k/m*360,c=chips[k];
+        const p=G.append('ellipse').attr('class','petal'+(c?' real':'')).attr('cx',0).attr('cy',-23).attr('rx',m>7?8.5:10.5).attr('ry',17).attr('transform',`rotate(${a})`);
+        if(c){p.attr('tabindex',0).attr('role','button').attr('aria-label',c[0]).datum({go:c[1],label:c[0],a});p.append('title').text(c[0]);}
+      }
+      G.append('circle').attr('class','center').attr('r',12).attr('tabindex',0).attr('role','button').attr('aria-label',f.d.h).datum({go:f.d.id,label:f.d.h});
+      G.append('text').attr('class','flabel').attr('dy',60).attr('text-anchor','middle').text((f.d.h.length>26?f.d.h.slice(0,25)+'…':f.d.h)+(f.d.hard?' ★':''));
+      G.append('text').attr('class','ptip').attr('text-anchor','middle').attr('dy',-50);
+    });
+    const tip=(G,t)=>G.select('.ptip').text(t||'');
+    flower.on('mouseenter',function(e,f){flower.classed('dim',x=>x!==f);stems.classed('lit',l=>l.target===f);})
+      .on('mouseleave',function(){flower.classed('dim',false);stems.classed('lit',false);tip(d3.select(this),'');});
+    flower.selectAll('.petal.real').on('mouseenter focus',function(e,p){tip(d3.select(this.parentNode),p.label);}).on('mouseleave blur',function(){tip(d3.select(this.parentNode),'');});
+    g.selectAll('.petal.real,.center').on('click',(e,p)=>{e.stopPropagation();go(document.getElementById(p.go));})
+      .on('keydown',(e,p)=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go(document.getElementById(p.go));}});
+    const sim=d3.forceSimulation(nodes)
+      .force('link',d3.forceLink(links).id(d=>d.id).distance(rr).strength(.25))
+      .force('charge',d3.forceManyBody().strength(d=>d.id==='r'?-300:-900))
+      .force('collide',d3.forceCollide(d=>d.id==='r'?78:68))
+      .force('x',d3.forceX(cx).strength(.02)).force('y',d3.forceY(cy).strength(.03));
+    flower.call(d3.drag().clickDistance(4)
+      .on('start',(e,f)=>{if(!e.active)sim.alphaTarget(.25).restart();f.fx=f.x;f.fy=f.y;})
+      .on('drag',(e,f)=>{f.fx=e.x;f.fy=e.y;})
+      .on('end',(e,f)=>{if(!e.active)sim.alphaTarget(0);f.fx=null;f.fy=null;}));
+    const curve=l=>{const s=l.source,t=l.target,mx=(s.x+t.x)/2,my=(s.y+t.y)/2,dx=t.x-s.x,dy=t.y-s.y,len=Math.hypot(dx,dy)||1,o=len*.18;return {mx:mx-dy/len*o,my:my+dx/len*o};};
+    const tick=()=>{
+      stems.attr('d',l=>{const c=curve(l);return `M${l.source.x},${l.source.y} Q${c.mx},${c.my} ${l.target.x},${l.target.y}`;});
+      leaves.attr('d',l=>{const c=curve(l),x=(l.source.x+2*c.mx+l.target.x)/4,y=(l.source.y+2*c.my+l.target.y)/4,a=Math.atan2(l.target.y-l.source.y,l.target.x-l.source.x)+.9;return `M${x},${y} q${Math.cos(a)*9-Math.sin(a)*5},${Math.sin(a)*9+Math.cos(a)*5} ${Math.cos(a)*18},${Math.sin(a)*18} q${-Math.cos(a)*9+Math.sin(a)*5},${-Math.sin(a)*9-Math.cos(a)*5} ${-Math.cos(a)*18},${-Math.sin(a)*18}Z`;});
+      flower.attr('transform',f=>`translate(${f.x},${f.y})`);
+    };
+    if(reduce){sim.stop();for(let i=0;i<300;i++)sim.tick();tick();} else sim.on('tick',tick);
+  }
+  const built=new Set();
+  function buildMap(sec){
+    const map=sec&&sec.querySelector('[data-map]'); if(!map||built.has(map)||sec.hidden) return;
+    built.add(map);
+    const head=sec.querySelector('.chap-head'), data=collect(sec), root=head.querySelector('h2').textContent;
+    if(window.d3) graph(map,root,idOf(head),data); else cards(map,root,data);
+    map.addEventListener('click',e=>{const t=e.target.closest('[data-go]'); if(t) go(document.getElementById(t.dataset.go));});
+  }
+  tabs.forEach(t=>t.addEventListener('click',()=>setTimeout(()=>buildMap(document.getElementById('v-'+t.dataset.v)),0)));
+  const boot=()=>document.querySelectorAll('section.view').forEach(buildMap);
+  if(document.readyState==='complete') setTimeout(boot,0); else addEventListener('load',boot);
+
+  /* ---------- subnet calculator ---------- */
+  const toInt=a=>a.reduce((n,o)=>(n*256+o),0)>>>0;
+  const toIp=n=>[24,16,8,0].map(s=>(n>>>s)&255).join('.');
+  function calc(str){
+    const m=str.trim().match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})\s*\/\s*(\d{1,2})$/);
+    if(!m) return {err:'اكتبوها بالشكل دا: 192.168.1.10/26'};
+    const oct=m.slice(1,5).map(Number), p=Number(m[5]);
+    if(oct.some(o=>o>255)) return {err:'فيه octet أكبر من 255، العنوان دا invalid.'};
+    if(p<1||p>30) return {err:'خلّوا الـ CIDR بين /1 و /30.'};
+    const ip=toInt(oct), mask=(0xFFFFFFFF<<(32-p))>>>0, net=(ip&mask)>>>0, bc=(net|(~mask>>>0))>>>0;
+    const f=oct[0], cls=f>=1&&f<=126?'A':f===127?'Loopback (127)':f<=191?'B':f<=223?'C':f<=239?'D (multicast)':'E (experimental)';
+    const mo=toIp(mask).split('.').map(Number), idx=mo.findIndex(o=>o!==255), ii=idx<0?3:idx;
+    const block=256-mo[ii];
+    return {cls,mask:toIp(mask),p,net:toIp(net),first:toIp(net+1),last:toIp(bc-1),bc:toIp(bc),hosts:Math.pow(2,32-p)-2,block,octet:['1st','2nd','3rd','4th'][ii]};
+  }
+  const out=document.getElementById('calcOut'), inp=document.getElementById('calcIn');
+  function run(){
+    const r=calc(inp.value);
+    if(r.err){out.innerHTML='<p class="err">'+r.err+'</p>';return}
+    out.innerHTML='<div class="tw"><table>'+
+      [['Class',r.cls],['Mask','/'+r.p+' = '+r.mask],['Block size',r.block+' (in the '+r.octet+' octet)'],['Network (subnet)',r.net],['Usable hosts',r.first+' – '+r.last+' ('+r.hosts+')'],['Broadcast',r.bc]]
+      .map(x=>'<tr><th>'+x[0]+'</th><td class="mono">'+x[1]+'</td></tr>').join('')+'</table></div>';
+  }
+  if(document.getElementById('calcForm')){document.getElementById('calcForm').addEventListener('submit',e=>{e.preventDefault();run()});
+  run();}
+
+  /* ---------- quiz ---------- */
+  const Q=[
+   [1,"A matrix with 3 rows and 2 columns has size…",["2 × 3","3 × 2","6","3 + 2"],1,"صفوف × أعمدة."],
+   [1,"In A = [aᵢⱼ], the index i refers to…",["the column","the row","the size","the determinant"],1,"i = الصف."],
+   [1,"For A = [2 5 1; 0 −1 4], a₂₃ =",["1","4","−1","0"],1,"الصف 2 العمود 3."],
+   [1,"Two matrices are equal if…",["they have the same determinant","they have the same size and equal corresponding entries","they have the same number of entries","they are both square"],1,"نفس الحجم ونفس العناصر."],
+   [1,"If [x 4; 2 3] = [5 4; x+y 3], then y =",["5","−3","3","2"],1,"2 = 5 + y."],
+   [1,"A + B is defined only when…",["A and B are square","A and B have the same size","columns of A = rows of B","det A ≠ 0"],1,"نفس الحجم."],
+   [1,"[2 5; −1 0] + [3 2; 1 4] =",["[5 7; 0 4]","[6 10; −1 0]","[5 7; 2 4]","[−1 3; −2 −4]"],0,"عنصر بعنصر."],
+   [1,"3[2 5; −1 0] =",["[6 15; −3 0]","[6 5; −1 0]","[5 8; 2 3]","[6 15; 3 0]"],0,"كل العناصر × 3."],
+   [1,"A + (−A) =",["I","0 (zero matrix)","2A","A"],1,"المعكوس الجمعي."],
+   [1,"A + B = B + A is the… property.",["associative","commutative","distributive","identity"],1,"تبديلي."],
+   [1,"The identity matrix I₃ has…",["all entries 1","1s on the main diagonal and 0 elsewhere","0 on the diagonal","3 rows and 2 columns"],1,"واحايد على القطر."],
+   [1,"A square matrix has…",["more rows than columns","equal numbers of rows and columns","only zeros","only ones"],1,"صفوف = أعمدة."],
+   [1,"An upper triangular matrix has zeros…",["above the main diagonal","below the main diagonal","on the diagonal","everywhere"],1,"تحت القطر."],
+   [1,"A lower triangular matrix has zeros…",["above the main diagonal","below the main diagonal","in the first row","nowhere"],0,"فوق القطر."],
+   [1,"AB is defined when…",["rows of A = rows of B","columns of A = rows of B","A and B have the same size","both are square"],1,"أعمدة الأولى = صفوف التانية."],
+   [1,"If A is 2×3 and B is 3×4, AB is…",["3×3","2×4","4×2","not defined"],1,"صفوف الأولى × أعمدة التانية."],
+   [1,"If A is 3×2 and B is 2×1, then BA is…",["1×2","3×1","not defined","2×2"],2,"1 ≠ 3."],
+   [1,"In general, matrix multiplication is…",["commutative","not commutative","undefined","always zero"],1,"AB ≠ BA."],
+   [1,"[2 3 5; 1 0 4]·[3 4; −1 2; 0 3] =",["[3 29; 3 16]","[6 12; 0 0]","[3 16; 3 29]","not defined"],0,"مثال المحاضرة."],
+   [1,"[5 0; 2 3; 1 −1]·[2; 4] =",["[10; 16; −2]","[10; 12; 4]","[10 16 −2]","not defined"],0,"مثال المحاضرة."],
+   [1,"(AB)C = A(BC) is the… property.",["associative","commutative","transpose","inverse"],0,"تجميعي."],
+   [1,"AI = ",["I","A","0","Aᵀ"],1,"I زي الواحد."],
+   [1,"For A = [1 2; 3 4], A² =",["[1 4; 9 16]","[7 10; 15 22]","[2 4; 6 8]","[1 2; 3 4]"],1,"A·A مش تربيع العناصر."],
+   [1,"A⁰ (for square A) =",["0","A","I","undefined"],2,"تعريف."],
+   [1,"The transpose of a 3×2 matrix is…",["3×2","2×3","3×3","2×2"],1,"الصفوف تبقى أعمدة."],
+   [1,"[3 2; 5 4; 0 1]ᵀ =",["[3 5 0; 2 4 1]","[2 3; 4 5; 1 0]","[3 2 5; 4 0 1]","[0 1; 5 4; 3 2]"],0,"مثال المحاضرة."],
+   [1,"(AB)ᵀ =",["AᵀBᵀ","BᵀAᵀ","BA","(BA)ᵀ"],1,"الترتيب بيتعكس."],
+   [1,"(Aᵀ)ᵀ =",["A","Aᵀ","I","0"],0,"مرتين = الأصلية."],
+   [1,"(A + B)ᵀ =",["Aᵀ + Bᵀ","AᵀBᵀ","BᵀAᵀ","A + B"],0,"transpose الجمع."],
+   [1,"A is symmetric if…",["A = −Aᵀ","A = Aᵀ","A = I","det A = 0"],1,"متماثلة."],
+   [1,"A is skew-symmetric if…",["A = Aᵀ","A = −Aᵀ","A² = A","A = 0"],1,"ضد المتماثلة."],
+   [1,"The diagonal of a skew-symmetric matrix is…",["all ones","all zeros","any numbers","negative"],1,"aᵢᵢ = −aᵢᵢ → 0."],
+   [1,"For any matrix A, AAᵀ is…",["symmetric","skew-symmetric","the identity","zero"],0,"Theorem 1.1.15."],
+   [1,"True or False: A² means squaring every entry of A.",["True","False"],1,"لأ، A·A."],
+   [1,"c(A + B) =",["cA + cB","cA + B","A + cB","c²AB"],0,"توزيع."],
+   [1,"Which matrices can be added: A (2×3), B (3×2), C (2×3)?",["A and B","A and C","B and C","all of them"],1,"نفس الحجم."],
+   [1,"How many entries does a 4×5 matrix have?",["9","20","45","54"],1,"4 × 5."],
+   [1,"Fill in: If A is m×k and B is k×n, AB is ____.",["k×k","m×n","n×m","m×k"],1,"m×n."],
+   [2,"Which equation is linear?",["xy = 4","2x − 3y + z = 7","x² + y = 1","√x + y = 2"],1,"كل متغير أُسه 1."],
+   [2,"Which equation is NOT linear?",["x + y = 1","3x = 5","1/x + y = 2","x − 2y + 4z = 0"],2,"المتغير في المقام."],
+   [2,"A system with no solution is called…",["consistent","inconsistent","homogeneous","equivalent"],1,"inconsistent."],
+   [2,"A system with at least one solution is…",["consistent","inconsistent","singular","linear"],0,"consistent."],
+   [2,"A linear system can have exactly…",["two solutions","no, one or infinitely many solutions","three solutions","only one solution"],1,"Theorem 1.2.6."],
+   [2,"x + y = 2 and 2x + 2y = 5 has…",["one solution","no solution","infinitely many","two solutions"],1,"خطوط متوازية."],
+   [2,"x + y = 2 and 2x + 2y = 4 has…",["one solution","no solution","infinitely many","exactly two"],2,"نفس الخط."],
+   [2,"x + y = 2 and x − y = 0 has the solution…",["(1, 1)","(2, 0)","(0, 2)","none"],0,"تقاطع."],
+   [2,"Geometrically, two equations in x, y with no solution are…",["crossing lines","parallel lines","the same line","perpendicular"],1,"متوازيين."],
+   [2,"Two systems are equivalent if…",["they have the same number of equations","they have the same solution set","they have the same coefficients","both are homogeneous"],1,"نفس الحلول."],
+   [2,"The augmented matrix of a system is…",["[A | B]","[A | I]","Aᵀ","A⁻¹B"],0,"المعاملات + الثوابت."],
+   [2,"Which is NOT an elementary row operation?",["Rᵢ ↔ Rⱼ","cRᵢ → Rᵢ with c ≠ 0","Rᵢ + cRⱼ → Rᵢ","0·Rᵢ → Rᵢ"],3,"الضرب في صفر ممنوع."],
+   [2,"Multiplying a row by zero is not allowed because…",["it deletes an equation and changes the solutions","it is too slow","it changes the size","it is the same as swapping"],0,"بيمسح معادلة."],
+   [2,"A is row-equivalent to B if…",["B comes from A by finitely many EROs","A = B","det A = det B","A and B are square"],0,"تعريف."],
+   [2,"Row-equivalence is…",["reflexive, symmetric and transitive","only reflexive","not symmetric","not transitive"],0,"equivalence relation."],
+   [2,"In REF, rows of zeros are…",["at the top","at the bottom","anywhere","not allowed"],1,"تحت."],
+   [2,"In REF, the first nonzero entry of every nonzero row is…",["0","1","any number","the largest"],1,"leading 1."],
+   [2,"Each leading 1 in REF is… the leading 1 of the row above.",["to the left of","to the right of","under","equal to"],1,"سلّم."],
+   [2,"RREF adds the condition…",["zeros above and below each leading 1","all entries are 1","no zero rows","the matrix is square"],0,"أصفار فوق وتحت."],
+   [2,"Is [1 3 −2; 0 1 4; 0 0 1] in REF?",["Yes","No"],0,"leading 1s سلّم."],
+   [2,"Is [1 0 0; 0 1 0; 0 0 1] in RREF?",["Yes","No"],0,"دي I."],
+   [2,"Is [0 0 0; 1 2 3] in REF?",["Yes","No"],1,"صف الأصفار فوق."],
+   [2,"Is [1 2 0; 0 1 0] in RREF?",["Yes","No"],1,"فيه 2 فوق الـ leading 1."],
+   [2,"A square matrix in REF is…",["lower triangular","upper triangular","symmetric","the identity"],1,"Corollary 1.3.11."],
+   [2,"A square matrix in RREF is either Iₙ or…",["has a row of zeros","is symmetric","is zero","is invertible"],0,"Lemma 1.3.12."],
+   [2,"The maximum number of leading 1s in an m × n REF matrix is…",["m + n","min(m, n)","mn","max(m, n)"],1,"Lemma 1.3.9."],
+   [2,"True or False: EROs change the solution set.",["True","False"],1,"لأ، بتدّي نظام متكافئ."],
+   [3,"Gaussian elimination reduces the augmented matrix to…",["RREF then reads the answer","REF then uses back-substitution","the identity only","a diagonal matrix always"],1,"REF + تعويض."],
+   [3,"Gauss-Jordan elimination reduces the matrix to…",["REF","RREF","the zero matrix","Aᵀ"],1,"RREF."],
+   [3,"Back-substitution starts from…",["the first equation","the last equation","the middle","any equation"],1,"من تحت لفوق."],
+   [3,"Solution of x + y + 2z = 9, 2x + 4y − 3z = 1, 3x + 6y − 5z = 0:",["(1, 2, 3)","(3, 2, 1)","(2, 1, 3)","no solution"],0,"المثال المحلول."],
+   [3,"A row [0 0 0 | 5] in the reduced augmented matrix means…",["one solution","no solution","infinitely many","z = 5"],1,"0 = 5 مستحيل."],
+   [3,"A row [0 0 0 | 0] means…",["no solution","this equation gives no information","z = 0","the matrix is singular"],1,"0 = 0."],
+   [3,"A variable whose column has no leading 1 is called…",["a pivot","a free variable","a constant","a coefficient"],1,"حر."],
+   [3,"A consistent system with a free variable has…",["one solution","no solution","infinitely many solutions","two solutions"],2,"لا نهائي."],
+   [3,"[1 2 −1 | 3; 0 0 1 | 2; 0 0 0 | 0] gives…",["x = 5 − 2t, y = t, z = 2","x = 3, y = 0, z = 2","no solution","x = 1, y = 2, z = 3"],0,"y حرة."],
+   [3,"A homogeneous system is one where…",["all coefficients are 1","all constant terms are 0","it has no solution","A is square"],1,"الثوابت أصفار."],
+   [3,"A homogeneous system always has…",["no solution","the trivial solution","exactly two solutions","a free variable"],1,"الأصفار حل."],
+   [3,"A homogeneous system with fewer equations than variables has…",["no solution","only the trivial solution","infinitely many solutions","exactly one solution"],2,"Theorem 1.4.7."],
+   [3,"A consistent system with 2 equations and 4 variables has…",["no solution","one solution","infinitely many","it depends"],2,"Theorem 1.4.8."],
+   [3,"The solution of x + y − z = 0, 2x − y + z = 0 is…",["(0, t, t)","(t, t, 0)","(0, 0, 0) only","no solution"],0,"المثال."],
+   [3,"[1 2 | 5; 3 −1 | 1] gives (x, y) =",["(1, 2)","(2, 1)","(5, 1)","no solution"],0,"المثال."],
+   [3,"For x + y = 2, 2x + 2y = k there is no solution when…",["k = 4","k ≠ 4","k = 0","always"],1,"0 = k − 4."],
+   [3,"Which operation makes a leading 1 when the pivot is 4?",["4R → R","(1/4)R → R","R − 4 → R","R ↔ 4R"],1,"نقسم على 4."],
+   [3,"To make the entry under a pivot 1 in row 1 equal to zero when it is 3, use…",["R₂ − 3R₁ → R₂","R₂ + 3R₁ → R₂","3R₂ → R₂","R₁ − 3R₂ → R₁"],0,"نطرح 3 أضعاف."],
+   [3,"Any matrix is row-equivalent to a matrix in RREF, and this RREF is…",["unique","not unique","always I","always zero"],0,"Theorem 1.4.4."],
+   [4,"The inverse is defined only for…",["square matrices","rectangular matrices","zero matrices","row vectors"],0,"مربعة."],
+   [4,"A is invertible if there is B with…",["AB = BA = I","AB = 0","A + B = I","AB = A"],0,"تعريف."],
+   [4,"A matrix with no inverse is called…",["singular","symmetric","identity","triangular"],0,"singular."],
+   [4,"If A is invertible, its inverse is…",["unique","not unique","always A","always I"],0,"Lemma 2.1.2."],
+   [4,"A matrix with a row of zeros is…",["always invertible","never invertible","symmetric","the identity"],1,"Lemma 2.1.3."],
+   [4,"[a b; c d] is invertible if and only if…",["ad − bc ≠ 0","ad + bc ≠ 0","a = d","b = c"],0,"Theorem 2.1.7."],
+   [4,"Inverse of [1 4; 2 3]:",["−1/5 [3 −4; −2 1]","1/5 [3 4; 2 1]","[3 −4; −2 1]","−1/5 [1 4; 2 3]"],0,"مثال المحاضرة."],
+   [4,"In the 2×2 formula we… the main diagonal and change the signs of the other two.",["swap","double","delete","square"],0,"نبدّل."],
+   [4,"The Gauss method for the inverse transforms…",["[A | I] into [I | A⁻¹]","[I | A] into [A | I]","A into Aᵀ","[A | B] into [B | A]"],0,"الطريقة."],
+   [4,"If a zero row appears on the left in [A | I], then…",["A is not invertible","A⁻¹ = 0","A = I","continue normally"],0,"singular."],
+   [4,"A is invertible if and only if A is row-equivalent to…",["0","Iₙ","Aᵀ","any matrix"],1,"Theorem 2.1.5."],
+   [4,"(A⁻¹)⁻¹ =",["A","A⁻¹","I","Aᵀ"],0,"خاصية."],
+   [4,"(AB)⁻¹ =",["A⁻¹B⁻¹","B⁻¹A⁻¹","AB","BA"],1,"الترتيب بيتعكس."],
+   [4,"(cA)⁻¹ =",["cA⁻¹","(1/c)A⁻¹","−cA⁻¹","c²A⁻¹"],1,"الرقم يتقلب."],
+   [4,"(Aᵀ)⁻¹ =",["(A⁻¹)ᵀ","A","−Aᵀ","Aᵀ"],0,"خاصية."],
+   [4,"(Aᵏ)⁻¹ =",["(A⁻¹)ᵏ","kA⁻¹","A⁻ᵏ⁻¹","Aᵏ"],0,"خاصية."],
+   [4,"If A is invertible and AB = AC, then…",["B = C","B = −C","A = 0","nothing"],0,"cancellation."],
+   [4,"If AX = B and A is invertible, then X =",["A⁻¹B","BA⁻¹","AB","B/A"],0,"Theorem 2.1.16."],
+   [4,"Solving x − y = 4, x − z = 3, −6x + 2y + 3z = 2 gives x =",["−19","19","−23","4"],0,"مثال المحاضرة."],
+   [4,"The inverse of A = [1 −1 0; 1 0 −1; −6 2 3] is…",["[−2 −3 −1; −3 −3 −1; −2 −4 −1]","[2 3 1; 3 3 1; 2 4 1]","[1 1 −6; −1 0 2; 0 −1 3]","not defined"],0,"مثال المحاضرة."],
+   [4,"If A is noninvertible, AB is…",["invertible","noninvertible","the identity","symmetric"],1,"Lemma 2.1.14."],
+   [4,"Is [2 6; 1 3] invertible?",["Yes","No"],1,"det = 0."],
+   [4,"True or False: (A + B)⁻¹ = A⁻¹ + B⁻¹ always.",["True","False"],1,"لأ."],
+   [4,"For square matrices, if AB = I then…",["BA = I","BA = 0","A = B","nothing"],0,"Theorem 2.1.4."],
+   [5,"det [a b; c d] =",["ad − bc","ab − cd","ad + bc","ac − bd"],0,"تعريف."],
+   [5,"det [1 4; 2 3] =",["−5","5","11","−11"],0,"3 − 8."],
+   [5,"The minor Mᵢⱼ is the determinant after deleting…",["row i and column j","row j and column i","only row i","only column j"],0,"تعريف."],
+   [5,"The cofactor Cᵢⱼ =",["(−1)^(i+j) Mᵢⱼ","Mᵢⱼ always","−Mᵢⱼ always","aᵢⱼ Mᵢⱼ"],0,"الإشارة."],
+   [5,"The sign of C₁₂ is…",["+","−"],1,"1 + 2 فردي."],
+   [5,"The sign of C₃₃ is…",["+","−"],0,"6 زوجي."],
+   [5,"Cofactor expansion can be done along…",["the first row only","any row or any column","the diagonal only","the last column only"],1,"Theorem 2.3.2."],
+   [5,"The best row or column to expand along is the one with…",["the biggest numbers","the most zeros","negative numbers","no zeros"],1,"حدود أقل."],
+   [5,"det [1 −1 0; 1 0 −1; −6 2 3] =",["−1","1","2","0"],0,"مثال المحاضرة."],
+   [5,"Sarrus' rule works for…",["2×2 only","3×3 only","any size","4×4"],1,"3×3 بس."],
+   [5,"A matrix with a column of zeros has det =",["1","0","undefined","the product of the diagonal"],1,"Corollary 2.3.3."],
+   [5,"det of a triangular matrix =",["sum of the diagonal","product of the diagonal","0","1"],1,"Theorem 2.3.4."],
+   [5,"det(Iₙ) =",["0","1","n","−1"],1,"Corollary 2.3.5."],
+   [5,"Swapping two rows makes the determinant…",["unchanged","multiplied by −1","zero","doubled"],1,"Theorem 2.4.1."],
+   [5,"Multiplying a row by c makes the determinant…",["c·det","det/c","cⁿ·det","unchanged"],0,"Theorem 2.4.1."],
+   [5,"Adding a multiple of one row to another makes det…",["unchanged","zero","negative","doubled"],0,"Theorem 2.4.1."],
+   [5,"If two rows are equal, det =",["0","1","2·det","undefined"],0,"Corollary 2.4.2."],
+   [5,"det(AB) =",["det A + det B","det A·det B","det A − det B","det(BA)²"],1,"Theorem 2.5.6."],
+   [5,"det(Aᵀ) =",["det A","−det A","1/det A","0"],0,"Lemma 2.5.9."],
+   [5,"For a 3×3 matrix, det(2A) =",["2 det A","4 det A","8 det A","6 det A"],2,"2³."],
+   [5,"det(A⁻¹) =",["det A","1/det A","−det A","0"],1,"Corollary 2.5.8."],
+   [5,"A is invertible if and only if…",["det A = 0","det A ≠ 0","det A = 1","A is symmetric"],1,"Theorem 2.5.10."],
+   [5,"AX = B has a unique solution if and only if…",["det A ≠ 0","det A = 0","B = 0","A is triangular"],0,"Corollary 2.5.5."],
+   [5,"A⁻¹ by the adjoint method =",["(1/|A|)·(cofactor matrix)ᵀ","|A|·cofactor matrix","(cofactor matrix)/2","Aᵀ/|A|"],0,"القانون."],
+   [5,"adj(A) is…",["the transpose of the cofactor matrix","the cofactor matrix","A⁻¹","Aᵀ"],0,"تعريف."],
+   [5,"If det A = 2 and det B = −3 (3×3), det(AB) =",["−6","−1","6","5"],0,"ضرب."],
+   [5,"det [1 2 3; 2 4 6; 7 8 9] =",["0","6","−6","12"],0,"صف مضاعف."],
+   [5,"det of the 4×4 lecture example [1 −2 3 0; −1 1 0 2; 0 2 0 3; 3 4 0 −2] =",["39","13","−39","0"],0,"3·13."],
+   [5,"True or False: det(A + B) = det A + det B always.",["True","False"],1,"لأ."]
+  ];
+  const list=document.getElementById('qList'), score=document.getElementById('qScore');
+  let filter='all', done={};
+  function render(){
+    const items=Q.map((q,i)=>({q,i})).filter(o=>filter==='all'||String(o.q[0])===filter);
+    list.innerHTML=items.map(({q,i},n)=>'<div class="q" data-i="'+i+'"><p>'+(n+1)+'. <span class="pill">'+({"1": "Matrices", "2": "Systems", "3": "Gauss", "4": "Inverse", "5": "Determinants"}[q[0]]||'Ch'+q[0])+'</span> <span class="pill">'+(/^True or False/.test(q[1])?'True/False':/____/.test(q[1])?'Fill in':/^What is printed/.test(q[1])?'Output':'MCQ')+'</span> '+q[1]+'</p><div class="opts">'+
+      q[2].map((o,j)=>'<button type="button" data-j="'+j+'">'+o+'</button>').join('')+'</div><div class="why note" hidden></div></div>').join('');
+    list.querySelectorAll('.q').forEach(el=>{const i=+el.dataset.i; if(done[i]!==undefined) mark(el,i,done[i])});
+    upd();
+  }
+  function mark(el,i,j){
+    const q=Q[i], bs=el.querySelectorAll('.opts button');
+    bs.forEach((b,k)=>{b.disabled=true; if(k===q[3]) b.classList.add('right'); else if(k===j) b.classList.add('wrong')});
+    const w=el.querySelector('.why'); w.hidden=false;
+    w.innerHTML=(j===q[3]?'<b>صح ✓</b> ':'<b>غلط ✗</b> الإجابة: <span dir="ltr">'+q[2][q[3]]+'</span>. ')+q[4];
+  }
+  function upd(){
+    const ks=Object.keys(done).filter(i=>filter==='all'||String(Q[i][0])===filter);
+    const ok=ks.filter(i=>done[i]===Q[i][3]).length;
+    const tot=Q.filter(q=>filter==='all'||String(q[0])===filter).length;
+    score.textContent='Score: '+ok+' / '+ks.length+' answered · '+tot+' questions';
+  }
+  list.addEventListener('click',e=>{
+    const b=e.target.closest('.opts button'); if(!b||b.disabled) return;
+    const el=b.closest('.q'), i=+el.dataset.i, j=+b.dataset.j; done[i]=j; mark(el,i,j); upd();
+  });
+  document.getElementById('qFilters').addEventListener('click',e=>{
+    const b=e.target.closest('button'); if(!b) return; filter=b.dataset.f;
+    document.querySelectorAll('#qFilters button').forEach(x=>x.setAttribute('aria-pressed',x===b)); render();
+  });
+  document.getElementById('qReset').addEventListener('click',()=>{done={};render()});
+  render();
+})();
+</script>
+<script>
+(function(){
+  /* ---------- interactive diagrams: linear algebra ---------- */
+  const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  function frame(h,title,ar){
+    h.innerHTML=`<div class="dg-h"><span class="dg-tag">Try it</span><b>${title}</b><span class="tr">${ar}</span></div><div class="dg-body"></div><div class="dg-ctl"></div><div class="dg-log" aria-live="polite"></div>`;
+    return {body:h.querySelector('.dg-body'),ctl:h.querySelector('.dg-ctl'),log:h.querySelector('.dg-log')};
+  }
+  const say=(log,rows)=>{log.innerHTML=rows.map(r=>`<p>${r[0]}<span class="tr">${r[1]}</span></p>`).join('');};
+  /* exact fractions */
+  const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b];}return a||1;};
+  const F=(n,d=1)=>{if(d<0){n=-n;d=-d;}const g=gcd(n,d);return {n:n/g,d:d/g};};
+  const add=(a,b)=>F(a.n*b.d+b.n*a.d,a.d*b.d), sub=(a,b)=>F(a.n*b.d-b.n*a.d,a.d*b.d), mul=(a,b)=>F(a.n*b.n,a.d*b.d), div=(a,b)=>F(a.n*b.d,a.d*b.n);
+  const isZ=a=>a.n===0, isOne=a=>a.n===a.d, fs=a=>a.d===1?String(a.n):`${a.n}/${a.d}`;
+  const parse=(txt,def)=>{const rows=String(txt).trim().split(/[;\n]+/).map(r=>r.trim().split(/[\s,]+/).filter(Boolean).map(x=>{const m=x.match(/^(-?\d+)(?:\/(\d+))?$/);return m?F(+m[1],+(m[2]||1)):null;}));
+    if(!rows.length||rows.some(r=>!r.length||r.includes(null))||rows.some(r=>r.length!==rows[0].length))return def.map(r=>r.map(v=>F(v)));return rows.slice(0,5).map(r=>r.slice(0,7));};
+  const mat=(M,opt={})=>{const bar=opt.bar,hl=opt.hl||{};return `<table class="mx">${M.map((r,i)=>`<tr>${r.map((v,j)=>`<td class="${hl[i+','+j]||''}${bar&&j===bar?' bar':''}">${fs(v)}</td>`).join('')}</tr>`).join('')}</table>`;};
+  function stepper(f,build,extra){
+    let st=[],k=0;
+    f.ctl.innerHTML=(extra||'')+'<button class="btn ghost" type="button" data-p>◀ Back</button><button class="btn" type="button" data-n>Next step ▶</button><button class="btn ghost" type="button" data-r>Restart</button>';
+    const show=()=>{const s=st[k];f.body.innerHTML=s.html+`<div class="meta">step ${k+1} / ${st.length}</div>`;say(f.log,[[s.en,s.ar]]);};
+    const restart=()=>{st=build();k=0;show();};
+    f.ctl.querySelector('[data-p]').onclick=()=>{if(k>0){k--;show();}};
+    f.ctl.querySelector('[data-n]').onclick=()=>{if(k<st.length-1){k++;show();}};
+    f.ctl.querySelector('[data-r]').onclick=restart;
+    f.ctl.addEventListener('change',e=>{if(e.target.matches('input,select'))restart();});
+    restart();
+  }
+  const W={};
+
+  /* matrix multiplication: highlight row·column */
+  W.matmul=h=>{
+    const f=frame(h,'Matrix multiplication: row × column','اكتبي A و B (الصفوف بينها ;) واضغطي Next، وشوفي كل عنصر بيتحسب منين.');
+    stepper(f,()=>{
+      const A=parse(f.ctl.querySelector('[data-a]').value,[[2,3,5],[1,0,4]]),B=parse(f.ctl.querySelector('[data-b]').value,[[3,4],[-1,2],[0,3]]);
+      const m=A.length,k=A[0].length,k2=B.length,n=B[0].length;
+      if(k!==k2)return [{html:`<div class="mxrow">${mat(A)}<span class="op">·</span>${mat(B)}</div>`,en:`A is ${m}×${k} and B is ${k2}×${n}: columns of A (${k}) ≠ rows of B (${k2}) → AB is NOT defined.`,ar:'أعمدة الأولى لازم تساوي صفوف التانية، فالضرب مش موجود.'}];
+      const C=A.map(()=>Array(n).fill(null)),st=[{html:`<div class="mxrow">${mat(A)}<span class="op">·</span>${mat(B)}</div>`,en:`A is ${m}×${k}, B is ${k}×${n} → AB is ${m}×${n}.`,ar:'الشرط متحقق، والناتج صفوف الأولى × أعمدة التانية.'}];
+      for(let i=0;i<m;i++)for(let j=0;j<n;j++){
+        let s=F(0);const terms=[];for(let t=0;t<k;t++){s=add(s,mul(A[i][t],B[t][j]));terms.push(`${fs(A[i][t])}·${fs(B[t][j])}`);}
+        C[i][j]=s;const hA={},hB={},hC={};for(let t=0;t<k;t++){hA[i+','+t]='hl';hB[t+','+j]='hl';}hC[i+','+j]='hl2';
+        const Cs=C.map(r=>r.map(v=>v||F(0)));
+        st.push({html:`<div class="mxrow">${mat(A,{hl:hA})}<span class="op">·</span>${mat(B,{hl:hB})}<span class="op">=</span>${mat(Cs,{hl:hC})}</div>`,en:`(AB)<sub>${i+1}${j+1}</sub> = row ${i+1} · column ${j+1} = ${terms.join(' + ')} = <b>${fs(s)}</b>`,ar:`الصف ${i+1} من A في العمود ${j+1} من B.`});
+      }
+      return st;
+    },'<label>A <input data-a value="2 3 5; 1 0 4" size="14"></label><label>B <input data-b value="3 4; -1 2; 0 3" size="14"></label>');
+  };
+
+  /* Gauss-Jordan stepper (works for [A|B] and [A|I]) */
+  function gaussSteps(M,bar){
+    const st=[],rows=M.length,cols=bar||M[0].length;let r=0;
+    const snap=(en,ar,hl)=>st.push({html:mat(M,{bar,hl}),en,ar});
+    snap('Start: the augmented matrix.','نبدأ بالمصفوفة الممتدة.');
+    for(let c=0;c<cols&&r<rows;c++){
+      let p=r;while(p<rows&&isZ(M[p][c]))p++;
+      if(p===rows)continue;
+      if(p!==r){[M[p],M[r]]=[M[r],M[p]];snap(`R${r+1} ↔ R${p+1} (bring a nonzero entry to the pivot position)`,'بدّلنا صفين عشان يبقى فيه رقم مش صفر مكان الـ pivot.',{[r+','+c]:'hl2'});}
+      if(!isOne(M[r][c])){const v=M[r][c];M[r]=M[r].map(x=>div(x,v));snap(`(1/${fs(v)})·R${r+1} → R${r+1} (make a leading 1)`,'قسمنا الصف عشان يبقى leading 1.',{[r+','+c]:'hl2'});}
+      for(let i=0;i<rows;i++){if(i===r||isZ(M[i][c]))continue;const v=M[i][c];M[i]=M[i].map((x,j)=>sub(x,mul(v,M[r][j])));
+        const sign=v.n>0?'−':'+',av=F(Math.abs(v.n),v.d);snap(`R${i+1} ${sign} ${isOne(av)?'':fs(av)}R${r+1} → R${i+1} (zero ${i<r?'above':'below'} the pivot)`,i<r?'صفّرنا فوق الـ pivot (ده جزء Gauss-Jordan).':'صفّرنا تحت الـ pivot.',{[i+','+c]:'hl'});}
+      r++;
+    }
+    return st;
+  }
+  W.rref=h=>{
+    const f=frame(h,'Row reduction step by step (Gauss-Jordan)','اكتبي المصفوفة الممتدة (آخر عمود = الثوابت)، وشوفي كل عملية صفوف بالكسور الصح.');
+    stepper(f,()=>{
+      const M=parse(f.ctl.querySelector('[data-m]').value,[[1,1,2,9],[2,4,-3,1],[3,6,-5,0]]),bar=M[0].length-1,st=gaussSteps(M,bar);
+      const n=bar,lead=[];M.forEach(r=>{const j=r.findIndex(x=>!isZ(x));lead.push(j);});
+      const bad=lead.some(j=>j===bar),piv=lead.filter(j=>j>-1&&j<bar).length;
+      const res=bad?['Last column has a leading entry: a row says 0 = c ≠ 0 → NO solution.','صف بيقول 0 = رقم مش صفر، فمفيش حل.']:piv<n?[`Only ${piv} leading 1s for ${n} variables → ${n-piv} free variable(s) → INFINITELY many solutions.`,'فيه متغير حر، فالحلول لا نهائية.']:['A leading 1 in every variable column → ONE solution: '+M.slice(0,n).map((r,i)=>`x${i+1} = ${fs(r[bar])}`).join(', '),'كل متغير ليه leading 1، فالحل واحد ومكتوب في آخر عمود.'];
+      st.push({html:mat(M,{bar}),en:'RREF reached. '+res[0],ar:res[1]});return st;
+    },'<label>[A | B] <input data-m value="1 1 2 9; 2 4 -3 1; 3 6 -5 0" size="26"></label>');
+  };
+
+  /* inverse by [A | I] */
+  W.inverse=h=>{
+    const f=frame(h,'Inverse by Gauss: [A | I] → [I | A⁻¹]','اكتبي مصفوفة مربعة، وتابعي العمليات لحد ما الشمال يبقى I.');
+    stepper(f,()=>{
+      const A=parse(f.ctl.querySelector('[data-m]').value,[[1,-1,0],[1,0,-1],[-6,2,3]]),n=A.length;
+      if(A.some(r=>r.length!==n))return [{html:mat(A),en:'The matrix must be square to have an inverse.',ar:'المعكوس للمصفوفة المربعة بس.'}];
+      const M=A.map((r,i)=>r.concat(Array.from({length:n},(_,j)=>F(i===j?1:0)))),st=gaussSteps(M,n);
+      const ok=M.every((r,i)=>r.slice(0,n).every((x,j)=>i===j?isOne(x):isZ(x)));
+      st.push({html:mat(M,{bar:n}),en:ok?'The left side is I, so the right side is A⁻¹.':'The left side cannot become I (a zero row appeared) → A is NOT invertible (det = 0).',ar:ok?'الشمال بقى I، فاليمين هو المعكوس.':'طلع صف أصفار، فمالهاش معكوس.'});return st;
+    },'<label>A <input data-m value="1 -1 0; 1 0 -1; -6 2 3" size="20"></label>');
+  };
+
+  /* determinant by cofactor expansion along a chosen row */
+  const detF=M=>{if(M.length===1)return M[0][0];if(M.length===2)return sub(mul(M[0][0],M[1][1]),mul(M[0][1],M[1][0]));let s=F(0);M[0].forEach((v,j)=>{if(isZ(v))return;const m=M.slice(1).map(r=>r.filter((_,c)=>c!==j));const t=mul(v,detF(m));s=j%2?sub(s,t):add(s,t);});return s;};
+  W.det=h=>{
+    const f=frame(h,'Determinant by cofactor expansion','اختاري الصف اللي هتفكي عليه، وشوفي كل minor وإشارته.');
+    stepper(f,()=>{
+      const A=parse(f.ctl.querySelector('[data-m]').value,[[1,-1,0],[1,0,-1],[-6,2,3]]),n=A.length,r=Math.min(n-1,Math.max(0,(+f.ctl.querySelector('[data-r]').value||1)-1));
+      if(A.some(x=>x.length!==n)||n<2)return [{html:mat(A),en:'Enter a square matrix (2×2 or bigger).',ar:'لازم مصفوفة مربعة.'}];
+      const st=[{html:mat(A),en:`Expand along row ${r+1}. Signs: (−1)^(i+j).`,ar:'هنفك على الصف ده، وكل عنصر ليه إشارة.'}];let s=F(0);const parts=[];
+      A[r].forEach((v,j)=>{const sg=(r+j)%2?-1:1,minor=A.filter((_,i)=>i!==r).map(x=>x.filter((_,c)=>c!==j)),M=detF(minor),C=mul(F(sg),M),t=mul(v,C);s=add(s,t);parts.push(fs(t));
+        const hl={};A.forEach((_,i)=>{hl[i+','+j]='dim';});A[r].forEach((_,c)=>{hl[r+','+c]='dim';});hl[r+','+j]='hl2';
+        st.push({html:`<div class="mxrow">${mat(A,{hl})}<span class="op">→</span>${mat(minor)}</div>`,en:`a<sub>${r+1}${j+1}</sub> = ${fs(v)}: minor M = ${fs(M)}, sign ${sg>0?'+':'−'} → C = ${fs(C)}, term = ${fs(v)}·${fs(C)} = <b>${fs(t)}</b>${isZ(v)?' (zero entry: skip!)':''}`,ar:isZ(v)?'العنصر صفر فحدّه صفر، ومش محتاجين نحسبه.':'نشطب الصف والعمود ونحسب الـ det اللي فاضل ونحط الإشارة.'});});
+      st.push({html:mat(A),en:`det(A) = ${parts.join(' + ')} = <b>${fs(s)}</b>${isZ(s)?' → NOT invertible':' → invertible'}`,ar:isZ(s)?'الـ det صفر فمالهاش معكوس.':'الـ det مش صفر فليها معكوس.'});return st;
+    },'<label>A <input data-m value="1 -1 0; 1 0 -1; -6 2 3" size="20"></label><label>row <input type="number" data-r value="1" min="1" max="5" style="width:3.5em"></label>');
+  };
+
+  /* two lines: one / none / infinitely many */
+  W.lines=h=>{
+    const f=frame(h,'Two equations, two lines','غيّري المعاملات وشوفي الخطين: بيتقاطعوا (حل واحد)، متوازيين (مفيش حل)، ولا نفس الخط (حلول لا نهائية).');
+    f.ctl.innerHTML='<label>a₁x + b₁y = c₁ <input data-e1 value="1 1 2" size="8"></label><label>a₂x + b₂y = c₂ <input data-e2 value="1 -1 0" size="8"></label><label>examples <select data-x><option value="">…</option><option value="1 1 2|1 -1 0">one solution</option><option value="1 1 2|2 2 5">no solution</option><option value="1 1 2|2 2 4">infinitely many</option></select></label>';
+    const g=s=>f.ctl.querySelector(s);
+    function draw(){
+      const e1=g('[data-e1]').value.split(/[\s,]+/).map(Number),e2=g('[data-e2]').value.split(/[\s,]+/).map(Number);
+      if(e1.length<3||e2.length<3||e1.concat(e2).some(x=>!Number.isFinite(x)))return;
+      const [a1,b1,c1]=e1,[a2,b2,c2]=e2,D=a1*b2-a2*b1,X=x=>40+x*20,Y=y=>140-y*20;
+      const line=(a,b,c,col)=>{let p;if(Math.abs(b)>1e-9)p=[[-6,(c+6*a)/b],[6,(c-6*a)/b]];else if(Math.abs(a)>1e-9)p=[[c/a,-6],[c/a,6]];else return '';return `<line x1="${X(p[0][0])+80}" y1="${Y(p[0][1])}" x2="${X(p[1][0])+80}" y2="${Y(p[1][1])}" stroke="${col}" stroke-width="2.5"/>`;};
+      let svg=`<svg class="dg-svg" viewBox="0 0 280 280"><line x1="0" y1="140" x2="280" y2="140" stroke="currentColor" opacity=".25"/><line x1="120" y1="0" x2="120" y2="280" stroke="currentColor" opacity=".25"/>${line(a1,b1,c1,'var(--k)')}${line(a2,b2,c2,'var(--c3)')}`;
+      let en,ar;
+      if(Math.abs(D)>1e-9){const x=(c1*b2-c2*b1)/D,y=(a1*c2-a2*c1)/D;svg+=`<circle cx="${X(x)+80}" cy="${Y(y)}" r="5" fill="var(--k)"/>`;en=`det = a₁b₂ − a₂b₁ = ${D} ≠ 0 → the lines cross once → ONE solution (${+x.toFixed(3)}, ${+y.toFixed(3)}).`;ar='الخطين بيتقاطعوا في نقطة واحدة.';}
+      else if(Math.abs(a1*c2-a2*c1)<1e-9&&Math.abs(b1*c2-b2*c1)<1e-9){en='det = 0 and the equations are multiples of each other → the SAME line → INFINITELY many solutions.';ar='نفس الخط، فكل نقطة عليه حل.';}
+      else{en='det = 0 but different constants → PARALLEL lines → NO solution (inconsistent).';ar='خطين متوازيين، مفيش نقطة مشتركة.';}
+      f.body.innerHTML=svg+'</svg>';say(f.log,[[en,ar]]);
+    }
+    g('[data-x]').onchange=e=>{if(!e.target.value)return;const [a,b]=e.target.value.split('|');g('[data-e1]').value=a;g('[data-e2]').value=b;draw();};
+    f.ctl.addEventListener('input',e=>{if(e.target.matches('input'))draw();});draw();
+  };
+
+  document.querySelectorAll('[data-dg]').forEach(h=>{try{W[h.dataset.dg](h);}catch(err){h.innerHTML='<p class="err">Diagram failed to load.</p>';console.error(err);}});
+})();
+</script>
+<script>
+(function(){
+  document.querySelectorAll('.ptab').forEach(t=>{
+    const out=t.closest('.block').querySelector('.ptab-out');
+    t.querySelectorAll('td[data-p]').forEach(td=>{
+      td.tabIndex=0;td.setAttribute('role','button');
+      const pick=()=>{
+        const p=+td.dataset.p,col=td.cellIndex,oct=p<=16?2:p<=24?3:4,blk=Math.pow(2,8-(p-(oct-1)*8)),mv=256-blk,host=Math.pow(2,32-p);
+        const mask=[1,2,3,4].map(k=>k<oct?255:k===oct?mv:0).join('.');
+        t.querySelectorAll('td').forEach(c=>c.classList.toggle('on',c.cellIndex===col));
+        out.innerHTML=`<p><b>/${p}</b>: octet ${oct} changes · block <b>${blk}</b> · mask <b>${mask}</b> · ${host.toLocaleString()} IPs per subnet, <b>${Math.max(0,host-2).toLocaleString()}</b> usable hosts.<span class="tr">/${p}: التغيير في الـ octet رقم ${oct}، القفزة ${blk}، والـ mask هو ${mask}.</span></p>`;
+      };
+      td.addEventListener('click',pick);td.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pick();}});
+    });
+  });
+})();
+</script>
+<script>
+(function(){
+  /* ---------- quiz sections: matching + essay ---------- */
+  const tabs=document.querySelectorAll('[data-qs]');
+  tabs.forEach(b=>b.addEventListener('click',()=>{
+    tabs.forEach(x=>x.setAttribute('aria-pressed',x===b));
+    document.getElementById('qsObj').hidden=b.dataset.qs!=='obj';
+    document.getElementById('qsEssay').hidden=b.dataset.qs!=='essay';
+  }));
+
+  /* matching */
+  const MS=[
+    [1,"Special matrices",[["Identity","1s on the diagonal, 0 elsewhere"],["Upper triangular","Zeros below the diagonal"],["Lower triangular","Zeros above the diagonal"],["Symmetric","A = Aᵀ"],["Skew-symmetric","A = −Aᵀ"],["Zero matrix","All entries 0"]]],
+    [2,"Row operations and forms",[["Rᵢ ↔ Rⱼ","Swap two rows"],["cRᵢ → Rᵢ","Multiply a row by c ≠ 0"],["Rᵢ + cRⱼ → Rᵢ","Add a multiple of another row"],["REF","Staircase of leading 1s"],["RREF","Zeros above and below leading 1s"],["Inconsistent","No solution"]]],
+    [4,"Inverse rules",[["(AB)⁻¹","B⁻¹A⁻¹"],["(A⁻¹)⁻¹","A"],["(cA)⁻¹","(1/c)A⁻¹"],["(Aᵀ)⁻¹","(A⁻¹)ᵀ"],["AX = B","X = A⁻¹B"],["[A | I]","[I | A⁻¹]"]]],
+    [5,"Determinant rules",[["Swap two rows","det changes sign"],["cRᵢ → Rᵢ","det multiplied by c"],["Rᵢ + cRⱼ","det unchanged"],["Triangular","Product of the diagonal"],["det(AB)","det A · det B"],["det(A⁻¹)","1 / det A"]]]
+  ];
+  const mBox=document.getElementById('mList');
+  const L='ABCDEFGH';
+  mBox.innerHTML=MS.map(([ch,title,pairs],si)=>{
+    const order=pairs.map((_,i)=>i).sort((a,b)=>((a*5+3)%8)-((b*5+3)%8));
+    const right='<ol class="mB" type="A">'+order.map(i=>`<li>${pairs[i][1]}</li>`).join('')+'</ol>';
+    const left=pairs.map((p,i)=>`<label class="mrow"><span class="mA">${i+1}. ${p[0]}</span><select data-ans="${L[order.indexOf(i)]}" aria-label="Answer for ${p[0]}"><option value="">—</option>${[...L].map(c=>`<option>${c}</option>`).join('')}</select><span class="mres"></span></label>`).join('');
+    return `<div class="mset" data-ch="${ch}"><h4><span class="pill">Ch${ch}</span> <span class="pill">Matching</span> ${title}</h4><p class="muted">Match each term in column A with the right description in column B.<span class="tr">وصّلي كل كلمة في العمود A بالتعريف الصح في العمود B.</span></p><div class="mgrid"><div>${left}</div><div>${right}</div></div><div class="dg-ctl"><button class="btn" type="button" data-mcheck>Check answers</button><button class="btn ghost" type="button" data-mshow>Show answers</button><span class="mscore"></span></div></div>`;
+  }).join('');
+  mBox.addEventListener('click',e=>{
+    const set=e.target.closest('.mset');if(!set)return;
+    const sels=[...set.querySelectorAll('select')];
+    if(e.target.closest('[data-mshow]'))sels.forEach(s=>s.value=s.dataset.ans);
+    if(e.target.closest('[data-mcheck]')||e.target.closest('[data-mshow]')){
+      let ok=0;sels.forEach(s=>{const r=s.value===s.dataset.ans;ok+=r;s.nextElementSibling.textContent=s.value?(r?'✓':'✗ '+s.dataset.ans):'';s.nextElementSibling.className='mres '+(r?'ok':'no');});
+      set.querySelector('.mscore').textContent=`${ok} / ${sels.length} correct`;
+    }
+  });
+
+  /* essay */
+  const ES=[
+   [1,"Definition","Define a matrix and its size. When are two matrices equal?","An m × n matrix is a rectangular array of real numbers with m rows and n columns. A = B iff they have the same size and aᵢⱼ = bᵢⱼ for all i, j.","التعريف والتساوي."],
+   [1,"Calculation","If [x 4; 2 3] = [5 4; x+y 3], find x and y.","x = 5; 2 = x + y → y = −3.","نساوي العناصر."],
+   [1,"Calculation","For A = [2 5; −1 0], B = [3 2; 1 4] find A + B, A − B and 3A.","A + B = [5 7; 0 4]; A − B = [−1 3; −2 −4]; 3A = [6 15; −3 0].","عنصر بعنصر."],
+   [1,"Calculation","Find AB for A = [2 3 5; 1 0 4], B = [3 4; −1 2; 0 3]. Does BA exist?","AB = [3 29; 3 16]. BA: 3×2 · 2×3 = 3×3 exists = [10 9 31; 0 −3 3; 3 0 12].","BA موجودة هنا بس مختلفة."],
+   [1,"Explain","Show with an example that matrix multiplication is not commutative.","A = [1 2; 3 4], B = [0 1; 1 0]: AB = [2 1; 4 3], BA = [3 4; 1 2].","مثال."],
+   [1,"List","State the properties of the transpose.","(Aᵀ)ᵀ = A, (A+B)ᵀ = Aᵀ+Bᵀ, (cA)ᵀ = cAᵀ, (AB)ᵀ = BᵀAᵀ.","الأربعة."],
+   [1,"Proof","Verify (A + B)ᵀ = Aᵀ + Bᵀ for A = [2 1 0; 2 3 −1], B = [0 −1 2; 3 4 5].","Both sides = [2 5; 0 7; 2 4].","الطرفين."],
+   [1,"Definition","Define symmetric and skew-symmetric matrices; give an example of each.","Symmetric A = Aᵀ, e.g. [1 2; 2 5]. Skew: A = −Aᵀ, e.g. [0 3; −3 0].","مثالين."],
+   [2,"Definition","Define a linear equation, a system, a solution, consistent and inconsistent systems.","a₁x₁+…+aₙxₙ = b; a finite list of such equations; values satisfying all equations; consistent = at least one solution, inconsistent = none.","التعريفات."],
+   [2,"Explain","How many solutions can a linear system have? Illustrate with two lines.","None (parallel), exactly one (crossing), infinitely many (same line).","الرسم."],
+   [2,"List","List the three elementary row operations.","Rᵢ ↔ Rⱼ; cRᵢ → Rᵢ (c ≠ 0); Rᵢ + cRⱼ → Rᵢ.","التلاتة."],
+   [2,"Definition","State the conditions for REF and RREF.","Zero rows at the bottom; leading 1s; each leading 1 right of the one above; RREF: zeros above and below leading 1s.","الشروط."],
+   [3,"Calculation","Solve x + y + 2z = 9, 2x + 4y − 3z = 1, 3x + 6y − 5z = 0 by Gaussian elimination.","REF [1 1 2|9; 0 1 −7/2|−17/2; 0 0 1|3] → z = 3, y = 2, x = 1.","الخطوات في تاب Gaussian."],
+   [3,"Calculation","Solve the same system by Gauss-Jordan.","Continue to RREF [I | (1, 2, 3)].","RREF."],
+   [3,"Calculation","Solve x + 2y = 5, 3x − y = 1.","x = 1, y = 2.","2×2."],
+   [3,"Calculation","For which k does x + y = 2, 2x + 2y = k have no solution? infinitely many?","k ≠ 4 no solution; k = 4 infinitely many.","الصف الأخير."],
+   [3,"Definition","Define a homogeneous system and solve x + y − z = 0, 2x − y + z = 0.","All constants 0; always has the trivial solution. Solution (0, t, t).","متغير حر."],
+   [3,"Compare","Compare Gaussian elimination and Gauss-Jordan elimination.","Gauss: REF + back-substitution. Gauss-Jordan: RREF, read directly.","الفرق."],
+   [4,"Definition","Define an invertible (nonsingular) matrix. Prove the inverse is unique.","AB = BA = I. If B, C are inverses: B = B(AC) = (BA)C = C.","التعريف والإثبات."],
+   [4,"Calculation","Find the inverse of A = [1 4; 2 3] by the formula and by the Gauss method.","|A| = −5; A⁻¹ = −1/5 [3 −4; −2 1] = [−3/5 4/5; 2/5 −1/5].","الطريقتين."],
+   [4,"Calculation","Find the inverse of A = [1 −1 0; 1 0 −1; −6 2 3] by [A | I].","A⁻¹ = [−2 −3 −1; −3 −3 −1; −2 −4 −1].","Gauss."],
+   [4,"Calculation","Use A⁻¹ to solve x − y = 4, x − z = 3, −6x + 2y + 3z = 2.","X = A⁻¹B = (−19, −23, −22).","X = A⁻¹B."],
+   [4,"Proof","Prove (AB)⁻¹ = B⁻¹A⁻¹.","(AB)(B⁻¹A⁻¹) = A(BB⁻¹)A⁻¹ = AA⁻¹ = I.","الإثبات."],
+   [4,"List","State the properties of the inverse.","(A⁻¹)⁻¹ = A; (Aᵏ)⁻¹ = (A⁻¹)ᵏ; (cA)⁻¹ = (1/c)A⁻¹; (Aᵀ)⁻¹ = (A⁻¹)ᵀ; (AB)⁻¹ = B⁻¹A⁻¹.","الخواص."],
+   [4,"Explain","Why is a matrix with a row of zeros not invertible?","Row i of AB is zero for every B, so AB can never be I (also det = 0).","السبب."],
+   [5,"Calculation","Compute det [1 −1 0; 1 0 −1; −6 2 3] by cofactors and by Sarrus.","Both give −1.","الطريقتين."],
+   [5,"Calculation","Find the cofactor matrix, adj(A) and A⁻¹ for A = [1 −1 0; 1 0 −1; −6 2 3].","cof = [2 3 2; 3 3 4; 1 1 1]; adj = [2 3 1; 3 3 1; 2 4 1]; A⁻¹ = −adj.","adjoint."],
+   [5,"Calculation","Find det of [1 −2 3 0; −1 1 0 2; 0 2 0 3; 3 4 0 −2].","Expand along column 3: 3·13 = 39.","العمود التالت."],
+   [5,"List","State the effect of each ERO on the determinant.","Swap: −det; cRᵢ: c·det; Rᵢ + cRⱼ: unchanged.","الجدول."],
+   [5,"Calculation","det A = 2, det B = −3 (3×3). Find det(AB), det(A⁻¹), det(Aᵀ), det(2A), det(A²B⁻¹).","−6; 1/2; 2; 16; −4/3.","القواعد."],
+   [5,"Proof","Prove det(A⁻¹) = 1/det(A).","det(A)det(A⁻¹) = det(AA⁻¹) = det(I) = 1.","من det(AB)."],
+   [5,"Explain","Explain why det [1 2 3; 2 4 6; 7 8 9] = 0 without computing.","Row 2 = 2·Row 1.","صف مضاعف."]
+  ];
+  const eList=document.getElementById('eList'),types=[...new Set(ES.map(e=>e[1]))];
+  document.getElementById('eCount').textContent=ES.length;
+  const fT=document.getElementById('eType');fT.innerHTML='<option value="">All types</option>'+types.map(t=>`<option>${t}</option>`).join('');
+  let fc='all';
+  function render(){
+    const t=fT.value,items=ES.filter(e=>(fc==='all'||String(e[0])===fc)&&(!t||e[1]===t));
+    eList.innerHTML=items.map((e,i)=>`<div class="eq"><p><b>${i+1}.</b> <span class="pill">${{"1": "Matrices", "2": "Systems", "3": "Gauss", "4": "Inverse", "5": "Determinants"}[e[0]]||'Ch'+e[0]}</span> <span class="pill">${e[1]}</span> ${e[2]}</p><details><summary>Show model answer</summary><div class="ea">${e[3]}<span class="tr">${e[4]}</span></div></details></div>`).join('')||'<p class="muted">No questions.</p>';
+    document.getElementById('eShown').textContent=items.length;
+  }
+  document.getElementById('eFilters').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;fc=b.dataset.f;document.querySelectorAll('#eFilters button').forEach(x=>x.setAttribute('aria-pressed',x===b));render();});
+  fT.addEventListener('change',render);
+  document.getElementById('eOpen').addEventListener('click',()=>eList.querySelectorAll('details').forEach(d=>d.open=true));
+  document.getElementById('eClose').addEventListener('click',()=>eList.querySelectorAll('details').forEach(d=>d.open=false));
+  render();
+})();
+</script>
+<script>
+(function(){
+  /* ---------- sidebar contents, studied progress, back to top ---------- */
+  const KEY='studied:'+(location.pathname.split('/').filter(Boolean)[0]||'site');try{if(!localStorage.getItem(KEY)&&localStorage.getItem('netStudied'))localStorage.setItem(KEY,localStorage.getItem('netStudied'));}catch(e){}let done={};
+  try{done=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){}
+  const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(done));}catch(e){}};
+  let n=0;
+  document.querySelectorAll('section.view .block > h3').forEach(h=>{
+    const b=h.parentElement;if(!b.id)b.id='s'+(++n);
+    const key=b.closest('section').id+'|'+h.textContent.trim();
+    const t=document.createElement('span');t.className='h3t';while(h.firstChild)t.appendChild(h.firstChild);h.appendChild(t);
+    const btn=document.createElement('button');btn.type='button';btn.className='studied';btn.dataset.key=key;
+    const paint=()=>{btn.setAttribute('aria-pressed',!!done[key]);btn.textContent=done[key]?'✓ Studied':'☐ Mark as studied';h.classList.toggle('isdone',!!done[key]);};
+    btn.addEventListener('click',()=>{if(done[key])delete done[key];else done[key]=1;save();paint();build();toast(done[key]?'✓ Marked as studied · اتعلّم إنه اتذاكر':'Unmarked · اتشال من المذاكر');});
+    const row=document.createElement('div');row.className='studied-row';row.innerHTML='<span>Finished this part?<span class="tr">خلصتي الجزء ده؟</span></span>';row.appendChild(btn);b.appendChild(row);const badge=document.createElement('span');badge.className='h3done';badge.textContent='✓ Studied';h.appendChild(badge);paint();
+  });
+  function toast(t){let el=document.getElementById('toast');if(!el){el=document.createElement('div');el.id='toast';el.className='toast';el.setAttribute('role','status');document.body.appendChild(el);}el.textContent=t;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),1800);}
+  const toc=document.getElementById('toc');let obs;
+  function build(){
+    const sec=[...document.querySelectorAll('section.view')].find(x=>!x.hidden);if(!sec)return;
+    toc.style.setProperty('--k',getComputedStyle(sec).getPropertyValue('--k'));
+    const hs=[...sec.querySelectorAll('.block > h3')];
+    const items=hs.map(h=>{const b=h.parentElement,k=b.querySelector('.studied-row .studied').dataset.key;return {id:b.id,t:h.querySelector('.h3t').textContent.replace('★','').trim(),d:!!done[k]};});
+    const c=items.filter(i=>i.d).length,pct=items.length?Math.round(c/items.length*100):0;
+    const list='<ol>'+items.map(i=>`<li><a href="#${i.id}" data-id="${i.id}" class="${i.d?'done':''}"><span class="dot"></span><span>${i.t}</span></a></li>`).join('')+'</ol>';
+    const title=sec.querySelector('.chap-head h2').textContent;
+    toc.innerHTML=`<div class="toc-in"><div class="toc-h">On this page</div><div class="toc-pt"><b>${title}</b></div><div class="toc-prog"><i style="width:${pct}%"></i></div><div class="toc-pt">${c} of ${items.length} studied · ${pct}%</div>${list}</div><details class="toc-mob"><summary>Contents · ${c}/${items.length} studied</summary>${list}</details>`;
+    toc.querySelectorAll('a[data-id]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();document.getElementById(a.dataset.id).scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});}));
+    if(obs)obs.disconnect();
+    obs=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting)toc.querySelectorAll('.toc-in a').forEach(a=>a.classList.toggle('cur',a.dataset.id===en.target.id));});},{rootMargin:'-80px 0px -70% 0px'});
+    hs.forEach(h=>obs.observe(h.parentElement));
+  }
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.addEventListener('click',()=>setTimeout(build,0)));
+  build();
+  const top=document.createElement('button');top.type='button';top.className='totop';top.textContent='↑ Top';
+  top.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));document.body.appendChild(top);
+  addEventListener('scroll',()=>top.classList.toggle('show',scrollY>700),{passive:true});
+})();
+</script>
+
+
+
+
+
+</html>
