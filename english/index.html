@@ -1,0 +1,1622 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>English: AI Curriculum (Units 6–8)</title>
+<meta name="site-version" content="en-2026-11-03-r1">
+<script>
+(function(){
+  /* auto-update: if the server has a newer version than this cached copy, reload once */
+  try{
+    var cur='en-2026-11-03-r1';
+    fetch(location.pathname+'?nocache='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():'';}).then(function(t){
+      var m=t.match(/name="site-version" content="([^"]+)"/);
+      if(m&&m[1]!==cur&&!sessionStorage.getItem('reloaded-'+m[1])){sessionStorage.setItem('reloaded-'+m[1],'1');location.reload();}
+    }).catch(function(){});
+  }catch(e){}
+})();
+</script>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* base reset so the standalone copy (GitHub Pages) behaves like the hosted one */
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0}
+img{max-width:100%}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+/* Layout: soft blush page, rounded cards; each chapter has its own pastel (rose, lilac, peach, mint) */
+:root{
+  --bg:#fff6f9; --panel:#ffffff; --fg:#3a2433; --muted:#86697b; --line:#f3d9e5;
+  --c1:#e0568f; --c2:#9b6ad6; --c3:#ea7a5f; --c4:#3fa58a; --lab:#c457b4;
+  --good:#3fa58a; --bad:#d9455f; --note:#fff0f6; --noteline:#f6b8d2; --code:#fbeef4;
+  --hero1:#ffd6e7; --hero2:#e9dcff; --shadow:0 6px 22px rgba(224,86,143,.10);
+  --f-display:"Plus Jakarta Sans","Tajawal",system-ui,sans-serif;
+  --f-body:"Plus Jakarta Sans","Tajawal",system-ui,sans-serif;
+  --f-ar:"Tajawal",Tahoma,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1e1520; --panel:#2a1d2c; --fg:#f6e7f0; --muted:#c3a6b8; --line:#47304a;
+  --c1:#ff86b6; --c2:#c4a0ff; --c3:#ffa489; --c4:#6fd3b4; --lab:#e98ad9;
+  --good:#6fd3b4; --bad:#ff7a90; --note:#33202f; --noteline:#7a3f62; --code:#35253a;
+  --hero1:#4a2140; --hero2:#2f2550; --shadow:0 6px 22px rgba(0,0,0,.35); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1e1520; --panel:#2a1d2c; --fg:#f6e7f0; --muted:#c3a6b8; --line:#47304a;
+  --c1:#ff86b6; --c2:#c4a0ff; --c3:#ffa489; --c4:#6fd3b4; --lab:#e98ad9;
+  --good:#6fd3b4; --bad:#ff7a90; --note:#33202f; --noteline:#7a3f62; --code:#35253a;
+  --hero1:#4a2140; --hero2:#2f2550; --shadow:0 6px 22px rgba(0,0,0,.35); color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--f-body)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--panel)}
+.wrap{max-width:980px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{padding-block:28px 12px}
+header.top h1{font:700 clamp(1.6rem,4vw,2.3rem)/1.15 var(--f-display);margin:0;text-wrap:balance}
+header.top p{margin:.4rem 0 0;color:var(--muted)}
+.ar{font-family:var(--f-ar);direction:rtl;text-align:right}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--panel);border-bottom:1px solid var(--line)}
+nav.tabs .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:8px;scrollbar-width:thin}
+nav.tabs button{flex:0 0 auto;font:600 .9rem var(--f-display);border:1px solid var(--line);background:var(--bg);color:var(--fg);padding:.45rem .8rem;border-radius:6px;cursor:pointer;display:flex;gap:.45rem;align-items:center}
+nav.tabs button i{width:10px;height:10px;border-radius:50%;background:var(--k);display:inline-block}
+nav.tabs button[aria-selected="true"]{background:var(--k);color:#fff;border-color:var(--k)}
+nav.tabs button[aria-selected="true"] i{background:#fff}
+nav.tabs button:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--c3);outline-offset:2px}
+main{padding-block:20px 60px}
+section.view{display:grid;gap:22px}
+.chap-head{border-left:6px solid var(--k);padding-left:14px}
+.chap-head small{font:600 .75rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--k)}
+.chap-head h2{font:700 1.7rem/1.2 var(--f-display);margin:.1rem 0 .2rem;text-wrap:balance}
+.chap-head p{margin:0;color:var(--muted)}
+h3{font:600 1.2rem/1.3 var(--f-display);margin:0 0 .6rem;color:var(--k);text-wrap:balance}
+h4{font:600 1rem var(--f-display);margin:1rem 0 .3rem}
+.block{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px 18px 14px;min-width:0}
+.block ul{margin:.3rem 0 .6rem;padding-left:1.2rem}
+.block li{margin:.15rem 0}
+.note{background:var(--note);border:1px solid var(--noteline);border-radius:6px;padding:.6rem .8rem;margin:.6rem 0;font-family:var(--f-ar);direction:rtl;text-align:right;line-height:1.8}
+.note b:first-child{color:var(--c1)}
+.tw{overflow-x:auto;margin:.5rem 0}
+table{border-collapse:collapse;width:100%;font-size:.92rem;font-variant-numeric:tabular-nums}
+th,td{border:1px solid var(--line);padding:.4rem .55rem;text-align:left;vertical-align:top}
+th{background:var(--code);font-family:var(--f-display);font-weight:600}
+code,.mono{font-family:var(--f-mono);font-size:.9em;background:var(--code);padding:.05rem .3rem;border-radius:4px}
+pre.cli{font:0.85rem/1.55 var(--f-mono);background:var(--code);border:1px solid var(--line);border-radius:6px;padding:.7rem .9rem;overflow-x:auto;margin:.5rem 0}
+pre.cli b{color:var(--k)}
+.mapbox{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px}
+.mapbox pre.mermaid{margin:0;background:transparent;text-align:center}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.pill{display:inline-block;font:600 .75rem var(--f-mono);padding:.05rem .45rem;border-radius:99px;border:1px solid var(--k);color:var(--k)}
+.essay summary{cursor:pointer;font-weight:600}
+.essay details{border-top:1px dashed var(--line);padding:.5rem 0}
+.essay details[open] summary{color:var(--k)}
+/* subnet calculator */
+.calc{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.calc input{font:1rem var(--f-mono);padding:.5rem .6rem;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg);min-width:0;flex:1 1 220px}
+.btn{font:600 .9rem var(--f-display);padding:.5rem .9rem;border-radius:6px;border:1px solid var(--k);background:var(--k);color:#fff;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--k)}
+.calc-out{margin-top:.6rem}
+.err{color:var(--bad);font-family:var(--f-ar)}
+/* quiz */
+.q{border-top:1px solid var(--line);padding:.8rem 0}
+.q:first-of-type{border-top:0}
+.q p{margin:0 0 .4rem;font-weight:600}
+.opts{display:grid;gap:6px}
+.opts button{text-align:left;font:inherit;padding:.45rem .7rem;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg);cursor:pointer}
+.opts button.right{border-color:var(--good);background:color-mix(in srgb,var(--good) 15%,var(--bg))}
+.opts button.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 15%,var(--bg))}
+.why{margin-top:.4rem}
+.score{font:600 1rem var(--f-display)}
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:.4rem}
+.filters button{font:600 .8rem var(--f-display);padding:.3rem .7rem;border-radius:99px;border:1px solid var(--line);background:var(--bg);color:var(--fg);cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.layer-stack{display:grid;gap:4px}
+.layer-stack div{display:grid;grid-template-columns:2.2rem 1fr 6rem;gap:8px;align-items:center;padding:.35rem .6rem;border-radius:5px;background:var(--code);border-left:5px solid var(--c2);font-size:.92rem}
+.layer-stack div span:first-child{font:700 1rem var(--f-mono);color:var(--c2)}
+.layer-stack div span:last-child{font:600 .8rem var(--f-mono);text-align:right}
+@media (max-width:520px){.layer-stack div{grid-template-columns:1.8rem 1fr}.layer-stack div span:last-child{grid-column:2;text-align:left}}
+.tr{display:block;font-family:var(--f-ar);direction:rtl;text-align:right;color:var(--muted);font-size:.95rem;line-height:1.8;margin-top:.2rem;padding-right:.6rem;border-right:3px solid var(--noteline)}
+td .tr{border:0;padding:0;font-size:.88rem}
+.chap-head .tr{border:0;padding:0;margin-top:.3rem}
+td.ar,th.ar{text-align:right}
+.vids{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.vid{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);text-decoration:none;min-width:0}
+.vid:hover{border-color:var(--k)}
+.vid .play{flex:0 0 32px;height:32px;border-radius:50%;background:var(--k);color:#fff;display:grid;place-items:center;font-size:.8rem}
+.vt{min-width:0}
+.vt b{display:block;font-family:var(--f-display);font-size:.95rem;line-height:1.35}
+.vt small{color:var(--muted)}
+.vid .tr{border:0;padding:0;font-size:.85rem}
+.muted{color:var(--muted);margin:.2rem 0 .7rem}
+header.top{background:linear-gradient(135deg,var(--hero1),var(--hero2));border-bottom-left-radius:28px;border-bottom-right-radius:28px;margin-bottom:6px}
+header.top h1{font-weight:800;font-size:clamp(1.9rem,5vw,2.8rem);color:var(--fg)}
+header.top h1::after{content:" ♡";color:var(--c1)}
+header.top .subtitle{font:700 clamp(1.1rem,3vw,1.4rem)/1.6 var(--f-ar);color:var(--c1);text-align:left;margin-top:.3rem}
+header.top .wrap{position:relative}
+.theme-btn{position:absolute;top:18px;right:max(16px,env(safe-area-inset-right,0px));display:inline-flex;gap:6px;align-items:center;font:700 .85rem var(--f-display);padding:6px 14px;border-radius:99px;border:1.5px solid color-mix(in srgb,var(--c1) 45%,transparent);background:var(--panel);color:var(--fg);cursor:pointer;box-shadow:var(--shadow)}
+.theme-btn:hover{border-color:var(--c1)}
+.theme-btn:focus-visible{outline:2px solid var(--c1);outline-offset:2px}
+.theme-btn .ti{color:var(--c1);font-size:1rem}
+@media (max-width:520px){.theme-btn{position:static;margin:4px 0 10px}.theme-btn .tl{display:inline}}
+header.top .byline{font:600 .95rem var(--f-display);color:var(--muted);font-style:italic;margin-top:.2rem}
+.block{border-radius:18px!important;box-shadow:var(--shadow);border-color:var(--line)!important}
+.mapbox{border-radius:18px!important;box-shadow:var(--shadow)}
+nav.tabs button{border-radius:99px!important}
+.chap-head{border-left:0!important;padding:14px 18px!important;border-radius:18px;background:color-mix(in srgb,var(--k) 12%,var(--panel))}
+.chap-head h2{font-weight:800}
+.note{border-radius:14px!important}
+th{background:color-mix(in srgb,var(--k) 12%,var(--panel))!important}
+table{border-radius:12px;overflow:hidden}
+.layer-stack div{border-left-color:var(--k)!important;border-radius:10px!important}
+.layer-stack div span:first-child{color:var(--k)!important}
+.btn,.vid{border-radius:14px!important}
+.opts button{border-radius:12px!important}
+.tr{border-right-color:color-mix(in srgb,var(--k) 45%,transparent)!important}
+td .tr,.vid .tr,.chap-head .tr{border:0!important}
+.watchrow{margin-top:14px;padding:12px;border-radius:14px;background:color-mix(in srgb,var(--k) 8%,var(--panel));border:1px dashed color-mix(in srgb,var(--k) 40%,transparent)}
+.watchrow.hard{background:color-mix(in srgb,var(--k) 14%,var(--panel));border-style:solid}
+.watchrow .wl{display:block;font:700 .9rem var(--f-ar);direction:rtl;text-align:right;color:var(--k);margin-bottom:8px}
+.wbtns{display:flex;flex-wrap:wrap;gap:8px}
+.watch{display:inline-flex;align-items:center;gap:8px;padding:7px 14px 7px 8px;border-radius:99px;background:var(--k);color:#fff;text-decoration:none;font:600 .88rem var(--f-display);max-width:100%;box-shadow:0 3px 10px color-mix(in srgb,var(--k) 30%,transparent)}
+.watch:hover{filter:brightness(1.08)}
+.watch:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+.watch .play{flex:0 0 26px;height:26px;border-radius:50%;background:rgba(255,255,255,.25);display:grid;place-items:center;font-size:.7rem}
+.watch small{opacity:.85;margin-left:6px;font-family:var(--f-mono);font-size:.75rem}
+.block{scroll-margin-top:84px}
+.block li,.block tr{scroll-margin-top:96px}
+.mm{background:var(--panel);border-radius:22px;box-shadow:var(--shadow);padding:22px 18px;border:1px solid var(--line)}
+.mm-head{display:flex;flex-direction:column;align-items:center;gap:4px;margin-bottom:18px}
+.mm-root{font:800 1.15rem var(--f-display);color:#fff;background:linear-gradient(135deg,var(--k),color-mix(in srgb,var(--k) 55%,var(--c2)));padding:10px 22px;border-radius:99px;box-shadow:0 6px 16px color-mix(in srgb,var(--k) 35%,transparent);text-align:center}
+.mm-hint{font:500 .85rem var(--f-ar);color:var(--muted)}
+.mm-stem{width:2px;height:16px;background:color-mix(in srgb,var(--k) 45%,transparent)}
+.mm-branches{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;position:relative;padding-top:14px;border-top:2px solid color-mix(in srgb,var(--k) 30%,transparent)}
+.mm-node{position:relative;background:color-mix(in srgb,var(--k) 7%,var(--panel));border:1.5px solid color-mix(in srgb,var(--k) 30%,transparent);border-radius:16px;padding:10px 12px 12px;min-width:0}
+.mm-node::before{content:"";position:absolute;top:-16px;left:22px;width:2px;height:16px;background:color-mix(in srgb,var(--k) 30%,transparent)}
+.mm-title{all:unset;cursor:pointer;display:flex;gap:8px;align-items:center;font:700 1rem/1.3 var(--f-display);color:var(--k)}
+.mm-title::before{content:"";flex:0 0 10px;height:10px;border-radius:50%;background:var(--k)}
+.mm-title:hover{text-decoration:underline}
+.mm-title:focus-visible,.mm-chip:focus-visible{outline:2px solid var(--k);outline-offset:2px;border-radius:8px}
+.mm-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.mm-chip{all:unset;cursor:pointer;font:600 .78rem var(--f-body);padding:3px 10px;border-radius:99px;background:var(--panel);border:1px solid color-mix(in srgb,var(--k) 25%,transparent);color:var(--fg);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mm-chip:hover{background:var(--k);color:#fff}
+.mm-hard{font-size:.7rem;margin-left:auto;color:var(--k)}
+@keyframes flash{0%{box-shadow:0 0 0 4px color-mix(in srgb,var(--k) 60%,transparent)}100%{box-shadow:var(--shadow)}}
+.flash{animation:flash 1.6s ease-out}
+li.flash,tr.flash{background:color-mix(in srgb,var(--k) 18%,transparent);border-radius:8px;animation:none;transition:background 1.5s}
+.mm:has(.mmg){padding:10px}
+.mmg-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;padding:4px 6px 8px}
+.mmg-reset{font:600 .8rem var(--f-display);border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:99px;padding:4px 12px;cursor:pointer}
+.mmg{display:block;width:100%;height:auto;border-radius:16px;background:radial-gradient(circle at 50% 45%,color-mix(in srgb,var(--k) 7%,var(--panel)),var(--panel) 70%);cursor:grab;touch-action:none}
+.mmg:active{cursor:grabbing}
+.mmg-link{stroke:color-mix(in srgb,var(--muted) 45%,transparent);stroke-width:1.1;transition:opacity .2s,stroke .2s}
+.mmg-link.lit{stroke:var(--k);stroke-width:1.8}
+.mmg-n{cursor:pointer;transition:opacity .2s;outline:none}
+.mmg-n circle{fill:color-mix(in srgb,var(--muted) 55%,var(--panel));stroke:var(--panel);stroke-width:1.5;transition:fill .2s}
+.mmg-n.t1 circle{fill:var(--k)}
+.mmg-n.t0 circle{fill:var(--k);stroke:color-mix(in srgb,var(--k) 35%,transparent);stroke-width:6}
+.mmg-n.hard circle{stroke:color-mix(in srgb,var(--k) 40%,transparent);stroke-width:5}
+.mmg-n text{fill:var(--fg);font:600 11px var(--f-body);paint-order:stroke;stroke:var(--panel);stroke-width:3px;stroke-linejoin:round;pointer-events:none}
+.mmg-n.t0 text{font:800 15px var(--f-display)}
+.mmg-n.t1 text{font:700 12.5px var(--f-display)}
+.mmg-n.t2 text{fill:var(--muted);font-size:10.5px}
+.mmg-n.lit circle{fill:var(--k)}
+.mmg-n.lit text{fill:var(--fg)}
+.mmg-n:focus-visible circle{stroke:var(--fg);stroke-width:2.5}
+.dim{opacity:.15}
+.mmg-n.t2 text{opacity:0;transition:opacity .2s}
+.mmg.zoomed .mmg-n.t2 text,.mmg-n.t2.lit text,.mmg-n.t2:hover text{opacity:1}
+.dg{margin-top:16px;border-radius:18px;padding:14px;background:color-mix(in srgb,var(--k) 5%,var(--panel));border:1.5px solid color-mix(in srgb,var(--k) 28%,transparent);min-width:0}
+.dg-h{margin-bottom:8px}
+.dg-h b{font:700 1.02rem var(--f-display)}
+.dg-tag{display:inline-block;font:700 .7rem var(--f-display);letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--k);border-radius:99px;padding:2px 9px;margin-right:8px;vertical-align:2px}
+.dg-svg{display:block;width:100%;height:auto;max-height:380px;background:var(--panel);border-radius:14px;border:1px solid var(--line)}
+.dg-ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+.dg-ctl label{font:600 .85rem var(--f-body);display:inline-flex;gap:6px;align-items:center}
+.dg-ctl select{font:inherit;padding:.3rem .4rem;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg)}
+.dg-ctl .chk{font-weight:500}
+.dg-log{margin-top:10px;min-height:1.5em}
+.dg-log p{margin:.25rem 0;padding:.45rem .7rem;border-radius:10px;background:var(--panel);border:1px solid var(--line)}
+.dg-log .tr{border:0;padding:0}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:99px;overflow:hidden;background:var(--bg)}
+.seg button{font:600 .85rem var(--f-display);border:0;background:transparent;color:var(--fg);padding:.4rem .9rem;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--k);color:#fff}
+.wire{stroke:color-mix(in srgb,var(--muted) 60%,transparent);stroke-width:2}
+.wire.bb{stroke-width:4}
+.wire.failed{stroke:var(--bad);stroke-dasharray:5 5;opacity:.6}
+.wire.blocked{stroke:var(--bad);stroke-dasharray:3 6;stroke-width:2.5}
+.dv-b{fill:var(--panel);stroke:var(--k);stroke-width:1.8}
+.dv-s{fill:color-mix(in srgb,var(--k) 22%,var(--panel))}
+.dv-a{stroke:var(--k);stroke-width:1.8;fill:none;stroke-linecap:round}
+.dv-d{fill:var(--k)}
+.dv{transition:opacity .25s}
+.dv.down{opacity:.25}
+.dv.root .dv-b{fill:color-mix(in srgb,var(--k) 25%,var(--panel));stroke-width:3}
+.dv.clickable{cursor:pointer}
+.dg-l{fill:var(--fg);font:700 11px var(--f-display)}
+.dg-s{fill:var(--muted);font:500 9.5px var(--f-mono)}
+.dg-port{fill:var(--k);font:700 11px var(--f-mono)}
+.pk rect{fill:var(--k);stroke:var(--panel);stroke-width:1.5}
+.pk path{stroke:#fff;fill:none;stroke-width:1.2}
+.pk.lost rect{fill:var(--bad)}
+.pk.bpdu rect{fill:var(--c2)}
+.bdg rect{fill:var(--good)}
+.bdg.no rect{fill:var(--bad)}
+.bdg-t{fill:#fff;font:700 10px var(--f-body);text-anchor:middle}
+.edge .hit{stroke:transparent;stroke-width:16;cursor:pointer}
+.edge .hit:focus-visible{stroke:color-mix(in srgb,var(--k) 30%,transparent)}
+.edge.broken .wire{stroke:var(--bad);stroke-dasharray:6 5}
+.cut{fill:var(--bad);font:800 14px var(--f-body)}
+.term{fill:var(--k)}
+.life{stroke:var(--line);stroke-width:2;stroke-dasharray:4 4}
+.msg line,.msg path{stroke:var(--k);stroke-width:2;fill:none}
+.msg.lost line{stroke:var(--bad);stroke-dasharray:4 3}
+.msg-t{fill:var(--fg);font:700 11px var(--f-mono);text-anchor:middle;paint-order:stroke;stroke:var(--panel);stroke-width:4px}
+.grp{fill:none;stroke:var(--c2);stroke-width:2;stroke-dasharray:4 3}
+.zone ellipse{fill:color-mix(in srgb,var(--zc) 16%,transparent);stroke:var(--zc);stroke-width:2}
+.zone circle{fill:var(--zc)}
+.zn{fill:#fff;font:800 11px var(--f-display)}
+.z0{--zc:var(--c1)}.z1{--zc:var(--c2)}.z2{--zc:var(--c3)}.z3{--zc:var(--c4)}.z4{--zc:var(--lab)}.z5{--zc:var(--bad)}
+.port rect{fill:var(--good)}
+.port.p-RP rect{fill:var(--c3)}
+.port.p-BLK rect{fill:var(--bad)}
+.dg-split{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:12px;align-items:start}
+@media (max-width:640px){.dg-split{grid-template-columns:1fr}}
+.mact{background:var(--panel);border-radius:12px}
+.mact caption{font:700 .9rem var(--f-display);text-align:left;padding:4px 2px;color:var(--k)}
+.mact tr.new td{background:color-mix(in srgb,var(--good) 25%,var(--panel));transition:background 1s}
+.mact .empty{color:var(--muted);text-align:center;font-style:italic}
+.enc{display:grid;grid-template-columns:150px minmax(0,1fr) 150px;gap:12px;align-items:center}
+@media (max-width:640px){.enc{grid-template-columns:1fr 1fr}.enc-mid{grid-column:1/-1;grid-row:1}}
+.stk{display:grid;gap:4px}
+.stk-h{font:700 .85rem var(--f-display);text-align:center;color:var(--k)}
+.lay{font:600 .8rem var(--f-body);padding:5px 8px;border-radius:8px;background:var(--panel);border:1px solid var(--line);transition:all .25s}
+.lay span{font:700 .75rem var(--f-mono);color:var(--muted);margin-right:6px}
+.lay.on{background:var(--k);color:#fff;border-color:var(--k);transform:scale(1.04)}
+.lay.on span{color:#fff}
+.enc-mid{display:grid;gap:10px;justify-items:center;text-align:center}
+.pdu-name{font:600 1rem var(--f-display)}
+.pdu{display:flex;flex-wrap:wrap;justify-content:center;gap:3px}
+.pd{font:700 .75rem var(--f-mono);padding:8px 8px;border-radius:7px;color:#fff;animation:pop .35s ease-out}
+.pd-data{background:var(--c2)}.pd-tcp{background:var(--c3)}.pd-ip{background:var(--c4)}.pd-mac{background:var(--c1)}.pd-fcs{background:var(--c1);opacity:.75}.pd-bits{background:var(--fg);color:var(--bg);letter-spacing:.1em}
+@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:none;opacity:1}}
+.enc-wire{width:100%;height:6px;border-radius:3px;background:var(--line)}
+.enc-wire.on{background:repeating-linear-gradient(90deg,var(--k) 0 10px,transparent 10px 20px);animation:mv .6s linear infinite}
+@keyframes mv{to{background-position:20px 0}}
+.bits-in{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-bottom:10px}
+.bits-in label{display:flex;gap:8px;align-items:center;font:600 .9rem var(--f-body)}
+.bits-in input[data-ip]{font-size:1rem;padding:.35rem .5rem;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg);width:11rem}
+.bits-in input[type=range]{accent-color:var(--k);width:200px;max-width:50vw}
+.bitrow{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0 10px}
+.oct{display:flex;gap:2px;align-items:flex-end;position:relative;padding-bottom:16px}
+.oct small{position:absolute;bottom:0;left:0;right:0;text-align:center;font:600 .75rem var(--f-mono);color:var(--muted)}
+.bit{width:18px;height:24px;display:grid;place-items:center;border-radius:4px;font:700 .8rem var(--f-mono)}
+.bit.n{background:var(--k);color:#fff}.bit.h{background:var(--code);color:var(--muted)}
+.bits-t th{width:42%}
+.ios-modes{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.ios-modes span{font:600 .78rem var(--f-display);padding:4px 10px;border-radius:99px;border:1px solid var(--line);background:var(--panel);display:inline-flex;gap:6px;align-items:center}
+.ios-modes small{font-family:var(--f-mono);color:var(--muted)}
+.ios-modes span.on{background:var(--k);color:#fff;border-color:var(--k)}
+.ios-modes span.on small{color:#fff}
+.ios-term{background:#1d1420;color:#f7d8e8;font:0.82rem/1.5 var(--f-mono);border-radius:12px;padding:10px 12px;height:210px;overflow:auto;margin:0;white-space:pre-wrap}
+.ios-in{display:flex;gap:6px;align-items:center;margin-top:6px;flex-wrap:wrap}
+.ios-pr{font-size:.85rem;color:var(--k);font-weight:700}
+.ios-in input{flex:1 1 180px;min-width:0;font-size:.9rem;padding:.4rem .5rem;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg)}
+.qcmd{font-size:.72rem;padding:4px 9px;border-radius:99px;border:1px solid color-mix(in srgb,var(--k) 35%,transparent);background:var(--panel);color:var(--fg);cursor:pointer}
+.qcmd:hover{background:var(--k);color:#fff}
+.ctl-l{font:600 .8rem var(--f-body);color:var(--muted);width:100%}
+.rj td{white-space:nowrap;font-size:.8rem}
+.rj i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px;background:var(--q);border:1px solid var(--line)}
+.rj i.o{--q:#e8832a}.rj i.g{--q:#3a9a4f}.rj i.b{--q:#2f6fd0}.rj i.br{--q:#7a5232}
+.rj i.w{background:repeating-linear-gradient(45deg,#fff 0 3px,var(--q) 3px 6px)}
+.ptab td[data-p]{cursor:pointer;font-weight:700;text-align:center}
+.ptab td{text-align:center}
+.ptab td.on{background:color-mix(in srgb,var(--k) 22%,var(--panel))}
+.ptab td[data-p]:hover{background:color-mix(in srgb,var(--k) 12%,var(--panel))}
+.ptab td[data-p]:focus-visible{outline:2px solid var(--k);outline-offset:-2px}
+.ptab .pt-k td{font-family:var(--f-mono)}
+.ptab-out p{margin:.3rem 0;padding:.5rem .7rem;border-radius:10px;background:var(--panel);border:1px solid var(--line)}
+.ptab-out .tr{border:0;padding:0}
+.qtabs{justify-self:start}
+.qs{display:grid;gap:22px}
+.mset{border-top:1px solid var(--line);padding-top:12px;margin-top:12px}
+.mset:first-child{border-top:0;margin-top:0;padding-top:0}
+.mgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+@media (max-width:640px){.mgrid{grid-template-columns:1fr}}
+.mrow{display:grid;grid-template-columns:minmax(0,1fr) auto 3.2rem;gap:8px;align-items:center;padding:4px 0;border-bottom:1px dashed var(--line)}
+.mrow select{font:inherit;padding:.2rem .3rem;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg)}
+.mA{font-weight:600}
+.mB{margin:0;padding-left:1.4rem}
+.mB li{padding:4px 0;border-bottom:1px dashed var(--line)}
+.mres.ok{color:var(--good);font-weight:700}.mres.no{color:var(--bad);font-weight:700}
+.mscore{font-weight:700}
+.eq{border-top:1px solid var(--line);padding:.8rem 0}
+.eq p{margin:0 0 .4rem;font-weight:600}
+.eq summary{cursor:pointer;color:var(--k);font-weight:700;font-size:.9rem}
+.ea{margin-top:.5rem;padding:.7rem .9rem;border-radius:12px;background:color-mix(in srgb,var(--k) 6%,var(--panel));border:1px solid var(--line)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ---------- study-site layout (docs style: sidebar contents, progress, calm cards) ---------- */
+:root{--bg:#fbf8fa;--line:#eee2e9;--shadow:0 1px 2px rgba(58,36,51,.05),0 4px 14px rgba(58,36,51,.04)}
+.wrap{max-width:1180px}
+body{font-size:16px;line-height:1.7}
+header.top{border-radius:0!important;background:linear-gradient(120deg,var(--hero1),var(--hero2) 70%)!important;padding-block:30px 22px}
+header.top h1{font-weight:800!important;letter-spacing:-.02em}
+nav.tabs{box-shadow:0 1px 0 var(--line)}
+nav.tabs .wrap{gap:2px;padding-block:0}
+nav.tabs button{border:0!important;background:transparent!important;color:var(--muted)!important;border-radius:0!important;padding:.85rem .9rem!important;border-bottom:3px solid transparent!important;font-weight:700}
+nav.tabs button[aria-selected="true"]{color:var(--fg)!important;border-bottom-color:var(--k)!important}
+nav.tabs button[aria-selected="true"] i{background:var(--k)!important}
+nav.tabs button:hover{color:var(--fg)!important}
+.layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:36px;align-items:start}
+.layout>section.view{grid-column:2;max-width:860px;width:100%}
+.toc{grid-column:1;grid-row:1/span 20;position:sticky;top:calc(env(safe-area-inset-top,0px) + 64px);max-height:calc(100vh - 84px);overflow:auto;padding:4px 4px 16px 0;font-size:.88rem}
+.toc-h{font:800 .72rem var(--f-display);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:6px 0 8px}
+.toc-prog{height:6px;border-radius:3px;background:var(--line);overflow:hidden;margin:4px 0 4px}
+.toc-prog i{display:block;height:100%;background:var(--k);width:0;transition:width .3s}
+.toc-pt{font-size:.78rem;color:var(--muted);margin-bottom:10px}
+.toc ol{list-style:none;margin:0;padding:0;border-left:2px solid var(--line)}
+.toc li a{display:flex;gap:8px;align-items:flex-start;padding:5px 10px;margin-left:-2px;border-left:2px solid transparent;color:var(--muted);text-decoration:none;line-height:1.35}
+.toc li a:hover{color:var(--fg)}
+.toc li a.cur{color:var(--k);border-left-color:var(--k);font-weight:700}
+.toc li a .dot{flex:0 0 14px;height:14px;border-radius:50%;border:1.5px solid var(--line);margin-top:2px;display:grid;place-items:center;font-size:9px;color:#fff}
+.toc li a.done .dot{background:var(--good);border-color:var(--good)}
+.toc li a.done .dot::after{content:"✓"}
+.toc .toc-mob{display:none}
+@media (max-width:960px){
+  .layout{grid-template-columns:1fr;gap:18px}
+  .layout>section.view{grid-column:1}
+  .toc{grid-column:1;grid-row:auto;position:static;max-height:none;padding:0}
+  .toc .toc-in{display:none}
+  .toc .toc-mob{display:block;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+  .toc .toc-mob summary{cursor:pointer;font-weight:700}
+}
+.chap-head{background:var(--panel)!important;border:1px solid var(--line);box-shadow:var(--shadow);padding:20px 22px!important;border-radius:16px!important;position:relative;overflow:hidden}
+.chap-head::before{content:"";position:absolute;inset:0 auto 0 0;width:6px;background:var(--k)}
+.chap-head h2{font-size:1.9rem!important;letter-spacing:-.02em}
+.block{border-radius:14px!important;box-shadow:var(--shadow)!important;padding:22px 24px 18px!important}
+.block>h3{font:800 1.22rem/1.35 var(--f-display);color:var(--fg);letter-spacing:-.01em;display:flex;gap:10px;align-items:center;justify-content:space-between;padding-bottom:10px;border-bottom:1px solid var(--line);margin-bottom:14px}
+.block>h3 .h3t{display:flex;gap:10px;align-items:center}
+.block>h3 .h3t::before{content:"";width:4px;height:1.1em;border-radius:2px;background:var(--k);flex:0 0 4px}
+.studied{all:unset;cursor:pointer;flex:0 0 auto;font:700 .72rem var(--f-display);padding:4px 10px;border-radius:99px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.studied:hover{border-color:var(--good);color:var(--good)}
+.studied[aria-pressed="true"]{background:var(--good);border-color:var(--good);color:#fff}
+.studied:focus-visible{outline:2px solid var(--good);outline-offset:2px}
+.block h4{font-size:1.02rem;margin-top:1.2rem}
+.block li{margin:.35rem 0}
+.tr{font-size:.93rem!important}
+table{border-radius:10px;font-size:.9rem}
+th{font-size:.85rem}
+.mm{border-radius:16px!important}
+.totop{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:6;border:1px solid var(--line);background:var(--panel);color:var(--fg);border-radius:99px;padding:8px 14px;font:700 .8rem var(--f-display);box-shadow:var(--shadow);cursor:pointer;opacity:0;pointer-events:none;transition:opacity .2s}
+.totop.show{opacity:1;pointer-events:auto}
+
+/* ---------- realistic palette: white docs look, one accent, GitHub-style neutrals ---------- */
+:root{--bg:#ffffff;--panel:#ffffff;--fg:#1f2328;--muted:#59636e;--line:#d1d9e0;--code:#f6f8fa;
+  --accent:#0969da;--c1:#0969da;--c2:#1a7f37;--c3:#bc4c00;--c4:#8250df;--lab:#0969da;--good:#1a7f37;--bad:#cf222e;
+  --note:#f6f8fa;--noteline:#d1d9e0;--hero1:#ffffff;--hero2:#ffffff;--shadow:none}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1117;--panel:#151b23;--fg:#f0f6fc;--muted:#9198a1;--line:#3d444d;--code:#151b23;
+  --accent:#4493f8;--c1:#4493f8;--c2:#3fb950;--c3:#db6d28;--c4:#ab7df8;--lab:#4493f8;--good:#3fb950;--bad:#f85149;
+  --note:#151b23;--noteline:#3d444d;--hero1:#0d1117;--hero2:#0d1117;--shadow:none;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1117;--panel:#151b23;--fg:#f0f6fc;--muted:#9198a1;--line:#3d444d;--code:#151b23;
+  --accent:#4493f8;--c1:#4493f8;--c2:#3fb950;--c3:#db6d28;--c4:#ab7df8;--lab:#4493f8;--good:#3fb950;--bad:#f85149;
+  --note:#151b23;--noteline:#3d444d;--hero1:#0d1117;--hero2:#0d1117;--shadow:none;color-scheme:dark}
+header.top{background:var(--bg)!important;border-bottom:1px solid var(--line);padding-block:26px 18px}
+header.top h1{color:var(--fg)}
+header.top h1::after{content:none!important}
+header.top .subtitle{color:var(--fg)!important;font-weight:500!important;font-size:1.05rem!important}
+header.top .byline{font-style:normal!important;color:var(--muted)}
+.theme-btn{border:1px solid var(--line)!important;box-shadow:none!important;border-radius:6px!important;font-weight:600!important}
+.theme-btn .ti{color:var(--fg)!important}
+nav.tabs{background:var(--bg)!important;border-bottom:1px solid var(--line)!important;box-shadow:none!important}
+nav.tabs button i{display:none!important}
+nav.tabs button[aria-selected="true"]{border-bottom-color:#fd8c73!important}
+.chap-head{background:transparent!important;border:0!important;box-shadow:none!important;padding:4px 0 14px!important;border-radius:0!important;border-bottom:1px solid var(--line)!important}
+.chap-head::before{content:none!important}
+.chap-head small{color:var(--muted)!important}
+.block{border:1px solid var(--line)!important;border-radius:8px!important;box-shadow:none!important}
+.block>h3 .h3t::before{content:none!important}
+.mm,.dg{border-radius:8px!important;box-shadow:none!important}
+.dg{background:var(--code)!important;border:1px solid var(--line)!important}
+.note{background:var(--code)!important;border:1px solid var(--line)!important;border-left:4px solid var(--accent)!important;border-radius:6px!important}
+.note b:first-child{color:var(--fg)!important}
+.watchrow,.watchrow.hard{background:var(--code)!important;border:1px solid var(--line)!important;border-radius:6px!important}
+.watchrow .wl{color:var(--fg)!important}
+.watch{border-radius:6px!important;box-shadow:none!important}
+.btn,.vid,.seg,.seg button,.filters button,.opts button,.qcmd,.studied{border-radius:6px!important}
+.pill{border-radius:4px!important}
+.dg-tag{border-radius:4px!important}
+.tr{border-right-color:var(--line)!important;color:var(--muted)!important}
+th{background:var(--code)!important}
+.ios-term{background:#0d1117!important;color:#e6edf3!important;border-radius:6px!important}
+.ios-modes span,.ios-modes span.on{border-radius:6px!important}
+.mmg{background:var(--panel)!important;border-radius:6px!important}
+.mm-root{background:var(--accent)!important;box-shadow:none!important}
+.layer-stack div{border-radius:4px!important}
+.toc li a.cur{color:var(--fg)!important;border-left-color:#fd8c73!important}
+.toc-prog i{background:var(--good)!important}
+.totop{border-radius:6px!important;box-shadow:none!important}
+
+/* ---------- chapter colour coding: solid colours, one per tab ---------- */
+:root{--lab:#0e7c86;--c5:#bf3989;--c6:#9a6700}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--lab:#39c5cf;--c5:#db61a2;--c6:#d29922}}
+:root[data-theme="dark"]{--lab:#39c5cf;--c5:#db61a2;--c6:#d29922}
+header.top{position:relative}
+header.top::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:4px;background:linear-gradient(90deg,var(--c1) 0 16.6%,var(--c2) 16.6% 33.3%,var(--c3) 33.3% 50%,var(--c4) 50% 66.6%,var(--c5) 66.6% 83.3%,var(--c6) 83.3%)}
+nav.tabs button i{display:inline-block!important;width:8px!important;height:8px!important;background:var(--k)!important}
+nav.tabs button[aria-selected="true"]{color:var(--k)!important;border-bottom-color:var(--k)!important}
+.chap-head{background:color-mix(in srgb,var(--k) 7%,var(--bg))!important;border:1px solid color-mix(in srgb,var(--k) 22%,var(--line))!important;border-top:4px solid var(--k)!important;border-radius:8px!important;padding:18px 20px!important}
+.chap-head small{color:var(--k)!important;font-weight:800}
+.chap-head h2{color:var(--fg)}
+.block>h3 .h3t::before{content:""!important;width:10px;height:10px;border-radius:2px;background:var(--k);flex:0 0 10px}
+.block{border-top:3px solid color-mix(in srgb,var(--k) 70%,var(--line))!important}
+th{background:color-mix(in srgb,var(--k) 9%,var(--code))!important}
+.note{border-left-color:var(--k)!important;background:color-mix(in srgb,var(--k) 5%,var(--code))!important}
+.toc li a.cur{color:var(--k)!important;border-left-color:var(--k)!important}
+.toc-prog i{background:var(--k)!important}
+.pill{color:var(--k);border-color:color-mix(in srgb,var(--k) 50%,transparent);background:color-mix(in srgb,var(--k) 8%,transparent)}
+.dg{background:color-mix(in srgb,var(--k) 4%,var(--code))!important;border-color:color-mix(in srgb,var(--k) 25%,var(--line))!important}
+.watchrow,.watchrow.hard{background:color-mix(in srgb,var(--k) 5%,var(--code))!important}
+.layer-stack div{border-left-color:var(--k)!important}
+.filters button[aria-pressed="true"]{background:var(--k)!important;color:#fff!important;border-color:var(--k)!important}
+.seg button[aria-pressed="true"]{background:var(--k)!important}
+.studied{font-size:.78rem!important;padding:6px 12px!important;border:1.5px solid var(--line)!important}
+.studied[aria-pressed="true"]{background:var(--good)!important;border-color:var(--good)!important;color:#fff!important}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);background:var(--fg);color:var(--bg);font:600 .88rem var(--f-body);padding:10px 16px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:20;max-width:calc(100vw - 32px)}
+.toast.show{opacity:1;transform:translateX(-50%)}
+.icg{display:grid;gap:10px;margin:.6rem 0}
+.icg-h{font:800 .76rem var(--f-display);color:var(--k);text-transform:uppercase;letter-spacing:.04em}
+.icbtn{justify-self:start;text-decoration:none;display:inline-block;margin-top:4px}
+.icg-h .tr{display:inline!important;border:0!important;padding:0 0 0 8px!important;margin:0}
+.icgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.icc{margin:0;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--panel);display:flex;flex-direction:column}
+.icimg{background:#fff;height:96px;display:grid;place-items:center;border-bottom:1px solid var(--line);padding:8px}
+.icimg img{max-height:80px;max-width:100%;object-fit:contain}
+.icc figcaption{padding:8px 10px;display:grid;gap:2px;font-size:.82rem;line-height:1.4}
+.icc figcaption b{font-size:.9rem}
+.icc figcaption .tr{border:0!important;padding:0!important;font-size:.8rem!important}
+.studied-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:18px;padding-top:12px;border-top:1px dashed var(--line);font:600 .88rem var(--f-body);color:var(--muted)}
+.studied-row .tr{display:inline!important;border:0!important;padding:0 0 0 8px!important}
+.h3done{display:none;flex:0 0 auto;font:700 .72rem var(--f-display);color:var(--good);border:1px solid var(--good);border-radius:99px;padding:2px 9px}
+.block>h3.isdone .h3done{display:inline-block}
+
+/* ---------- Obsidian-style graph look (always dark canvas) ---------- */
+.mm{background:#1b1820!important;border-color:#2d2933!important}
+.mm .mm-hint,.mmg-bar .mm-hint{color:#a29ea8!important}
+.mmg-reset{background:#26222b!important;color:#d9d6dd!important;border-color:#3a3540!important}
+.mmg{background:radial-gradient(ellipse at 50% 45%,#2a2530 0%,#1b1820 70%)!important;border:0!important}
+.mmg-sky circle{fill:#d8d4dd}
+.mmg-link{stroke:rgba(225,220,230,.16)!important;stroke-width:1!important}
+.mmg-link.lit{stroke:var(--k)!important;stroke-width:1.6!important;opacity:1}
+.mmg-n circle{fill:#9d99a3!important;stroke:none!important}
+.mmg-n.t1 circle{fill:#cfccd4!important}
+.mmg-n.t0 circle{fill:#ece9ef!important;stroke:rgba(236,233,239,.18)!important;stroke-width:8!important}
+.mmg-n.hard circle{stroke:var(--k)!important;stroke-width:2!important}
+.mmg-n text{fill:#b9b5bf!important;stroke:#1b1820!important;stroke-width:3px!important;font-weight:500!important}
+.mmg-n.t0 text{fill:#f1eef4!important;font-size:13px!important;font-weight:700!important}
+.mmg-n.t1 text{fill:#d6d3db!important;font-size:11px!important;font-weight:600!important}
+.mmg-n.t2 text{font-size:9.5px!important}
+.mmg-n.lit circle{fill:var(--k)!important}
+.mmg-n.lit text{fill:#fff!important}
+.mmg-n:hover circle{filter:drop-shadow(0 0 6px var(--k))}
+.mmg .dim{opacity:.12}
+.mmg-n.t2 circle{fill:#8f8a96!important}
+.mmg-link{stroke:rgba(225,220,230,.13)!important}
+
+/* ---------- flower mind map ---------- */
+.flowers .stem{fill:none;stroke:#4f8a5b;stroke-width:2.2;opacity:.75;transition:opacity .2s}
+.flowers .stem.lit{stroke:#7cc48a;stroke-width:3;opacity:1}
+.flowers .leaf{fill:#4f8a5b;opacity:.7}
+.flowers .rpetal{fill:var(--k);opacity:.35}
+.flowers .rcenter{fill:#f4c95d}
+.flowers .rlabel{fill:#f1eef4;font:800 14px var(--f-display);paint-order:stroke;stroke:#1b1820;stroke-width:4px}
+.fl-root{cursor:pointer}
+.flower{cursor:grab;transition:opacity .2s}
+.flower.dim{opacity:.25}
+.flower .petal{fill:var(--k);opacity:.45;stroke:#1b1820;stroke-width:1}
+.flower .petal.real{opacity:.9;cursor:pointer}
+.flower .petal.real:hover,.flower .petal.real:focus{fill:#ffffff;opacity:1;outline:none}
+.flower .center{fill:#f4c95d;stroke:#1b1820;stroke-width:1.5;cursor:pointer}
+.flower .center:hover,.flower .center:focus{fill:#ffe08a;outline:none}
+.flower.hard .center{fill:#ff9f6e}
+.flower .flabel{fill:#e2dfe6;font:600 11.5px var(--f-body);paint-order:stroke;stroke:#1b1820;stroke-width:3.5px;pointer-events:none}
+.flower .ptip{fill:#fff;font:700 11px var(--f-body);paint-order:stroke;stroke:#1b1820;stroke-width:4px;pointer-events:none}
+
+/* ---------- data structures additions ---------- */
+:root{--c7:#953800}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--c7:#f0883e}}
+:root[data-theme="dark"]{--c7:#f0883e}
+.hub-back{display:inline-block;margin-bottom:6px;font:600 .88rem var(--f-body);color:var(--muted);text-decoration:none}
+.hub-back:hover{color:var(--fg)}
+pre.cli{white-space:pre;tab-size:2}
+.ea pre.cli{margin:.4rem 0;font-size:.8rem}
+.cells{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.cell{width:62px;height:62px;border:2px solid var(--line);border-radius:8px;display:grid;place-items:center;position:relative;background:var(--panel);transition:all .25s}
+.cells.small .cell{width:46px;height:46px}
+.cell span{font:700 1rem var(--f-mono)}
+.cell small{position:absolute;bottom:-18px;font:600 .7rem var(--f-mono);color:var(--muted)}
+.cell.used{border-color:var(--k);background:color-mix(in srgb,var(--k) 10%,var(--panel))}
+.cell.new{background:var(--good);color:#fff;border-color:var(--good)}
+.cell.move{background:color-mix(in srgb,var(--k) 35%,var(--panel))}
+.cell.src{outline:2px dashed var(--k)}
+.cell.look{outline:3px solid var(--c3)}
+.meta{margin-top:24px;font:500 .9rem var(--f-mono);color:var(--muted)}
+.meta b{color:var(--fg)}
+.ll{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:26px 6px 8px;overflow-x:auto}
+.node{position:relative;display:flex;border:2px solid var(--k);border-radius:8px;overflow:hidden;background:var(--panel);transition:all .25s}
+.node .d{padding:8px 12px;font:700 1rem var(--f-mono)}
+.node .n{padding:8px 6px;font:600 .62rem var(--f-mono);color:var(--muted);border-left:1px solid var(--line);display:grid;place-items:center}
+.node.d2 .n:first-child{border-left:0;border-right:1px solid var(--line)}
+.node.new{background:color-mix(in srgb,var(--good) 25%,var(--panel));border-color:var(--good)}
+.node.look{outline:3px solid var(--c3)}
+.node.del{background:color-mix(in srgb,var(--bad) 25%,var(--panel));border-color:var(--bad);opacity:.7}
+.ptr{position:absolute;top:-20px;left:0;font:700 .68rem var(--f-mono);color:var(--k);font-style:normal}
+.node{overflow:visible}
+.ptr.t{left:auto;right:0;color:var(--c3)}
+.arr{font:700 1.1rem var(--f-mono);color:var(--muted)}
+.nul,.llempty{font:600 .85rem var(--f-mono);color:var(--muted)}
+.stk2{display:grid;gap:4px;max-width:280px}
+.scell{display:grid;grid-template-columns:40px 1fr 70px;align-items:center;gap:6px;border:2px solid var(--line);border-radius:6px;padding:6px 8px;background:var(--panel)}
+.scell small{font:600 .7rem var(--f-mono);color:var(--muted)}
+.scell span{font:700 1rem var(--f-mono)}
+.scell em{font:700 .75rem var(--f-mono);color:var(--k);font-style:normal}
+.scell.used{border-color:var(--k);background:color-mix(in srgb,var(--k) 10%,var(--panel))}
+.scell.new{background:var(--good);color:#fff;border-color:var(--good)}
+.bo-l{display:flex;gap:8px;align-items:center;font:600 .9rem var(--f-body);margin-bottom:8px}
+.bo-l input{accent-color:var(--k);width:220px;max-width:55vw}
+.bo{display:grid;gap:6px}
+.bo-row{display:grid;grid-template-columns:70px minmax(0,1fr) 90px;gap:8px;align-items:center}
+.bo-k{font:700 .85rem var(--f-mono)}
+.bo-bar{height:16px;background:var(--code);border-radius:4px;overflow:hidden}
+.bo-bar i{display:block;height:100%;background:var(--k);transition:width .25s}
+.bo-v{font:600 .8rem var(--f-mono);color:var(--muted)}
+.bo-a{grid-column:2/-1;font:500 .78rem var(--f-ar);color:var(--muted);direction:rtl;text-align:right;margin-top:-4px}
+.dg-ctl input[type=number]{width:5.5rem;font:inherit;padding:.3rem .4rem;border-radius:6px;border:1px solid var(--line);background:var(--bg);color:var(--fg)}
+details.ans{margin:.3rem 0 .9rem;border:1px solid var(--line);border-radius:6px;padding:.35rem .7rem;background:var(--panel)}
+details.ans summary{cursor:pointer;font:700 .85rem var(--f-body);color:var(--k)}
+details.ans pre.cli{margin:.4rem 0}
+details.ans .tr{border:0!important;padding:0!important}
+.chapvid{border:1px solid color-mix(in srgb,var(--k) 35%,var(--line));border-left:5px solid var(--k);border-radius:8px;padding:12px 14px;background:color-mix(in srgb,var(--k) 6%,var(--panel))}
+.cv-h{font:800 1rem var(--f-ar);direction:rtl;text-align:right;color:var(--fg);margin-bottom:8px}
+.cv-h span{display:block;font:500 .85rem var(--f-ar);color:var(--muted)}
+.cv-b{display:flex;flex-wrap:wrap;gap:8px}
+.cvid{display:flex;gap:10px;align-items:center;flex:1 1 260px;min-width:0;padding:10px 12px;border-radius:8px;background:var(--k);color:#fff;text-decoration:none}
+.cvid:hover{filter:brightness(1.08)}
+.cvid:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+.cvid .play{flex:0 0 34px;height:34px;border-radius:50%;background:rgba(255,255,255,.25);display:grid;place-items:center}
+.cvid b{display:block;font:700 .92rem var(--f-ar)}
+.cvid small{font:600 .76rem var(--f-body);opacity:.9}
+.chap-head:has(.doodle){padding-right:190px!important}
+.doodle{position:absolute;right:16px;top:50%;transform:translateY(-50%) rotate(-3deg);height:150px;width:auto;max-width:170px;object-fit:contain;pointer-events:none;mix-blend-mode:multiply}
+:root[data-theme="dark"] .doodle{filter:invert(1);mix-blend-mode:screen}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .doodle{filter:invert(1);mix-blend-mode:screen}}
+@media (max-width:640px){.chap-head:has(.doodle){padding-right:96px!important}.doodle{height:76px;max-width:84px;right:10px}}
+/*THEME*/
+:root{--bg:#fbf9fa;--panel:#ffffff;--fg:#2a1d22;--muted:#705c63;--line:#e5dcdf;--code:#f7f3f4;--accent:#6d2c42;--c1:#6d2c42;--c2:#843e4a;--c3:#94426b;--c4:#713d3e;--lab:#793e64;--c5:#965464;--c6:#552a3d;--c7:#814b51;--c8:#905174;--good:#3f7f55;--bad:#b5483f;--note:#f7f2f4;--noteline:#deced3;--hero1:#fbf9fa;--hero2:#fbf9fa;--shadow:none;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#181113;--panel:#231a1d;--fg:#f0ebec;--muted:#b6a5ab;--line:#45363b;--code:#231a1d;--accent:#d095a9;--c1:#dbb0be;--c2:#ce9fa7;--c3:#ca93af;--c4:#d0acae;--lab:#cea6bf;--c5:#bd919b;--c6:#dec1cd;--c7:#c4a1a4;--c8:#c096ae;--good:#7cc49a;--bad:#e9877c;--note:#291e22;--noteline:#513d44;--hero1:#181113;--hero2:#181113;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#181113;--panel:#231a1d;--fg:#f0ebec;--muted:#b6a5ab;--line:#45363b;--code:#231a1d;--accent:#d095a9;--c1:#dbb0be;--c2:#ce9fa7;--c3:#ca93af;--c4:#d0acae;--lab:#cea6bf;--c5:#bd919b;--c6:#dec1cd;--c7:#c4a1a4;--c8:#c096ae;--good:#7cc49a;--bad:#e9877c;--note:#291e22;--noteline:#513d44;--hero1:#181113;--hero2:#181113;color-scheme:dark}
+.mm{background:#22161a!important;border-color:#3c2a30!important}
+.mmg{background:radial-gradient(ellipse at 50% 45%,#39232a 0%,#1f1418 70%)!important}
+.ios-term{background:#22161a!important;color:#f0ebec!important}
+.view code{overflow-wrap:anywhere}
+/*/THEME*/
+/*ART*/
+.art.doodle{filter:none!important;mix-blend-mode:normal!important;transform:translateY(-50%)!important;height:112px;width:150px;max-width:150px}
+.art .s{fill:none;stroke:var(--k,var(--c1));stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.art .f{fill:color-mix(in srgb,var(--k,var(--c1)) 30%,transparent);stroke:var(--k,var(--c1));stroke-width:2.2;stroke-linejoin:round}
+.art .d{fill:var(--k,var(--c1))}
+.art .dash{stroke-dasharray:4 3}
+.art .t{fill:var(--k,var(--c1));stroke:none;font:700 11px var(--f-mono,monospace)}
+.art .t.s2{fill:var(--muted);font-weight:500}
+.art .t.big{font-size:17px}.art .t.huge{font-size:64px;font-weight:400}
+.chap-head{background:linear-gradient(120deg,color-mix(in srgb,var(--k) 14%,var(--panel)),color-mix(in srgb,var(--k) 4%,var(--panel)))!important;border-color:color-mix(in srgb,var(--k) 30%,var(--line))!important}
+.block>h3{color:color-mix(in srgb,var(--k) 75%,var(--fg))}
+@media (max-width:640px){.art.doodle{height:72px;width:96px}}
+.card .art.doodle{position:absolute;right:12px;bottom:12px;top:auto;transform:none!important;height:84px;width:112px}
+/*/ART*/
+</style>
+
+<header class="top"><div class="wrap">
+  <a class="hub-back" href="../">← All subjects</a>
+  <h1>English: AI Curriculum (Units 6–8)</h1>
+  <p class="ar subtitle">ملخص أم سميحة لتجنب الفضيحة</p>
+  <p class="byline">made by Yomna</p>
+  <button class="theme-btn" type="button" id="themeBtn" aria-label="Switch light or dark mode"><span class="ti" aria-hidden="true">☀</span><span class="tl">Light mode</span></button>
+  <script>
+  (function(){
+    const root=document.documentElement,btn=document.getElementById('themeBtn');
+    try{const t=localStorage.getItem('netTheme');if(t==='light'||t==='dark')root.dataset.theme=t;}catch(e){}
+    const isDark=()=>root.dataset.theme?root.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+    const paint=()=>{const d=isDark();btn.querySelector('.ti').textContent=d?'☀':'☾';btn.querySelector('.tl').textContent=d?'Light mode':'Dark mode';};
+    btn.addEventListener('click',()=>{const next=isDark()?'light':'dark';root.dataset.theme=next;try{localStorage.setItem('netTheme',next);}catch(e){}paint();});
+    matchMedia('(prefers-color-scheme: dark)').addEventListener('change',paint);
+    paint();
+  })();
+  </script>
+</div></header>
+
+<nav class="tabs" aria-label="Sections"><div class="wrap" role="tablist">
+  <button role="tab" data-v="ch1" style="--k:var(--c1)"><i></i>Unit 6 · Robotics</button>
+  <button role="tab" data-v="ch2" style="--k:var(--c2)"><i></i>Unit 7 · Ethics</button>
+  <button role="tab" data-v="ch3" style="--k:var(--c3)"><i></i>Unit 8 · Data</button>
+  <button role="tab" data-v="lab" style="--k:var(--c7)"><i></i>Exam Practice</button>
+  <button role="tab" data-v="quiz" style="--k:var(--c5)"><i></i>Quiz</button>
+  <button role="tab" data-v="review" style="--k:var(--c6)"><i></i>Night Before</button>
+</div></nav>
+
+<main class="wrap layout">
+<aside class="toc" id="toc" aria-label="On this page"></aside>
+<!-- ================= UNIT 6 ================= -->
+<section class="view" id="v-ch1" style="--k:var(--c1)">
+  <div class="chap-head"><svg class="doodle art" viewBox="0 0 160 120" role="img" aria-label="a robot"><rect class="f" x="56" y="10" width="48" height="36" rx="8"/><circle class="d" cx="70" cy="28" r="5"/><circle class="d" cx="90" cy="28" r="5"/><path class="s" d="M80 10V2M70 40h20"/><rect class="f" x="50" y="50" width="60" height="44" rx="6"/><path class="s" d="M50 60L26 80l-8-6M110 60l24 20 8-6"/><rect class="f" x="58" y="94" width="14" height="18" rx="3"/><rect class="f" x="88" y="94" width="14" height="18" rx="3"/></svg><small>Unit 6</small><h2>Robotics and Automation</h2><p>Reading: How robots think, move and work. Grammar: the passive voice (present and past) and modals of obligation and necessity. Vocabulary of robotics.</p><span class="tr">القطعة عن الروبوتات، والجرامر: المبني للمجهول (مضارع وماضي) والـ modals بتاعة الإلزام والضرورة، وكلمات الروبوتات.</span></div>
+  <div class="chapvid"><div class="cv-h">🎬 شرح بالعربي (فيديو)<span>اتفرجي عليه الأول، وبعدين ذاكري من الملخص تحت.</span></div><div class="cv-b"><a class="cvid" href="https://www.youtube.com/watch?v=ffJr9CG3k2k" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span><b>المبني للمجهول (Passive) بالكامل</b><small>17:01 · دروس أونلاين</small></span></a><a class="cvid" href="https://www.youtube.com/watch?v=QF28UIrTgWE" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span><b>الفرق بين must و should</b><small>10:16 · Miss Salma</small></span></a></div></div>
+  <div class="mm" data-map></div>
+
+  <div class="block">
+    <h3>6.1 Reading: How Robots Think, Move and Work</h3>
+    <ul>
+      <li><b>Robotics</b> is a branch of AI and engineering that designs and builds machines that do tasks automatically.<span class="tr">الروبوتكس فرع من الذكاء الاصطناعي والهندسة بيصمم ويبني آلات بتشتغل لوحدها.</span></li>
+      <li>A <b>robot</b> senses, thinks and acts: it uses <b>sensors</b> to understand its environment, <b>algorithms</b> to decide, and motors or wheels to move.<span class="tr">الروبوت بيحس (sensors)، ويفكر (algorithms)، ويتحرك (موتورات وعجل).</span></li>
+      <li><b>Automation</b> = using technology to do repetitive tasks without human help. Automated systems follow programmed instructions and may not "think"; intelligent robots can <b>adapt</b> to changes.<span class="tr">الـ automation: تكنولوجيا بتعمل مهام متكررة من غير بني آدم، بتنفّذ أوامر بس. الروبوت الذكي بيتأقلم مع التغيير.</span></li>
+      <li>Types: <b>industrial</b> robots assemble products in factories; <b>service</b> robots clean houses or help customers; <b>medical</b> robots do surgeries or deliver medicine; <b>exploration</b> robots study dangerous or distant places (space, ocean).<span class="tr">أنواعها: صناعية (تجميع في المصانع)، وخدمية (تنضيف ومساعدة عملاء)، وطبية (عمليات وتوصيل أدوية)، واستكشاف (الفضاء والمحيط).</span></li>
+      <li>Robotics improves <b>speed, accuracy and safety</b> but raises questions about <b>jobs and ethics</b>; the future of work depends on how humans and robots <b>cooperate</b>.<span class="tr">بتزوّد السرعة والدقة والأمان، بس بتفتح أسئلة عن الوظايف والأخلاق.</span></li>
+    </ul>
+    <details class="ans"><summary>Comprehension questions with model answers</summary><ol>
+      <li><b>What is robotics?</b> A branch of AI and engineering that designs and builds machines that perform tasks automatically.</li>
+      <li><b>How does a robot sense and act?</b> It uses sensors to understand its environment, makes decisions with algorithms, and moves with mechanical parts such as motors or wheels.</li>
+      <li><b>Robotics vs automation?</b> Automation uses technology to repeat programmed tasks without human help and may not "think"; intelligent robots can adapt to changes in their surroundings.</li>
+      <li><b>Four types:</b> industrial (assemble products), service (clean houses, assist customers), medical (surgery, deliver medicine), exploration (study space or the ocean).</li>
+      <li><b>Advantages and challenges:</b> more speed, accuracy and safety; but questions about jobs and ethics.</li>
+    </ol><span class="tr">الإجابات من القطعة. اكتبيها بجمل كاملة وبكلمات القطعة نفسها.</span></details>
+  </div>
+
+  <div class="block">
+    <h3>6.2 Grammar: The Passive Voice (Present and Past)</h3>
+    <ul>
+      <li>Use the passive when the <b>action</b> or the <b>object</b> is more important than who does it (processes, inventions).<span class="tr">بنستخدم المبني للمجهول لما الفعل نفسه أهم من مين عمله.</span></li>
+      <li><b>Present simple passive:</b> am / is / are + past participle (V3). "Robots <b>are programmed</b> to follow instructions."<span class="tr">مضارع: am/is/are + التصريف التالت.</span></li>
+      <li><b>Past simple passive:</b> was / were + V3. "The first industrial robot <b>was created</b> in 1959."<span class="tr">ماضي: was/were + التصريف التالت.</span></li>
+      <li>The doer can be added with <b>by</b>: "The robot's movements are controlled <b>by</b> an onboard computer."<span class="tr">الفاعل لو عايزين نذكره بنحطه بعد by.</span></li>
+    </ul>
+<pre class="cli">Active:  Engineers program the robots.        →  Passive: The robots are programmed (by engineers).
+Active:  The company built a new model.       →  Passive: A new model was built (by the company).
+object of the active → subject of the passive;  verb → be (same tense) + V3</pre>
+    <details class="ans"><summary>Book practices 1–3 (answers)</summary><pre class="cli">P1: 1 are used   2 was developed   3 are installed   4 are controlled   5 are assembled
+P2: 1 The robots are programmed by engineers.
+    2 A new model was built by the company last year.
+    3 Motion is detected by the sensors.
+    4 The robot was designed by scientists for medical use.
+    5 The factory is cleaned manually by workers.
+P3: 1 is built   2 are used   3 was designed   4 is controlled   5 are done</pre><span class="tr">في P1 الجملة 2 فيها "early 2000s" يعني ماضي → was developed. وفي P3 الفاعل الحقيقي مش موجود (الآلة مش هي اللي بتبني)، فالمبني للمجهول هو الصح.</span></details>
+    <div class="note"><b>غلطات بتتسأل:</b> ‎"was design" غلط → was designed (لازم V3). ‎"are using" معناها هما اللي بيستخدموا، والصح are used. ولازم الـ be تتفق مع الفاعل: Robots are… / The robot is…</div>
+  </div>
+
+  <div class="block">
+    <h3>6.3 Grammar: Modals of Obligation and Necessity</h3>
+    <div class="tw"><table>
+      <tr><th>Modal</th><th>Use</th><th>Example</th><th class="ar">بالعربي</th></tr>
+      <tr><td><b>must</b></td><td>strong obligation / rule</td><td>Robots must be tested before use.</td><td class="ar">لازم (قاعدة)</td></tr>
+      <tr><td><b>have to / has to</b></td><td>necessity</td><td>Engineers have to ensure safety.</td><td class="ar">لازم/مضطر</td></tr>
+      <tr><td><b>should</b></td><td>advice, a good idea</td><td>Developers should check the program for errors.</td><td class="ar">المفروض (نصيحة)</td></tr>
+      <tr><td><b>don't / doesn't have to</b></td><td>lack of necessity (not needed)</td><td>Operators don't have to control robots manually.</td><td class="ar">مش ضروري</td></tr>
+      <tr><td><b>mustn't (must not)</b></td><td>prohibition</td><td>You mustn't touch the robot while it is operating.</td><td class="ar">ممنوع</td></tr>
+    </table></div>
+    <div class="note"><b>أهم فرق في الامتحان:</b> mustn't = ممنوع. don't have to = مش لازم (براحتك). "You mustn't touch it" غير "You don't have to touch it".</div>
+    <details class="ans"><summary>Book practices 4–5 (answers)</summary><pre class="cli">P4: 1 must / have to   2 must / should   3 don't have to   4 should   5 mustn't
+P5: 1 The robot must be tested.
+    2 Humans don't have to assemble products.
+    3 Developers should check the program before use.</pre><span class="tr">"It is necessary" = must، "not necessary" = don't have to، "a good idea" = should. والجملة 3 في P4 "the robot does it automatically" يعني مش ضروري يتحكموا → don't have to.</span></details>
+  </div>
+
+  <div class="block">
+    <h3>6.4 Vocabulary of Robotics and Automation</h3>
+    <div class="tw"><table>
+      <tr><th>Word</th><th>Meaning</th><th>Example</th><th class="ar">بالعربي</th></tr>
+      <tr><td><b>robot</b></td><td>machine that can sense and act</td><td>Robots can assemble cars quickly.</td><td class="ar">روبوت</td></tr>
+      <tr><td><b>automation</b></td><td>use of machines to perform tasks</td><td>Automation saves time and money.</td><td class="ar">الأتمتة</td></tr>
+      <tr><td><b>sensor</b></td><td>device that detects / measures signals</td><td>Sensors help robots avoid obstacles.</td><td class="ar">حسّاس</td></tr>
+      <tr><td><b>actuator</b></td><td>mechanical part that produces movement</td><td>Actuators control the robot's arms.</td><td class="ar">مُشغّل (اللي بيحرّك)</td></tr>
+      <tr><td><b>program</b></td><td>set of coded instructions</td><td>Robots follow a programmed sequence.</td><td class="ar">برنامج</td></tr>
+      <tr><td><b>precision</b></td><td>accuracy and control, exactness</td><td>Robots work with great precision.</td><td class="ar">دقة</td></tr>
+      <tr><td><b>assembly</b></td><td>putting parts together</td><td>Robots are used for car assembly.</td><td class="ar">تجميع</td></tr>
+      <tr><td><b>controller</b></td><td>device that manages a robot's actions</td><td>The controller guides the robot's movement.</td><td class="ar">وحدة التحكم</td></tr>
+      <tr><td><b>maintenance</b></td><td>keeping machines in good condition, regular care and repair</td><td>Regular maintenance prevents damage.</td><td class="ar">صيانة</td></tr>
+      <tr><td><b>collaboration</b></td><td>working together to achieve a goal</td><td>Humans and robots collaborate in factories.</td><td class="ar">تعاون</td></tr>
+    </table></div>
+    <h4>Word formation</h4>
+    <div class="tw"><table>
+      <tr><th>Noun</th><th>Verb</th><th>Adjective</th></tr>
+      <tr><td>automation</td><td>automate</td><td>automated</td></tr>
+      <tr><td>operation</td><td>operate</td><td>operational</td></tr>
+      <tr><td>maintenance</td><td>maintain</td><td>maintainable</td></tr>
+      <tr><td>collaboration</td><td>collaborate</td><td>collaborative</td></tr>
+    </table></div>
+    <details class="ans"><summary>Book practices 6–8 (answers)</summary><pre class="cli">P6: sensor = device that measures or detects signals
+    actuator = mechanical part that causes movement
+    controller = device that manages a robot's functions
+    precision = accuracy or exactness
+    maintenance = regular care and repair
+    collaboration = working together to achieve a goal
+P7: 1 sensor   2 actuator   3 precision   4 controller   5 maintenance
+P8: 1 automation   2 maintained   3 collaboration   4 maintenance</pre><span class="tr">في Word formation: بعد full (صفة) بييجي اسم → automation. بعد "must be" بييجي V3 → maintained. بعد "focuses on" اسم → collaboration. "Proper ___ extends the life" اسم → maintenance.</span></details>
+  </div>
+
+  <div class="block">
+    <h3>6.5 Functional expressions and connectors</h3>
+    <div class="tw"><table>
+      <tr><th>Function</th><th>Expression</th><th>Example</th></tr>
+      <tr><td>Describing functions</td><td>It is used to… / It helps to…</td><td>This robot is used to assemble parts.</td></tr>
+      <tr><td>Cause and effect</td><td>because / so / therefore</td><td>The robot stopped because its sensor failed.</td></tr>
+      <tr><td>Giving instructions</td><td>First… then… next…</td><td>First, turn on the controller, then start the program.</td></tr>
+      <tr><td>Obligation</td><td>You must… / You should…</td><td>You must not touch the robot while it's moving.</td></tr>
+      <tr><td>Giving examples</td><td>For instance / such as…</td><td>Robots are used in many areas, such as medicine.</td></tr>
+    </table></div>
+    <details class="ans"><summary>Book practices (answers)</summary><pre class="cli">Match: Robots are used to → perform repetitive tasks.  You must not → touch the machine while operating.
+       For example → in factories and hospitals.  Because the system failed → the production stopped.
+       First, turn on the robot → and then check the controller.
+Fill:  1 For example / Therefore (robots are used to reduce human labor)   2 First   3 therefore
+       4 for example   5 You must</pre><span class="tr">because قبل السبب، و therefore قبل النتيجة.</span></details>
+  </div>
+
+  <div class="block">
+    <h3>6.6 Writing: How Robots and Automation Are Changing Human Work</h3>
+    <p>Plan: Introduction (definitions) → Examples → Positive effects → Negative effects → Conclusion. Use the passive and modals.<span class="tr">الخطة: تعريفات، أمثلة، مميزات، عيوب، خاتمة. واستخدمي الـ passive والـ modals.</span></p>
+    <details class="ans"><summary>Model essay (about 170 words)</summary><p>Robotics is a branch of artificial intelligence that designs machines which can sense, think and act. Automation means using technology to do repetitive tasks without human help. Both are changing the way people work.</p><p>Today, robots are used in many places. For example, cars are assembled by industrial robots, houses are cleaned by service robots, and some operations are performed by medical robots. As a result, work is done faster and with more precision, and dangerous jobs are given to machines instead of people.</p><p>However, automation also creates problems. Some workers lose their jobs, so they must learn new skills. Companies should also think about safety and ethics, because robots can make mistakes if their sensors fail.</p><p>In conclusion, robots will not replace humans completely. Humans and robots have to collaborate: robots can do repetitive tasks, while people control, maintain and improve them.</p><span class="tr">لاحظي: are used، are assembled، is done (passive) و must، should، have to (modals) وروابط For example، As a result، However، In conclusion.</span></details>
+  </div>
+
+  <div class="block essay">
+    <h3>Expected questions</h3>
+    <details><summary>Change into the passive: "Scientists designed the robot for medical use."</summary><p>The robot was designed (by scientists) for medical use.<span class="tr">ماضي → was + V3.</span></p></details>
+    <details><summary>What is the difference between "mustn't" and "don't have to"?</summary><p>mustn't = it is not allowed (prohibition). don't have to = it is not necessary.<span class="tr">ممنوع ضد مش ضروري.</span></p></details>
+    <details><summary>Give the term: "a mechanical part that produces movement".</summary><p>actuator<span class="tr">actuator.</span></p></details>
+  </div>
+</section>
+
+<!-- ================= UNIT 7 ================= -->
+<section class="view" id="v-ch2" style="--k:var(--c2)" hidden>
+  <div class="chap-head"><svg class="doodle art" viewBox="0 0 160 120" role="img" aria-label="balance scale of ethics"><path class="s" d="M80 14v86M50 112h60M26 34h108"/><path class="s" d="M26 34l-16 34h32zM134 34l-16 34h32z"/><path class="f" d="M10 68q16 14 32 0z"/><path class="f" d="M118 68q16 14 32 0z"/><circle class="d" cx="80" cy="14" r="5"/><text class="t" x="26" y="92" text-anchor="middle">fair</text><text class="t" x="134" y="92" text-anchor="middle">safe</text></svg><small>Unit 7</small><h2>Ethics and Responsibility in AI</h2><p>Reading: The moral side of AI. Grammar: the first conditional and the passive with modal verbs. Vocabulary of AI ethics.</p><span class="tr">القطعة عن أخلاقيات الذكاء الاصطناعي، والجرامر: الـ First Conditional والمبني للمجهول مع الـ modals، وكلمات الأخلاقيات.</span></div>
+  <div class="chapvid"><div class="cv-h">🎬 شرح بالعربي (فيديو)<span>اتفرجي عليه الأول، وبعدين ذاكري من الملخص تحت.</span></div><div class="cv-b"><a class="cvid" href="https://www.youtube.com/watch?v=3yBK_an3aDA" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span><b>حالات If (ومنها الحالة الأولى)</b><small>17:01 · دروس أونلاين</small></span></a><a class="cvid" href="https://www.youtube.com/watch?v=S3r1BIlT_ks" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span><b>أسهل شرح للحالة الشرطية الأولى</b><small>16:13 · Learn together</small></span></a></div></div>
+  <div class="mm" data-map></div>
+
+  <div class="block">
+    <h3>7.1 Reading: The Moral Side of Artificial Intelligence</h3>
+    <ul>
+      <li>As AI becomes more powerful it raises <b>ethical questions</b>: should a machine make life-changing decisions? How can AI be used fairly and safely?<span class="tr">كل ما الـ AI بيقوى، بتطلع أسئلة أخلاقية: ينفع آلة تاخد قرارات مصيرية؟</span></li>
+      <li><b>AI ethics</b> = the study of right and wrong in the design and use of intelligent systems. Key values: <b>fairness, transparency, accountability, privacy</b>.<span class="tr">أخلاقيات الـ AI = الصح والغلط في تصميم واستخدام الأنظمة الذكية. القيم: العدل، والشفافية، والمسؤولية، والخصوصية.</span></li>
+      <li>Examples of problems: a <b>hiring algorithm</b> may reject applicants unfairly because it learned from <b>biased data</b>; <b>facial recognition</b> may violate privacy if used without <b>consent</b>.<span class="tr">أمثلة: برنامج توظيف بيرفض ناس ظلم عشان اتعلم من داتا متحيزة، والتعرف على الوشوش ممكن ينتهك الخصوصية من غير موافقة.</span></li>
+      <li>Ethical AI needs <b>human oversight</b>, clear rules and responsible design; developers must make sure systems respect human rights and social values.<span class="tr">الـ AI الأخلاقي محتاج إشراف بشري وقواعد وتصميم مسؤول.</span></li>
+      <li>Governments and organizations create <b>AI ethics guidelines</b> to prevent misuse and build public trust. The goal is not to stop AI but to make it <b>responsible, inclusive and beneficial</b>.<span class="tr">الهدف مش إننا نوقف الـ AI، الهدف نخليه مسؤول ومفيد للكل.</span></li>
+    </ul>
+    <details class="ans"><summary>Comprehension questions with model answers</summary><ol>
+      <li><b>What is AI ethics?</b> The study of right and wrong in the design and use of intelligent systems.</li>
+      <li><b>Why is fairness important?</b> Because AI that learns from biased data can make unfair decisions, for example rejecting job applicants unfairly.</li>
+      <li><b>Examples of unethical AI behavior:</b> a biased hiring algorithm; facial recognition used without consent.</li>
+      <li><b>How can human oversight help?</b> People can monitor AI, find mistakes and prevent misuse.</li>
+      <li><b>Main goal of ethical AI:</b> to make AI responsible, inclusive and beneficial for everyone, not to stop it.</li>
+    </ol></details>
+  </div>
+
+  <div class="block">
+    <h3>7.2 Grammar: The First Conditional</h3>
+    <ul>
+      <li>Form: <b>If + present simple, will + base verb</b>. It talks about <b>real, possible future</b> situations and their consequences.<span class="tr">الشكل: If + مضارع بسيط، will + فعل في المصدر. للحاجات اللي ممكن تحصل فعلاً في المستقبل.</span></li>
+      <li>"If AI <b>becomes</b> too powerful, it <b>will need</b> strict control." The clauses can swap: "AI will need strict control if it becomes too powerful."<span class="tr">ممكن نبدّل الجزئين، ولو If في الأول بنحط فاصلة.</span></li>
+      <li><b>Never</b> put will in the if-clause: ✗ If AI <s>will be</s> trained… ✓ If AI <b>is</b> trained…<span class="tr">ممنوع will بعد If.</span></li>
+      <li><b>unless</b> = if … not: "Unless governments regulate AI, misuse will continue."<span class="tr">unless = لو مش.</span></li>
+    </ul>
+    <details class="ans"><summary>Book practices 1–3 (answers)</summary><pre class="cli">P1: 1 will help   2 will need   3 will be   4 will be   5 will trust
+P2: 1 If data is biased, AI will make mistakes.
+    2 If we test systems, they will become safer.
+    3 If developers hide problems, users will lose trust.
+P3: 1 is … will make   2 don't protect … will (misuse)   3 will trust … is   4 create … will</pre><span class="tr">في P3 الجملة 4: create مع will (First). created مع would ده الـ Second Conditional ومش موضوعنا.</span></details>
+  </div>
+
+  <div class="block">
+    <h3>7.3 Grammar: The Passive Voice with Modal Verbs</h3>
+    <ul>
+      <li>Form: <b>modal + be + past participle (V3)</b>: must be tested, should be protected, can be designed, might be caused.<span class="tr">الشكل: modal + be + التصريف التالت.</span></li>
+      <li>Use: responsibility ("AI systems <b>must be tested</b> before release") and recommendations ("Data <b>should be protected</b> by developers").<span class="tr">للمسؤولية والنصايح.</span></li>
+    </ul>
+<pre class="cli">Active:  Developers must design fair systems.   →  Fair systems must be designed (by developers).
+Active:  People can monitor AI behavior.        →  AI behavior can be monitored (by people).</pre>
+    <details class="ans"><summary>Book practices 4–5 (answers)</summary><pre class="cli">P4: 1 must be tested   2 should be protected   3 can be designed   4 might be caused   5 must be respected
+P5: 1 Fair systems must be designed by developers.
+    2 User information should be protected by companies.
+    3 AI behavior can be monitored by people.
+    4 The system might be fixed by engineers.
+    5 Ethical laws must be created by governments.</pre><span class="tr">الـ modal بيفضل زي ما هو، وبعده be دايماً (مش is ولا are)، وبعدها V3.</span></details>
+    <div class="note"><b>غلطة شائعة:</b> ‎"must is tested" أو "should protected" غلط. الصح: must be tested، should be protected.</div>
+  </div>
+
+  <div class="block">
+    <h3>7.4 Vocabulary of AI Ethics and Responsibility</h3>
+    <div class="tw"><table>
+      <tr><th>Word</th><th>Meaning</th><th>Example</th><th class="ar">بالعربي</th></tr>
+      <tr><td><b>ethics</b></td><td>moral principles guiding behavior</td><td>AI ethics focuses on right and wrong in technology.</td><td class="ar">الأخلاقيات</td></tr>
+      <tr><td><b>bias</b></td><td>unfair preference or prejudice</td><td>Biased data leads to unfair decisions.</td><td class="ar">تحيّز</td></tr>
+      <tr><td><b>fairness</b></td><td>equal treatment of all people</td><td>Developers must ensure fairness in AI models.</td><td class="ar">العدل</td></tr>
+      <tr><td><b>transparency</b></td><td>openness and clarity</td><td>Transparency builds user trust.</td><td class="ar">الشفافية</td></tr>
+      <tr><td><b>accountability</b></td><td>responsibility for actions / outcomes</td><td>AI companies need accountability for their systems.</td><td class="ar">المساءلة/المسؤولية</td></tr>
+      <tr><td><b>privacy</b></td><td>control of personal information</td><td>Privacy is essential for user safety.</td><td class="ar">الخصوصية</td></tr>
+      <tr><td><b>oversight</b></td><td>supervision or monitoring</td><td>Human oversight prevents misuse of AI.</td><td class="ar">الإشراف</td></tr>
+      <tr><td><b>consent</b></td><td>permission or agreement</td><td>Data should only be used with user consent.</td><td class="ar">الموافقة</td></tr>
+      <tr><td><b>regulation</b></td><td>official rule or law</td><td>New regulations control AI use.</td><td class="ar">لوائح/قوانين</td></tr>
+      <tr><td><b>misuse</b></td><td>wrong or unethical use</td><td>Misuse of AI can harm people.</td><td class="ar">سوء الاستخدام</td></tr>
+    </table></div>
+    <h4>Word formation</h4>
+    <div class="tw"><table>
+      <tr><th>Noun</th><th>Verb</th><th>Adjective</th></tr>
+      <tr><td>fairness</td><td>—</td><td>fair</td></tr>
+      <tr><td>regulation</td><td>regulate</td><td>regulated</td></tr>
+      <tr><td>privacy</td><td>—</td><td>private</td></tr>
+      <tr><td>accountability</td><td>account (for)</td><td>accountable</td></tr>
+    </table></div>
+    <details class="ans"><summary>Book practices 6–8 (answers)</summary><pre class="cli">P6: 1 bias – d   2 transparency – b   3 accountability – e   4 oversight – a   5 consent – c   6 regulation – f
+P7: 1 fairness   2 transparency   3 oversight   4 regulations   5 consent
+P8: 1 accountability   2 regulations   3 trust   4 fairness</pre><span class="tr">P8 الجملة 3: "Transparency increases public ___" → trust (الثقة). الكلمة مش من الجدول بس هي المعنى المطلوب من القطعة (build public trust).</span></details>
+  </div>
+
+  <div class="block">
+    <h3>7.5 Functional expressions</h3>
+    <div class="tw"><table>
+      <tr><th>Function</th><th>Expression</th><th>Example</th></tr>
+      <tr><td>Expressing opinions</td><td>I think… / In my opinion…</td><td>I think AI should always be monitored.</td></tr>
+      <tr><td>Agreeing / disagreeing</td><td>I agree with you. / I don't think so.</td><td>I agree that data privacy is important.</td></tr>
+      <tr><td>Giving reasons</td><td>Because… / That's why…</td><td>AI must be tested because it can make mistakes.</td></tr>
+      <tr><td>Expressing condition</td><td>If… / Unless…</td><td>If developers follow ethics, systems will be fair.</td></tr>
+      <tr><td>Suggesting solutions</td><td>We should… / It would be better to…</td><td>We should create clear laws for AI use.</td></tr>
+    </table></div>
+    <details class="ans"><summary>Book practices (answers)</summary><pre class="cli">Match: 1 I think AI should → d follow ethical guidelines   2 We should → b limit the use of facial recognition
+       3 If companies are not careful → e AI may cause unfair outcomes   4 I agree that → c protect user privacy*
+       5 It would be better to → a test systems before release
+       (*"I agree that we should protect user privacy" is the natural meaning)
+Fill:  1 I think   2 because   3 Unless (the box gives "if": "If governments don't regulate…")   4 We should   5 that's why</pre><span class="tr">الجملة 3: "___ governments regulate AI, misuse will continue" معناها المنطقي Unless. لو الاختيار من الصندوق if، يبقى لازم نفي.</span></details>
+  </div>
+
+  <div class="block">
+    <h3>7.6 Writing: Why Ethical AI Matters for the Future</h3>
+    <p>Opinion essay plan: Introduction (clear opinion) → 2–3 reasons → one example → conclusion. Use the first conditional and the passive with modals.<span class="tr">مقال رأي: رأيك بوضوح، وأسباب، ومثال، وخاتمة.</span></p>
+    <details class="ans"><summary>Model essay (about 170 words)</summary><p>In my opinion, ethical AI is one of the most important goals for the future, because AI is now used to make decisions that affect people's lives.</p><p>First, AI must be fair. If a system learns from biased data, it will make unfair decisions. For example, a hiring algorithm might reject good applicants only because of their gender or background.</p><p>Second, privacy should be protected. Facial recognition can be used to follow people without their consent. If companies collect data without permission, people will lose trust in technology.</p><p>Third, someone must be accountable. When a self-driving car causes an accident, users need to know who is responsible. That's why human oversight and clear regulations are needed.</p><p>In conclusion, we should not stop AI, but it must be designed and used responsibly. If developers follow ethical rules, AI will be safer, fairer and more useful for everyone.</p><span class="tr">لاحظي: If … will (First conditional) و must be designed، should be protected، can be used (passive with modals).</span></details>
+  </div>
+
+  <div class="block essay">
+    <h3>Expected questions</h3>
+    <details><summary>Complete: If developers ____ (follow) ethical rules, AI ____ (help) everyone.</summary><p>follow … will help<span class="tr">مضارع بعد If، و will في النتيجة.</span></p></details>
+    <details><summary>Rewrite in the passive: "Companies should protect user information."</summary><p>User information should be protected by companies.<span class="tr">should be + V3.</span></p></details>
+    <details><summary>Give the term: "permission or agreement".</summary><p>consent</p></details>
+  </div>
+</section>
+
+<!-- ================= UNIT 8 ================= -->
+<section class="view" id="v-ch3" style="--k:var(--c3)" hidden>
+  <div class="chap-head"><svg class="doodle art" viewBox="0 0 160 120" role="img" aria-label="bar chart and magnifying glass"><path class="s" d="M14 104h132M14 104V10"/><rect class="f" x="24" y="80" width="16" height="24" rx="2"/><rect class="f" x="48" y="64" width="16" height="40" rx="2"/><rect class="f" x="72" y="72" width="16" height="32" rx="2"/><rect class="f" x="96" y="46" width="16" height="58" rx="2"/><rect class="f" x="120" y="34" width="16" height="70" rx="2"/><circle class="f" cx="118" cy="34" r="16"/><path class="s" d="M130 46l14 14"/></svg><small>Unit 8</small><h2>Data-Driven Intelligence</h2><p>Reading: The power of data in AI. Grammar: quantifiers and expressions of amount, and the present perfect continuous. Vocabulary of data science.</p><span class="tr">القطعة عن قوة الداتا في الذكاء الاصطناعي، والجرامر: الـ quantifiers والـ Present Perfect Continuous، وكلمات علم البيانات.</span></div>
+  <div class="chapvid"><div class="cv-h">🎬 شرح بالعربي (فيديو)<span>اتفرجي عليه الأول، وبعدين ذاكري من الملخص تحت.</span></div><div class="cv-b"><a class="cvid" href="https://www.youtube.com/watch?v=cdl2AjSE0-c" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span><b>Much ولا Many؟ Little ولا Few؟ الـ Quantifiers</b><small>12:37 · My English Sarah</small></span></a><a class="cvid" href="https://www.youtube.com/watch?v=N5gnxLrxKWM" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span><b>الفرق بين few و a few و little و a little</b><small>4:38 · محمد عبد القوي</small></span></a><a class="cvid" href="https://www.youtube.com/watch?v=2EptvhLbLEU" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span><b>المضارع التام المستمر</b><small>8:00 · دروس أونلاين</small></span></a></div></div>
+  <div class="mm" data-map></div>
+
+  <div class="block">
+    <h3>8.1 Reading: The Power of Data in Artificial Intelligence</h3>
+    <ul>
+      <li>Every intelligent system depends on <b>data</b>. <b>Data science</b> = collecting, organizing and analyzing information to make useful decisions. With AI, it lets machines <b>learn from examples</b> instead of only following commands.<span class="tr">علم البيانات: نجمع ونرتب ونحلل المعلومات عشان ناخد قرارات. ومع الـ AI الآلة بتتعلم من الأمثلة.</span></li>
+      <li>AI uses large <b>datasets</b> to recognize <b>patterns</b>: a weather app analyzes years of climate data to predict tomorrow's temperature; a streaming service recommends movies from your viewing history.<span class="tr">مثالين: تطبيق الطقس بيتوقع من بيانات سنين، وخدمة الأفلام بترشّح من اللي اتفرجتي عليه.</span></li>
+      <li>The <b>AI data process</b> has four steps: <b>1. collection</b> (gathering raw information from different sources) → <b>2. cleaning</b> (removing mistakes and irrelevant items) → <b>3. analysis</b> (finding patterns and relationships) → <b>4. prediction</b> (using models to make decisions or forecasts).<span class="tr">الأربع خطوات: جمع ← تنضيف ← تحليل ← توقّع. احفظيهم بالترتيب.</span></li>
+      <li>Data science and AI create powerful tools but raise questions about <b>privacy, accuracy and fairness</b>; data must be used <b>responsibly</b>.<span class="tr">بس فيه أسئلة عن الخصوصية والدقة والعدل.</span></li>
+    </ul>
+    <details class="ans"><summary>Comprehension questions with model answers</summary><ol>
+      <li><b>What is data science?</b> The process of collecting, organizing and analyzing information to make useful decisions.</li>
+      <li><b>How does AI use data to learn?</b> It uses large datasets to recognize patterns and learns from examples instead of just following commands.</li>
+      <li><b>The four steps:</b> data collection, data cleaning, data analysis, prediction.</li>
+      <li><b>Two applications:</b> a weather app that predicts temperature; a streaming service that recommends movies.</li>
+      <li><b>Why is ethical data use important?</b> Because data raises questions of privacy, accuracy and fairness; it must be used responsibly to build safe systems.</li>
+    </ol></details>
+  </div>
+
+  <div class="block">
+    <h3>8.2 Grammar: Quantifiers and Expressions of Amount</h3>
+    <div class="tw"><table>
+      <tr><th>Quantifier</th><th>Used with</th><th>Example</th><th class="ar">بالعربي</th></tr>
+      <tr><td><b>many</b></td><td>countable plural (questions / negatives)</td><td>How many samples? There aren't many errors.</td><td class="ar">كتير (بيتعد)</td></tr>
+      <tr><td><b>much</b></td><td>uncountable (questions / negatives)</td><td>There isn't much noise in the dataset.</td><td class="ar">كتير (مش بيتعد)</td></tr>
+      <tr><td><b>a lot of / lots of</b></td><td>both</td><td>AI uses a lot of data.</td><td class="ar">كتير للنوعين</td></tr>
+      <tr><td><b>a few</b></td><td>countable — some, a small number</td><td>There are a few mistakes.</td><td class="ar">شوية (بيتعد)</td></tr>
+      <tr><td><b>a little</b></td><td>uncountable — a small amount</td><td>We have a little clean data.</td><td class="ar">شوية (مش بيتعد)</td></tr>
+      <tr><td><b>few / little</b> (no "a")</td><td>almost none (negative idea)</td><td>Few companies share their data.</td><td class="ar">تقريباً مفيش</td></tr>
+      <tr><td><b>some</b></td><td>positive sentences, offers / requests</td><td>We need some more images.</td><td class="ar">بعض</td></tr>
+      <tr><td><b>any</b></td><td>questions and negatives</td><td>There isn't any error.</td><td class="ar">أي (نفي وسؤال)</td></tr>
+    </table></div>
+    <div class="note"><b>المفتاح:</b> data و information و noise و software كلها uncountable → much / a little. وsamples و errors و images و mistakes countable → many / a few.</div>
+    <details class="ans"><summary>Book practices 1–3 (answers)</summary><pre class="cli">P1: 1 a lot of / many   2 much   3 Many   4 some / a little   5 a few
+P2: 1 much   2 a few   3 some   4 a lot of   5 much
+P3: 1 The dataset contains a lot of data / a large amount of data.
+    2 The system doesn't need many samples.
+    3 We only have a few examples for training.</pre><span class="tr">P2 الجملة 1: human control مش بيتعد → much. الجملة 2: mistakes بتتعد → a few. الجملة 3: جملة مثبتة بطلب → some.</span></details>
+  </div>
+
+  <div class="block">
+    <h3>8.3 Grammar: Present Perfect Continuous</h3>
+    <ul>
+      <li>Form: <b>have / has + been + verb-ing</b>. "Scientists <b>have been collecting</b> data for years." "The model <b>has been learning</b> from millions of examples."<span class="tr">الشكل: have/has + been + الفعل بـ ing.</span></li>
+      <li>Use: an action that <b>started in the past and is still continuing</b>, emphasizing <b>duration</b>.<span class="tr">حاجة بدأت في الماضي ولسه مستمرة، ومركّزين على المدة.</span></li>
+      <li><b>for</b> + a period (for two weeks, for a year); <b>since</b> + a starting point (since January, since last month).<span class="tr">for + مدة. since + بداية.</span></li>
+    </ul>
+    <details class="ans"><summary>Book practices 4–5 (answers)</summary><pre class="cli">P4: 1 have been collecting   2 has been analyzing   3 have been working
+    4 has been using   5 has been developing
+P5: 1 They have been building the model since January.
+    2 Scientists have been testing algorithms for a year.
+    3 The company has been gathering information since last month.</pre><span class="tr">Engineers/Researchers جمع → have. The system/AI/The team مفرد → has.</span></details>
+    <div class="note"><b>خلي بالك:</b> has been مع المفرد (he/she/it/the system)، و have been مع الجمع (they/scientists/engineers).</div>
+  </div>
+
+  <div class="block">
+    <h3>8.4 Vocabulary of Data Science and AI</h3>
+    <div class="tw"><table>
+      <tr><th>Word</th><th>Meaning</th><th>Example</th><th class="ar">بالعربي</th></tr>
+      <tr><td><b>data</b></td><td>information or facts</td><td>Data helps machines learn.</td><td class="ar">بيانات</td></tr>
+      <tr><td><b>dataset</b></td><td>collection (group) of data</td><td>The dataset contains millions of images.</td><td class="ar">مجموعة بيانات</td></tr>
+      <tr><td><b>algorithm</b></td><td>step-by-step procedure</td><td>An algorithm analyzes user behavior.</td><td class="ar">خوارزمية</td></tr>
+      <tr><td><b>pattern</b></td><td>repeated design, trend or structure</td><td>The model detects patterns in data.</td><td class="ar">نمط</td></tr>
+      <tr><td><b>variable</b></td><td>factor that can change (the result)</td><td>The variable affects the output.</td><td class="ar">متغير</td></tr>
+      <tr><td><b>prediction</b></td><td>guess based on data</td><td>The AI made an accurate prediction.</td><td class="ar">توقّع</td></tr>
+      <tr><td><b>analysis</b></td><td>detailed examination</td><td>Data analysis helps improve accuracy.</td><td class="ar">تحليل</td></tr>
+      <tr><td><b>clean data</b></td><td>error-free data</td><td>The system works better with clean data.</td><td class="ar">بيانات نضيفة</td></tr>
+      <tr><td><b>visualization</b></td><td>graph, chart or picture of information</td><td>Data visualization makes trends easy to see.</td><td class="ar">تصوير البيانات</td></tr>
+      <tr><td><b>accuracy</b></td><td>how correct something is; level of correctness</td><td>High accuracy means reliable results.</td><td class="ar">الدقة</td></tr>
+    </table></div>
+    <h4>Word formation</h4>
+    <div class="tw"><table>
+      <tr><th>Noun</th><th>Verb</th><th>Adjective</th></tr>
+      <tr><td>analysis</td><td>analyze</td><td>analytical</td></tr>
+      <tr><td>prediction</td><td>predict</td><td>predictive</td></tr>
+      <tr><td>accuracy</td><td>—</td><td>accurate</td></tr>
+      <tr><td>visualization</td><td>visualize</td><td>visual</td></tr>
+    </table></div>
+    <details class="ans"><summary>Book practices 6–8 (answers)</summary><pre class="cli">P6: 1 dataset – b   2 algorithm – e   3 variable – a   4 visualization – f   5 accuracy – c   6 pattern – d
+P7: 1 dataset   2 variable   3 algorithm   4 visualization   5 accuracy
+P8: 1 visualization   2 accuracy   3 analyze   4 Predictive (or Analytical)</pre><span class="tr">بعد "We must" فعل → analyze. وقبل "analysis" صفة → Predictive/Analytical.</span></details>
+  </div>
+
+  <div class="block">
+    <h3>8.5 Functional expressions</h3>
+    <div class="tw"><table>
+      <tr><th>Function</th><th>Expression</th><th>Example</th></tr>
+      <tr><td>Describing processes</td><td>First… then… after that…</td><td>First we collect data, then we analyze it.</td></tr>
+      <tr><td>Giving reasons</td><td>Because… / Since…</td><td>We clean data because it improves accuracy.</td></tr>
+      <tr><td>Describing trends</td><td>It has increased / decreased / remained stable.</td><td>Data usage has increased in recent years.</td></tr>
+      <tr><td>Making comparisons</td><td>more than / less than / as much as</td><td>AI uses more data than traditional systems.</td></tr>
+      <tr><td>Cause and effect</td><td>Therefore / As a result…</td><td>The model was trained with bad data; therefore, it failed.</td></tr>
+    </table></div>
+    <details class="ans"><summary>Book practices (answers)</summary><pre class="cli">Match: 1 – b (then we process and analyze it)   2 – e (so training took longer)   3 – a (because it improves accuracy)
+       4 – c (as a result, predictions were wrong)   5 – d (than traditional computer systems)
+Fill:  1 because   2 therefore   3 after that   4 Since   5 as a result</pre></details>
+  </div>
+
+  <div class="block">
+    <h3>8.6 Writing: How Data Shapes Artificial Intelligence</h3>
+    <p>Informative text: Introduction (definition) → Explanation (the four steps) → Two examples → Benefits and challenges → Conclusion.<span class="tr">مقال معلوماتي: تعريف، والخطوات، ومثالين، والمميزات والتحديات، وخاتمة.</span></p>
+    <details class="ans"><summary>Model essay (about 170 words)</summary><p>Data science is the process of collecting, organizing and analyzing information to make useful decisions. Today, it is the fuel of artificial intelligence, because AI learns from examples, not only from commands.</p><p>The process has four steps. First, a lot of raw data is collected from different sources. Then the data is cleaned, so mistakes and irrelevant items are removed. After that, it is analyzed to find patterns. Finally, models use these patterns to make predictions.</p><p>There are many examples in daily life. A weather app has been analyzing years of climate data to predict tomorrow's temperature, and streaming services recommend movies based on our viewing history.</p><p>Data brings many benefits: faster decisions and higher accuracy. However, there are a few challenges. If the data is biased or dirty, the results will be wrong, and personal data can be misused.</p><p>In conclusion, data shapes how AI thinks, so it must be collected and used responsibly.</p><span class="tr">لاحظي الروابط First، Then، After that، Finally والـ quantifiers ‏a lot of، a few، many والـ present perfect continuous ‏has been analyzing.</span></details>
+  </div>
+
+  <div class="block essay">
+    <h3>Expected questions</h3>
+    <details><summary>Choose: There isn't (much / many) noise in the cleaned dataset.</summary><p>much (noise is uncountable)<span class="tr">noise مش بيتعد.</span></p></details>
+    <details><summary>Rewrite: "Scientists began testing algorithms last year." (present perfect continuous)</summary><p>Scientists have been testing algorithms for a year.<span class="tr">have been + ing + for.</span></p></details>
+    <details><summary>Give the term: "a group of collected data".</summary><p>dataset</p></details>
+  </div>
+</section>
+
+<!-- ================= EXAM PRACTICE ================= -->
+<section class="view" id="v-lab" style="--k:var(--c7)" hidden>
+  <div class="chap-head"><svg class="doodle art" viewBox="0 0 160 120" role="img" aria-label="exam paper out of 20"><rect class="f" x="30" y="8" width="100" height="104" rx="6"/><text class="t" x="44" y="30">Q1 ……</text><text class="t" x="44" y="50">Q2 ……</text><text class="t" x="44" y="70">Q3 ……</text><text class="t" x="44" y="90">Q4 ……</text><circle class="s" cx="118" cy="98" r="16"/><text class="t" x="118" y="102" text-anchor="middle">20</text></svg><small>Practice · same format as the question bank</small><h2>Exam Practice</h2><p>One mock exam per unit, 20 marks each: choose the best answer, give the accurate term, complete from the box, and grammar.</p><span class="tr">امتحان تجريبي لكل وحدة من 20 درجة، بنفس شكل الـ Question bank بالظبط. حلّي على ورقة وبعدين افتحي الإجابة.</span></div>
+
+  <div class="block">
+    <h3>How the exam is built</h3>
+    <ol>
+      <li><b>Q1 Choose the best answer</b> (5 marks): reading and vocabulary meaning.<span class="tr">اختيار من متعدد على القطعة والكلمات.</span></li>
+      <li><b>Q2 Give the accurate term</b> (5 marks): you read a definition and write the word.<span class="tr">تعريف ونكتب الكلمة: احفظي جدول الكلمات بالتعريف بالظبط.</span></li>
+      <li><b>Q3 Complete the sentences using the words in the box</b> (5 marks).<span class="tr">نكمّل الجمل من كلمات في صندوق: ركّزي على نوع الكلمة (اسم، فعل، صفة).</span></li>
+      <li><b>Q4 Grammar: choose the correct answer</b> (5 marks).<span class="tr">جرامر اختيار.</span></li>
+    </ol>
+  </div>
+
+  <div class="block">
+    <h3>Mock exam: Unit 6 (Robotics and Automation)</h3>
+<pre class="cli">Q1 Choose the best answer:
+ 1. A robot uses ____ to understand its environment.   a) actuators  b) sensors  c) wheels  d) motors
+ 2. Automation means using technology to perform ____ tasks.  a) creative  b) repetitive  c) emotional  d) rare
+ 3. ____ robots assemble products in factories.        a) Service  b) Medical  c) Industrial  d) Exploration
+ 4. Robots that study space or the ocean are ____ robots.   a) exploration  b) service  c) industrial  d) medical
+ 5. Robotics improves speed, accuracy and ____.         a) jobs  b) safety  c) emotion  d) cost
+Q2 Give the accurate term:
+ 1. A mechanical part that produces movement.
+ 2. A device that manages a robot's actions.
+ 3. Accuracy or exactness.
+ 4. The process of putting parts together.
+ 5. Regular care and repair of machines.
+Q3 Complete using the box:  [ sensor · collaboration · precision · automation · program ]
+ 1. Modern factories use full ____ to speed up production.
+ 2. The ____ detects objects in front of the robot.
+ 3. The robot works with high ____, never making mistakes.
+ 4. Robots follow a ____ of coded instructions.
+ 5. The team focuses on ____ between humans and machines.
+Q4 Grammar – choose:
+ 1. The first industrial robot (was created / created) in 1959.
+ 2. Industrial robots (are using / are used) for assembling cars.
+ 3. You (mustn't / don't have to) touch the robot while it is operating.
+ 4. Operators (mustn't / don't have to) control robots manually; they are automatic.
+ 5. Thousands of parts (are assembled / assemble) by robotic arms every day.</pre>
+    <details class="ans"><summary>Show answers</summary><pre class="cli">Q1: 1 b   2 b   3 c   4 a   5 b
+Q2: 1 actuator   2 controller   3 precision   4 assembly   5 maintenance
+Q3: 1 automation   2 sensor   3 precision   4 program   5 collaboration
+Q4: 1 was created   2 are used   3 mustn't   4 don't have to   5 are assembled</pre><span class="tr">Q4: الروبوت مش هو اللي "خلق" نفسه فبنستخدم المبني للمجهول. mustn't = ممنوع، don't have to = مش ضروري.</span></details>
+  </div>
+
+  <div class="block">
+    <h3>Mock exam: Unit 7 (Ethics and Responsibility in AI)</h3>
+<pre class="cli">Q1 Choose the best answer:
+ 1. AI ethics is the study of ____ in the design and use of intelligent systems.  a) speed  b) right and wrong  c) data  d) costs
+ 2. A hiring algorithm may reject applicants unfairly because it learns from ____ data.  a) clean  b) biased  c) big  d) public
+ 3. Facial recognition may violate ____ if used without consent.  a) privacy  b) speed  c) accuracy  d) safety
+ 4. Ethical AI requires human ____.   a) oversight  b) bias  c) misuse  d) emotion
+ 5. The goal is to make AI responsible, inclusive and ____.  a) secret  b) beneficial  c) expensive  d) faster
+Q2 Give the accurate term:
+ 1. Unfair preference or prejudice.
+ 2. Openness and clarity.
+ 3. Being responsible for outcomes / actions.
+ 4. Permission or agreement.
+ 5. Wrong or unethical use.
+Q3 Complete using the box:  [ fairness · regulations · oversight · privacy · ethics ]
+ 1. Developers must ensure ____ when training AI systems.
+ 2. Human ____ is needed to prevent mistakes.
+ 3. AI companies should follow government ____.
+ 4. ____ is essential for user safety.
+ 5. AI ____ focuses on right and wrong in technology.
+Q4 Grammar – choose:
+ 1. If AI (is / will be) trained with bad data, it (makes / will make) unfair decisions.
+ 2. If governments set strong regulations, AI (will be / is being) safer.
+ 3. AI models (must test / must be tested) for bias before use.
+ 4. User data (should protect / should be protected) by law.
+ 5. Mistakes (might be caused / might cause) by poor training data.</pre>
+    <details class="ans"><summary>Show answers</summary><pre class="cli">Q1: 1 b   2 b   3 a   4 a   5 b
+Q2: 1 bias   2 transparency   3 accountability   4 consent   5 misuse
+Q3: 1 fairness   2 oversight   3 regulations   4 Privacy   5 ethics
+Q4: 1 is … will make   2 will be   3 must be tested   4 should be protected   5 might be caused</pre><span class="tr">بعد If مضارع بسيط ومن غير will. والـ passive مع modal = modal + be + V3.</span></details>
+  </div>
+
+  <div class="block">
+    <h3>Mock exam: Unit 8 (Data-Driven Intelligence)</h3>
+<pre class="cli">Q1 Choose the best answer:
+ 1. Data science is collecting, organizing and ____ information.  a) deleting  b) analyzing  c) selling  d) hiding
+ 2. The first step of the AI data process is data ____.  a) cleaning  b) analysis  c) collection  d) prediction
+ 3. Removing mistakes and irrelevant items is called data ____.  a) cleaning  b) collection  c) visualization  d) prediction
+ 4. A streaming service recommends movies based on your ____.  a) weather  b) viewing history  c) bank  d) location only
+ 5. Using models to make decisions or forecasts is ____.  a) collection  b) cleaning  c) prediction  d) storage
+Q2 Give the accurate term:
+ 1. A group (collection) of data.
+ 2. A step-by-step procedure.
+ 3. A factor that can change the result.
+ 4. A graph or chart of information.
+ 5. How correct something is.
+Q3 Complete using the box:  [ dataset · pattern · accuracy · analysis · prediction ]
+ 1. The model learns patterns from the ____.
+ 2. The ____ of predictions improved after cleaning the data.
+ 3. The AI made an accurate ____ about tomorrow's weather.
+ 4. The model detects a repeated ____ in user behavior.
+ 5. Data ____ helps improve accuracy.
+Q4 Grammar – choose:
+ 1. There isn't (much / many) noise in the cleaned dataset.
+ 2. There are (a few / a little) mistakes in the training data.
+ 3. We need (some / any) more images for better results.
+ 4. Scientists (have been collecting / has been collecting) data for years.
+ 5. The system has been analyzing customer behavior (since / for) last month.</pre>
+    <details class="ans"><summary>Show answers</summary><pre class="cli">Q1: 1 b   2 c   3 a   4 b   5 c
+Q2: 1 dataset   2 algorithm   3 variable   4 visualization   5 accuracy
+Q3: 1 dataset   2 accuracy   3 prediction   4 pattern   5 analysis
+Q4: 1 much   2 a few   3 some   4 have been collecting   5 since</pre><span class="tr">noise مش بيتعد → much. mistakes بيتعد → a few. since + بداية (last month).</span></details>
+  </div>
+</section>
+
+<section class="view" id="v-quiz" style="--k:var(--c5)" hidden>
+  <div class="chap-head"><svg class="doodle art" viewBox="0 0 160 120" role="img" aria-label="quiz checklist"><rect class="f" x="40" y="14" width="80" height="96" rx="8"/><rect class="d" x="64" y="8" width="32" height="12" rx="4"/><rect class="s" x="52" y="32" width="12" height="12" rx="2"/><path class="s" d="M54 38l4 4 8-10"/><path class="s" d="M72 38h36"/><rect class="s" x="52" y="54" width="12" height="12" rx="2"/><path class="s" d="M54 60l4 4 8-10"/><path class="s" d="M72 60h36"/><rect class="s" x="52" y="76" width="12" height="12" rx="2"/><path class="s" d="M54 82l4 4 8-10"/><path class="s" d="M72 82h36"/></svg><small>Practice</small><h2>Quiz</h2><p>Two sections: objective questions (choose the best answer, give the accurate term, grammar, matching) and written questions (reading, grammar rewriting, writing) with model answers.</p><span class="tr">قسمين: أسئلة اختيار بتتصحح لوحدها بنفس شكل الامتحان، وأسئلة مكتوبة (قطعة، وجرامر، وكتابة) ليها إجابات نموذجية.</span></div>
+  <div class="qtabs seg" role="group" aria-label="Quiz section"><button type="button" data-qs="obj" aria-pressed="true">MCQ section</button><button type="button" data-qs="essay" aria-pressed="false">Written section</button></div>
+  <div id="qsObj" class="qs">
+    <div class="block">
+      <h3>Choose the best answer, give the term, grammar</h3>
+      <div class="filters" id="qFilters">
+        <button data-f="all" aria-pressed="true">All</button>
+        <button data-f="1" aria-pressed="false">Unit 6</button>
+        <button data-f="2" aria-pressed="false">Unit 7</button>
+        <button data-f="3" aria-pressed="false">Unit 8</button>
+      </div>
+      <p class="score" id="qScore">Score: 0 / 0</p>
+      <button class="btn ghost" id="qReset" type="button">Reset answers</button>
+      <div id="qList"></div>
+    </div>
+    <div class="block">
+      <h3>Matching</h3>
+      <div id="mList"></div>
+    </div>
+  </div>
+  <div id="qsEssay" class="qs" hidden>
+    <div class="block">
+      <h3>Written questions (<span id="eCount"></span>)</h3>
+      <p>Answer on paper first, then open the model answer.<span class="tr">جاوبي في ورقة الأول، وبعدين افتحي الإجابة النموذجية.</span></p>
+      <div class="filters" id="eFilters">
+        <button data-f="all" aria-pressed="true">All</button>
+        <button data-f="1" aria-pressed="false">Unit 6</button>
+        <button data-f="2" aria-pressed="false">Unit 7</button>
+        <button data-f="3" aria-pressed="false">Unit 8</button>
+      </div>
+      <div class="dg-ctl"><label>Type <select id="eType"></select></label><span class="muted">Showing <b id="eShown"></b></span><button class="btn ghost" type="button" id="eOpen">Open all answers</button><button class="btn ghost" type="button" id="eClose">Close all</button></div>
+      <div id="eList"></div>
+    </div>
+  </div>
+</section>
+<!-- ================= NIGHT BEFORE ================= -->
+<section class="view" id="v-review" style="--k:var(--c6)" hidden>
+  <div class="chap-head"><svg class="doodle art" viewBox="0 0 160 120" role="img" aria-label="night before: moon and open book"><path class="f" d="M108 14a26 26 0 1 0 20 42a22 22 0 1 1-20-42z"/><path class="d" d="M40 20l2 5 5 2-5 2-2 5-2-5-5-2 5-2z M62 36l1.5 3.5 3.5 1.5-3.5 1.5-1.5 3.5-1.5-3.5-3.5-1.5 3.5-1.5z"/><path class="f" d="M24 82q28-10 56 0v26q-28-10-56 0z"/><path class="f" d="M80 82q28-10 56 0v26q-28-10-56 0z"/><path class="s" d="M34 88q18-6 36 0M34 96q18-6 36 0M90 88q18-6 36 0M90 96q18-6 36 0"/></svg><small>Last look</small><h2>Night Before the Exam</h2><p>All grammar rules and all vocabulary of units 6, 7 and 8 on one page.</p><span class="tr">كل الجرامر وكل الكلمات في صفحة واحدة.</span></div>
+  <div class="block">
+    <h3>Grammar in one table</h3>
+    <div class="tw"><table>
+      <tr><th>Unit</th><th>Grammar</th><th>Form</th><th>Example</th></tr>
+      <tr><td>6</td><td>Passive (present)</td><td>am/is/are + V3</td><td>Robots are programmed…</td></tr>
+      <tr><td>6</td><td>Passive (past)</td><td>was/were + V3</td><td>The robot was created in 1959.</td></tr>
+      <tr><td>6</td><td>Modals</td><td>must / have to / should / don't have to / mustn't</td><td>You mustn't touch it. You don't have to control it.</td></tr>
+      <tr><td>7</td><td>First conditional</td><td>If + present, will + verb</td><td>If data is biased, AI will make mistakes.</td></tr>
+      <tr><td>7</td><td>Passive with modals</td><td>modal + be + V3</td><td>Data should be protected.</td></tr>
+      <tr><td>8</td><td>Quantifiers</td><td>many/a few + countable; much/a little + uncountable; a lot of + both; some (+) / any (− ?)</td><td>There isn't much noise. There are a few mistakes.</td></tr>
+      <tr><td>8</td><td>Present perfect continuous</td><td>have/has + been + V-ing (+ for / since)</td><td>Scientists have been collecting data for years.</td></tr>
+    </table></div>
+  </div>
+  <div class="block">
+    <h3>All vocabulary (term ← definition)</h3>
+    <div class="tw"><table>
+      <tr><th>Unit 6</th><th>Unit 7</th><th>Unit 8</th></tr>
+      <tr><td>sensor – detects signals</td><td>ethics – moral principles</td><td>data – information or facts</td></tr>
+      <tr><td>actuator – produces movement</td><td>bias – unfair preference</td><td>dataset – collection of data</td></tr>
+      <tr><td>controller – manages actions</td><td>fairness – equal treatment</td><td>algorithm – step-by-step procedure</td></tr>
+      <tr><td>precision – accuracy, exactness</td><td>transparency – openness, clarity</td><td>pattern – repeated trend</td></tr>
+      <tr><td>assembly – putting parts together</td><td>accountability – responsibility for actions</td><td>variable – factor that changes</td></tr>
+      <tr><td>maintenance – care and repair</td><td>privacy – control of personal info</td><td>prediction – guess based on data</td></tr>
+      <tr><td>collaboration – working together</td><td>oversight – supervision</td><td>analysis – detailed examination</td></tr>
+      <tr><td>automation – machines do tasks</td><td>consent – permission</td><td>visualization – chart of data</td></tr>
+      <tr><td>program – coded instructions</td><td>regulation – official rule</td><td>accuracy – level of correctness</td></tr>
+      <tr><td>robot – senses and acts</td><td>misuse – wrong use</td><td>clean data – error-free data</td></tr>
+    </table></div>
+  </div>
+  <div class="block">
+    <h3>Reading facts to remember</h3>
+    <ul>
+      <li>Robot = senses, thinks, acts. Four types: industrial, service, medical, exploration. First industrial robot: 1959.<span class="tr">الروبوت وأنواعه.</span></li>
+      <li>AI ethics values: fairness, transparency, accountability, privacy. Examples: biased hiring algorithm, facial recognition without consent.<span class="tr">القيم والأمثلة.</span></li>
+      <li>AI data process: collection → cleaning → analysis → prediction. Examples: weather app, streaming recommendations.<span class="tr">الأربع خطوات.</span></li>
+    </ul>
+  </div>
+  <div class="note"><b>آخر نصيحة:</b> في Give the term اكتبي الكلمة بالظبط ومن غير غلط إملائي (accountability، maintenance، visualization). وفي الصندوق شوفي نوع الكلمة المطلوبة قبل ما تختاري.</div>
+</section>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script>
+(function(){
+  /* ---------- tabs ---------- */
+  const tabs=[...document.querySelectorAll('nav.tabs button')];
+  const ids=tabs.map(t=>t.dataset.v);
+  function show(v){
+    if(!ids.includes(v)) v='ch1';
+    tabs.forEach(t=>t.setAttribute('aria-selected',t.dataset.v===v));
+    ids.forEach(id=>document.getElementById('v-'+id).hidden=(id!==v));
+    try{localStorage.setItem('netTab',v)}catch(e){}
+  }
+  tabs.forEach(t=>t.addEventListener('click',()=>{show(t.dataset.v);window.scrollTo({top:0})}));
+  let start=(location.hash||'').slice(1);
+  if(!start){try{start=localStorage.getItem('netTab')||''}catch(e){}}
+  show(start);
+
+
+  /* ---------- interactive mind maps (Obsidian-style graph) ---------- */
+  let uid=0;
+  const idOf=el=>el.id||(el.id='n'+(++uid));
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function go(el){
+    if(!el) return;
+    el.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+    el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');
+    if(el.matches('li,tr')) setTimeout(()=>el.classList.remove('flash'),1600);
+  }
+  function collect(sec){
+    const blocks=[...sec.querySelectorAll('.block')].filter(b=>b.querySelector('h3'));
+    return blocks.map(b=>{
+      const seen=new Set(), chips=[];
+      b.querySelectorAll(':scope > ul > li, :scope > ol > li').forEach(li=>{
+        const t=li.querySelector(':scope > b'); if(!t) return;
+        const x=t.textContent.replace(/[:：]\s*$/,'').trim(); if(!x||seen.has(x)||x.length>40) return;
+        seen.add(x); chips.push([x,idOf(li)]);
+      });
+      if(chips.length<2) b.querySelectorAll('table tr').forEach(tr=>{
+        const td=tr.querySelector('td'); if(!td) return;
+        const x=(td.querySelector('b')||td).childNodes[0].textContent.trim(); if(!x||seen.has(x)||x.length>32||/^[0-9…]+$/.test(x)) return;
+        seen.add(x); chips.push([x,idOf(tr)]);
+      });
+      return {h:(b.querySelector('h3 .h3t')||b.querySelector('h3')).textContent.trim(),id:idOf(b),hard:!!b.querySelector('.watchrow.hard'),chips:chips.slice(0,7)};
+    });
+  }
+  function cards(map,root,data){
+    map.innerHTML='<div class="mm-head"><div class="mm-root">'+root+'</div></div><div class="mm-branches">'+data.map(d=>
+      '<div class="mm-node"><button class="mm-title" type="button" data-go="'+d.id+'">'+d.h+(d.hard?' ★':'')+'</button><div class="mm-chips">'+
+      d.chips.map(c=>'<button class="mm-chip" type="button" data-go="'+c[1]+'">'+c[0]+'</button>').join('')+'</div></div>').join('')+'</div>';
+  }
+  function graph(map,root,rootId,data){
+    map.innerHTML='<div class="mmg-bar"><span class="mm-hint">كل وردة = عنوان، والبتلات = النقط اللي تحته. دوسي على الوردة أو على أي بتلة وهتنزلي على شرحها. تقدري تسحبي الورد وتكبّري بالعجلة أو بصباعين.</span><button class="mmg-reset" type="button">Reset view</button></div>';
+    const W=Math.round(Math.max(320,(map.getBoundingClientRect().width||map.closest('main').getBoundingClientRect().width||900)-24)), H=Math.round(Math.max(440,Math.min(640,W*.72)));
+    const svg=d3.select(map).append('svg').attr('class','mmg flowers').attr('viewBox',[0,0,W,H]).attr('role','img').attr('aria-label',root+' mind map');
+    const sky=svg.append('g').attr('class','mmg-sky');for(let i=0;i<40;i++)sky.append('circle').attr('cx',Math.random()*W).attr('cy',Math.random()*H).attr('r',Math.random()*1.1+.3).attr('opacity',Math.random()*.45+.1);
+    const g=svg.append('g');
+    const zoom=d3.zoom().scaleExtent([.4,4]).on('zoom',e=>g.attr('transform',e.transform));
+    svg.call(zoom).on('dblclick.zoom',null);
+    map.querySelector('.mmg-reset').onclick=()=>svg.transition().duration(reduce?0:400).call(zoom.transform,d3.zoomIdentity);
+    const cx=W/2, cy=H/2, rr=Math.min(W,H)*.36, n=data.length;
+    const rootN={id:'r',fx:cx,fy:cy,x:cx,y:cy};
+    const fl=data.map((d,i)=>{const a=i/n*Math.PI*2-Math.PI/2;return {id:'f'+i,d,x:cx+Math.cos(a)*rr,y:cy+Math.sin(a)*rr};});
+    const nodes=[rootN,...fl], links=fl.map(f=>({source:'r',target:f.id}));
+    const stems=g.append('g').selectAll('path').data(links).join('path').attr('class','stem');
+    const leaves=g.append('g').selectAll('path').data(links).join('path').attr('class','leaf');
+    const rootG=g.append('g').attr('class','fl-root').attr('transform',`translate(${cx},${cy})`).attr('tabindex',0).attr('role','button').attr('aria-label',root);
+    for(let k=0;k<10;k++){const a=k/10*360;rootG.append('ellipse').attr('class','rpetal').attr('cx',0).attr('cy',-26).attr('rx',10).attr('ry',20).attr('transform',`rotate(${a})`);}
+    rootG.append('circle').attr('class','rcenter').attr('r',17);
+    rootG.append('text').attr('class','rlabel').attr('dy',66).attr('text-anchor','middle').text(root);
+    rootG.on('click',()=>go(document.getElementById(rootId)));
+    const flower=g.append('g').selectAll('g').data(fl).join('g').attr('class',f=>'flower'+(f.d.hard?' hard':''));
+    flower.each(function(f){
+      const G=d3.select(this),chips=f.d.chips,m=Math.max(6,chips.length);
+      for(let k=0;k<m;k++){
+        const a=k/m*360,c=chips[k];
+        const p=G.append('ellipse').attr('class','petal'+(c?' real':'')).attr('cx',0).attr('cy',-23).attr('rx',m>7?8.5:10.5).attr('ry',17).attr('transform',`rotate(${a})`);
+        if(c){p.attr('tabindex',0).attr('role','button').attr('aria-label',c[0]).datum({go:c[1],label:c[0],a});p.append('title').text(c[0]);}
+      }
+      G.append('circle').attr('class','center').attr('r',12).attr('tabindex',0).attr('role','button').attr('aria-label',f.d.h).datum({go:f.d.id,label:f.d.h});
+      G.append('text').attr('class','flabel').attr('dy',60).attr('text-anchor','middle').text((f.d.h.length>26?f.d.h.slice(0,25)+'…':f.d.h)+(f.d.hard?' ★':''));
+      G.append('text').attr('class','ptip').attr('text-anchor','middle').attr('dy',-50);
+    });
+    const tip=(G,t)=>G.select('.ptip').text(t||'');
+    flower.on('mouseenter',function(e,f){flower.classed('dim',x=>x!==f);stems.classed('lit',l=>l.target===f);})
+      .on('mouseleave',function(){flower.classed('dim',false);stems.classed('lit',false);tip(d3.select(this),'');});
+    flower.selectAll('.petal.real').on('mouseenter focus',function(e,p){tip(d3.select(this.parentNode),p.label);}).on('mouseleave blur',function(){tip(d3.select(this.parentNode),'');});
+    g.selectAll('.petal.real,.center').on('click',(e,p)=>{e.stopPropagation();go(document.getElementById(p.go));})
+      .on('keydown',(e,p)=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go(document.getElementById(p.go));}});
+    const sim=d3.forceSimulation(nodes)
+      .force('link',d3.forceLink(links).id(d=>d.id).distance(rr).strength(.25))
+      .force('charge',d3.forceManyBody().strength(d=>d.id==='r'?-300:-900))
+      .force('collide',d3.forceCollide(d=>d.id==='r'?78:68))
+      .force('x',d3.forceX(cx).strength(.02)).force('y',d3.forceY(cy).strength(.03));
+    flower.call(d3.drag().clickDistance(4)
+      .on('start',(e,f)=>{if(!e.active)sim.alphaTarget(.25).restart();f.fx=f.x;f.fy=f.y;})
+      .on('drag',(e,f)=>{f.fx=e.x;f.fy=e.y;})
+      .on('end',(e,f)=>{if(!e.active)sim.alphaTarget(0);f.fx=null;f.fy=null;}));
+    const curve=l=>{const s=l.source,t=l.target,mx=(s.x+t.x)/2,my=(s.y+t.y)/2,dx=t.x-s.x,dy=t.y-s.y,len=Math.hypot(dx,dy)||1,o=len*.18;return {mx:mx-dy/len*o,my:my+dx/len*o};};
+    const tick=()=>{
+      stems.attr('d',l=>{const c=curve(l);return `M${l.source.x},${l.source.y} Q${c.mx},${c.my} ${l.target.x},${l.target.y}`;});
+      leaves.attr('d',l=>{const c=curve(l),x=(l.source.x+2*c.mx+l.target.x)/4,y=(l.source.y+2*c.my+l.target.y)/4,a=Math.atan2(l.target.y-l.source.y,l.target.x-l.source.x)+.9;return `M${x},${y} q${Math.cos(a)*9-Math.sin(a)*5},${Math.sin(a)*9+Math.cos(a)*5} ${Math.cos(a)*18},${Math.sin(a)*18} q${-Math.cos(a)*9+Math.sin(a)*5},${-Math.sin(a)*9-Math.cos(a)*5} ${-Math.cos(a)*18},${-Math.sin(a)*18}Z`;});
+      flower.attr('transform',f=>`translate(${f.x},${f.y})`);
+    };
+    if(reduce){sim.stop();for(let i=0;i<300;i++)sim.tick();tick();} else sim.on('tick',tick);
+  }
+  const built=new Set();
+  function buildMap(sec){
+    const map=sec&&sec.querySelector('[data-map]'); if(!map||built.has(map)||sec.hidden) return;
+    built.add(map);
+    const head=sec.querySelector('.chap-head'), data=collect(sec), root=head.querySelector('h2').textContent;
+    if(window.d3) graph(map,root,idOf(head),data); else cards(map,root,data);
+    map.addEventListener('click',e=>{const t=e.target.closest('[data-go]'); if(t) go(document.getElementById(t.dataset.go));});
+  }
+  tabs.forEach(t=>t.addEventListener('click',()=>setTimeout(()=>buildMap(document.getElementById('v-'+t.dataset.v)),0)));
+  const boot=()=>document.querySelectorAll('section.view').forEach(buildMap);
+  if(document.readyState==='complete') setTimeout(boot,0); else addEventListener('load',boot);
+
+  /* ---------- subnet calculator ---------- */
+  const toInt=a=>a.reduce((n,o)=>(n*256+o),0)>>>0;
+  const toIp=n=>[24,16,8,0].map(s=>(n>>>s)&255).join('.');
+  function calc(str){
+    const m=str.trim().match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})\s*\/\s*(\d{1,2})$/);
+    if(!m) return {err:'اكتبوها بالشكل دا: 192.168.1.10/26'};
+    const oct=m.slice(1,5).map(Number), p=Number(m[5]);
+    if(oct.some(o=>o>255)) return {err:'فيه octet أكبر من 255، العنوان دا invalid.'};
+    if(p<1||p>30) return {err:'خلّوا الـ CIDR بين /1 و /30.'};
+    const ip=toInt(oct), mask=(0xFFFFFFFF<<(32-p))>>>0, net=(ip&mask)>>>0, bc=(net|(~mask>>>0))>>>0;
+    const f=oct[0], cls=f>=1&&f<=126?'A':f===127?'Loopback (127)':f<=191?'B':f<=223?'C':f<=239?'D (multicast)':'E (experimental)';
+    const mo=toIp(mask).split('.').map(Number), idx=mo.findIndex(o=>o!==255), ii=idx<0?3:idx;
+    const block=256-mo[ii];
+    return {cls,mask:toIp(mask),p,net:toIp(net),first:toIp(net+1),last:toIp(bc-1),bc:toIp(bc),hosts:Math.pow(2,32-p)-2,block,octet:['1st','2nd','3rd','4th'][ii]};
+  }
+  const out=document.getElementById('calcOut'), inp=document.getElementById('calcIn');
+  function run(){
+    const r=calc(inp.value);
+    if(r.err){out.innerHTML='<p class="err">'+r.err+'</p>';return}
+    out.innerHTML='<div class="tw"><table>'+
+      [['Class',r.cls],['Mask','/'+r.p+' = '+r.mask],['Block size',r.block+' (in the '+r.octet+' octet)'],['Network (subnet)',r.net],['Usable hosts',r.first+' – '+r.last+' ('+r.hosts+')'],['Broadcast',r.bc]]
+      .map(x=>'<tr><th>'+x[0]+'</th><td class="mono">'+x[1]+'</td></tr>').join('')+'</table></div>';
+  }
+  if(document.getElementById('calcForm')){document.getElementById('calcForm').addEventListener('submit',e=>{e.preventDefault();run()});
+  run();}
+
+  /* ---------- quiz ---------- */
+  const Q=[
+   [1,"Robotics is a branch of AI and ____.",["medicine","engineering","art","history"],1,"القطعة."],
+   [1,"A robot is a machine that senses, thinks and ____.",["sleeps","acts","feels","talks"],1,"senses, thinks, acts."],
+   [1,"A robot uses ____ to understand its environment.",["sensors","actuators","wheels","programs"],0,"الحسّاسات."],
+   [1,"A robot makes decisions using ____.",["motors","algorithms","wheels","cables"],1,"الخوارزميات."],
+   [1,"Robots move using mechanical parts such as ____.",["sensors and data","motors or wheels","algorithms","screens"],1,"موتورات وعجل."],
+   [1,"Automation means using technology to perform ____ tasks without human help.",["creative","repetitive","dangerous only","emotional"],1,"متكررة."],
+   [1,"Intelligent robots, unlike automated systems, can ____ to changes.",["adapt","refuse","sleep","break"],0,"بتتأقلم."],
+   [1,"____ robots assemble products in factories.",["Service","Industrial","Medical","Exploration"],1,"صناعية."],
+   [1,"____ robots clean houses or assist customers.",["Service","Industrial","Exploration","Medical"],0,"خدمية."],
+   [1,"____ robots perform surgeries or deliver medicine.",["Medical","Service","Industrial","Exploration"],0,"طبية."],
+   [1,"____ robots study dangerous or distant places such as space.",["Exploration","Service","Industrial","Medical"],0,"استكشاف."],
+   [1,"Robotics improves speed, accuracy and ____.",["jobs","safety","emotion","noise"],1,"الأمان."],
+   [1,"Give the term: device that detects signals.",["actuator","sensor","controller","program"],1,"sensor."],
+   [1,"Give the term: mechanical part that produces movement.",["actuator","sensor","precision","assembly"],0,"actuator."],
+   [1,"Give the term: device that manages a robot's actions.",["controller","sensor","actuator","maintenance"],0,"controller."],
+   [1,"Give the term: accuracy and control.",["precision","collaboration","automation","maintenance"],0,"precision."],
+   [1,"Give the term: process of putting parts together.",["assembly","maintenance","precision","program"],0,"assembly."],
+   [1,"Give the term: keeping machines in good condition.",["maintenance","collaboration","assembly","automation"],0,"maintenance."],
+   [1,"Give the term: working together to achieve a goal.",["collaboration","automation","precision","operation"],0,"collaboration."],
+   [1,"Give the term: a set of coded instructions.",["program","sensor","robot","actuator"],0,"program."],
+   [1,"Modern factories use full ____ to speed up production.",["automate","automation","automated","automatic"],1,"اسم بعد full."],
+   [1,"Robots must be ____ before testing.",["maintain","maintenance","maintained","maintainable"],2,"must be + V3."],
+   [1,"Humans and robots work in a ____ way.",["collaborate","collaboration","collaborative","collaborated"],2,"صفة قبل way."],
+   [1,"The robot is fully ____.",["operate","operation","operational","operator"],2,"صفة."],
+   [1,"Robots ____ in many industries today.",["use","are used","used","are using"],1,"passive مضارع."],
+   [1,"The first cleaning robot ____ in the early 2000s.",["developed","was developed","is developed","develops"],1,"passive ماضي."],
+   [1,"The first industrial robot ____ in 1959.",["was created","created","is created","creates"],0,"passive ماضي."],
+   [1,"The machine ____ to work automatically.",["builds","is built","building","build"],1,"passive."],
+   [1,"This type of robot ____ in Japan.",["was design","was designed","designed","is design"],1,"was + V3."],
+   [1,"Passive of 'Engineers program the robots':",["The robots are programmed by engineers.","The robots programmed engineers.","The robots were program by engineers.","Engineers are programmed by the robots."],0,"are + V3."],
+   [1,"Passive of 'The company built a new model last year':",["A new model was built by the company last year.","A new model is built by the company last year.","A new model built the company.","The company was built a new model."],0,"was + V3."],
+   [1,"Robots ____ be tested before use. (obligation)",["must","don't have to","might","can't"],0,"إلزام."],
+   [1,"Developers ____ check the program for errors. (advice)",["should","mustn't","don't have to","won't"],0,"نصيحة."],
+   [1,"Operators ____ control robots manually; the robots are automatic.",["mustn't","don't have to","must","should"],1,"مش ضروري."],
+   [1,"You ____ touch the robot while it is operating. (prohibited)",["don't have to","mustn't","should","have to"],1,"ممنوع."],
+   [1,"'It is not necessary for humans to assemble products' = Humans ____ assemble products.",["mustn't","don't have to","must","should"],1,"don't have to."],
+   [1,"The robot stopped ____ its sensor failed.",["because","therefore","for example","first"],0,"سبب."],
+   [1,"Robots are used in many areas, ____ medicine.",["such as","because","therefore","first"],0,"مثال."],
+   [2,"AI ethics is the study of ____ in the design and use of intelligent systems.",["costs","right and wrong","speed","hardware"],1,"القطعة."],
+   [2,"Which is NOT one of the values of AI ethics in the text?",["fairness","transparency","privacy","profit"],3,"الأربع قيم."],
+   [2,"A hiring algorithm might reject applicants unfairly because it learns from ____ data.",["biased","clean","large","private"],0,"متحيزة."],
+   [2,"A facial recognition system might violate privacy if used without ____.",["consent","bias","speed","data"],0,"موافقة."],
+   [2,"Ethical AI requires human ____, clear rules and responsible design.",["oversight","misuse","bias","emotion"],0,"إشراف."],
+   [2,"Governments create AI ethics guidelines to prevent misuse and build public ____.",["trust","bias","fear","data"],0,"ثقة."],
+   [2,"The goal of ethical AI is NOT to ____ AI development.",["stop","improve","guide","regulate"],0,"مش نوقفه."],
+   [2,"Give the term: unfair preference or prejudice.",["bias","consent","fairness","oversight"],0,"bias."],
+   [2,"Give the term: openness and clarity.",["transparency","privacy","regulation","misuse"],0,"transparency."],
+   [2,"Give the term: responsibility for actions.",["accountability","consent","bias","ethics"],0,"accountability."],
+   [2,"Give the term: control of personal information.",["privacy","oversight","fairness","regulation"],0,"privacy."],
+   [2,"Give the term: supervision or monitoring.",["oversight","consent","bias","ethics"],0,"oversight."],
+   [2,"Give the term: permission or agreement.",["consent","regulation","fairness","privacy"],0,"consent."],
+   [2,"Give the term: official rule or law.",["regulation","ethics","bias","misuse"],0,"regulation."],
+   [2,"Give the term: wrong or unethical use.",["misuse","oversight","fairness","privacy"],0,"misuse."],
+   [2,"Give the term: equal treatment of all people.",["fairness","bias","consent","transparency"],0,"fairness."],
+   [2,"Give the term: moral principles guiding behavior.",["ethics","regulation","privacy","data"],0,"ethics."],
+   [2,"Companies must be ____ for AI actions.",["account","accountability","accountable","accounting"],2,"صفة بعد be."],
+   [2,"AI is ____ by strict laws.",["regulate","regulation","regulated","regulating"],2,"passive."],
+   [2,"Personal data must remain ____.",["privacy","private","privately","privatize"],1,"صفة."],
+   [2,"If developers follow ethical rules, AI ____ everyone.",["helps","will help","would help","helped"],1,"First conditional."],
+   [2,"If AI ____ trained with bad data, it will make unfair decisions.",["will be","is","was","would be"],1,"مضارع بعد If."],
+   [2,"If governments set strong regulations, AI ____ safer.",["will be","is being","was","be"],0,"will."],
+   [2,"People ____ AI if it is transparent.",["will trust","trusted","would trust","trusting"],0,"First conditional."],
+   [2,"If users ____ their data, companies can misuse it.",["don't protect","won't protect","didn't protect","not protect"],0,"مضارع بعد If."],
+   [2,"'When data is biased, AI makes mistakes' in the first conditional:",["If data is biased, AI will make mistakes.","If data will be biased, AI makes mistakes.","If data was biased, AI would make mistakes.","If data biased, AI make mistakes."],0,"If + present, will."],
+   [2,"____ governments regulate AI, misuse will continue. (= if … not)",["Unless","If","Because","When"],0,"unless."],
+   [2,"AI models ____ for bias before use.",["must test","must be tested","must tested","must be test"],1,"modal + be + V3."],
+   [2,"User data ____ by law.",["should protect","should be protected","should protected","should is protected"],1,"modal passive."],
+   [2,"Algorithms ____ to be fair and transparent.",["can design","can be designed","can designed","can be design"],1,"modal passive."],
+   [2,"Mistakes ____ by poor training data.",["might cause","might be caused","might caused","might be cause"],1,"modal passive."],
+   [2,"Passive of 'Developers must design fair systems':",["Fair systems must be designed by developers.","Fair systems must design developers.","Fair systems must designed by developers.","Fair systems are must designed."],0,"modal + be + V3."],
+   [2,"'I think AI should always be monitored' expresses…",["an opinion","a condition","a reason","an example"],0,"رأي."],
+   [2,"'We should create clear laws for AI use' is…",["suggesting a solution","giving a reason","disagreeing","describing a trend"],0,"اقتراح."],
+   [3,"Data science is the process of collecting, organizing and ____ information.",["hiding","analyzing","deleting","selling"],1,"القطعة."],
+   [3,"With AI, data science allows machines to learn from ____.",["examples","commands only","emotions","luck"],0,"الأمثلة."],
+   [3,"A weather app analyzes years of ____ data.",["climate","user","movie","medical"],0,"المناخ."],
+   [3,"A streaming service recommends movies based on your ____.",["viewing history","location","age only","bank account"],0,"اللي اتفرجتي عليه."],
+   [3,"The first step of the AI data process is…",["data cleaning","data collection","prediction","data analysis"],1,"الجمع."],
+   [3,"Removing mistakes or irrelevant items is…",["data collection","data cleaning","prediction","visualization"],1,"التنضيف."],
+   [3,"Identifying patterns and relationships is…",["data analysis","data collection","data cleaning","storage"],0,"التحليل."],
+   [3,"Using models to make decisions or forecasts is…",["prediction","cleaning","collection","assembly"],0,"التوقع."],
+   [3,"The correct order of the AI data process is…",["collection → cleaning → analysis → prediction","cleaning → collection → prediction → analysis","analysis → collection → cleaning → prediction","prediction → analysis → cleaning → collection"],0,"الترتيب."],
+   [3,"Data science and AI raise questions about privacy, accuracy and ____.",["fairness","speed","color","price"],0,"القطعة."],
+   [3,"Give the term: a collection of data.",["dataset","algorithm","variable","pattern"],0,"dataset."],
+   [3,"Give the term: a step-by-step procedure.",["algorithm","dataset","prediction","accuracy"],0,"algorithm."],
+   [3,"Give the term: a repeated design or trend.",["pattern","variable","analysis","visualization"],0,"pattern."],
+   [3,"Give the term: a factor that can change.",["variable","pattern","dataset","prediction"],0,"variable."],
+   [3,"Give the term: a guess based on data.",["prediction","analysis","accuracy","algorithm"],0,"prediction."],
+   [3,"Give the term: detailed examination.",["analysis","visualization","dataset","pattern"],0,"analysis."],
+   [3,"Give the term: a graph or chart of information.",["visualization","variable","algorithm","clean data"],0,"visualization."],
+   [3,"Give the term: how correct something is.",["accuracy","analysis","pattern","prediction"],0,"accuracy."],
+   [3,"Give the term: error-free data.",["clean data","dataset","raw data","pattern"],0,"clean data."],
+   [3,"____ skills are vital for data scientists.",["Analyze","Analysis","Analytical","Analyst"],2,"صفة."],
+   [3,"____ models help forecast results.",["Predict","Prediction","Predictive","Predicted"],2,"صفة."],
+   [3,"We must ____ the data before making a decision.",["analysis","analyze","analytical","analyzing"],1,"فعل بعد must."],
+   [3,"AI systems need ____ examples to recognize patterns.",["much","a lot of","a little","any"],1,"examples countable."],
+   [3,"There isn't ____ error in this dataset.",["many","much","a few","few"],1,"error هنا uncountable."],
+   [3,"The algorithm doesn't require (____) human control.",["many","much","a few","several"],1,"control uncountable."],
+   [3,"There are ____ mistakes in the training data.",["a few","a little","much","any"],0,"mistakes countable."],
+   [3,"We need ____ more images for better results.",["some","any","much","a little"],0,"جملة مثبتة."],
+   [3,"There isn't ____ noise in the cleaned dataset.",["many","much","a few","several"],1,"noise uncountable."],
+   [3,"Only ____ of the samples were accurate.",["a few","a little","much","any"],0,"samples countable."],
+   [3,"Engineers ____ user data for the new AI model.",["have been collecting","has been collecting","have been collect","has collecting"],0,"جمع → have."],
+   [3,"The system ____ customer behavior since last month.",["has been analyzing","have been analyzing","has been analyze","is analyzed"],0,"مفرد → has."],
+   [3,"AI has been using this dataset for training ____ two weeks.",["for","since","from","during"],0,"for + مدة."],
+   [3,"The company has been gathering information ____ last month.",["for","since","ago","during"],1,"since + بداية."],
+   [3,"'They started building the model in January' →",["They have been building the model since January.","They have been building the model for January.","They has been building the model since January.","They are building the model since January."],0,"PPC + since."],
+   [3,"We clean data ____ it improves accuracy.",["because","therefore","as a result","after that"],0,"سبب."],
+   [3,"The model was trained with bad data; ____, it failed.",["therefore","because","since","such as"],0,"نتيجة."],
+   [3,"'Data usage has increased in recent years' is…",["describing a trend","giving an example","giving an instruction","agreeing"],0,"اتجاه."]
+  ];
+  const list=document.getElementById('qList'), score=document.getElementById('qScore');
+  let filter='all', done={};
+  function render(){
+    const items=Q.map((q,i)=>({q,i})).filter(o=>filter==='all'||String(o.q[0])===filter);
+    list.innerHTML=items.map(({q,i},n)=>'<div class="q" data-i="'+i+'"><p>'+(n+1)+'. <span class="pill">'+({"1": "Unit 6", "2": "Unit 7", "3": "Unit 8"}[q[0]]||'Ch'+q[0])+'</span> <span class="pill">'+(/^True or False/.test(q[1])?'True/False':/____/.test(q[1])?'Fill in':/^What is printed/.test(q[1])?'Output':'MCQ')+'</span> '+q[1]+'</p><div class="opts">'+
+      q[2].map((o,j)=>'<button type="button" data-j="'+j+'">'+o+'</button>').join('')+'</div><div class="why note" hidden></div></div>').join('');
+    list.querySelectorAll('.q').forEach(el=>{const i=+el.dataset.i; if(done[i]!==undefined) mark(el,i,done[i])});
+    upd();
+  }
+  function mark(el,i,j){
+    const q=Q[i], bs=el.querySelectorAll('.opts button');
+    bs.forEach((b,k)=>{b.disabled=true; if(k===q[3]) b.classList.add('right'); else if(k===j) b.classList.add('wrong')});
+    const w=el.querySelector('.why'); w.hidden=false;
+    w.innerHTML=(j===q[3]?'<b>صح ✓</b> ':'<b>غلط ✗</b> الإجابة: <span dir="ltr">'+q[2][q[3]]+'</span>. ')+q[4];
+  }
+  function upd(){
+    const ks=Object.keys(done).filter(i=>filter==='all'||String(Q[i][0])===filter);
+    const ok=ks.filter(i=>done[i]===Q[i][3]).length;
+    const tot=Q.filter(q=>filter==='all'||String(q[0])===filter).length;
+    score.textContent='Score: '+ok+' / '+ks.length+' answered · '+tot+' questions';
+  }
+  list.addEventListener('click',e=>{
+    const b=e.target.closest('.opts button'); if(!b||b.disabled) return;
+    const el=b.closest('.q'), i=+el.dataset.i, j=+b.dataset.j; done[i]=j; mark(el,i,j); upd();
+  });
+  document.getElementById('qFilters').addEventListener('click',e=>{
+    const b=e.target.closest('button'); if(!b) return; filter=b.dataset.f;
+    document.querySelectorAll('#qFilters button').forEach(x=>x.setAttribute('aria-pressed',x===b)); render();
+  });
+  document.getElementById('qReset').addEventListener('click',()=>{done={};render()});
+  render();
+})();
+</script>
+
+<script>
+(function(){
+  document.querySelectorAll('.ptab').forEach(t=>{
+    const out=t.closest('.block').querySelector('.ptab-out');
+    t.querySelectorAll('td[data-p]').forEach(td=>{
+      td.tabIndex=0;td.setAttribute('role','button');
+      const pick=()=>{
+        const p=+td.dataset.p,col=td.cellIndex,oct=p<=16?2:p<=24?3:4,blk=Math.pow(2,8-(p-(oct-1)*8)),mv=256-blk,host=Math.pow(2,32-p);
+        const mask=[1,2,3,4].map(k=>k<oct?255:k===oct?mv:0).join('.');
+        t.querySelectorAll('td').forEach(c=>c.classList.toggle('on',c.cellIndex===col));
+        out.innerHTML=`<p><b>/${p}</b>: octet ${oct} changes · block <b>${blk}</b> · mask <b>${mask}</b> · ${host.toLocaleString()} IPs per subnet, <b>${Math.max(0,host-2).toLocaleString()}</b> usable hosts.<span class="tr">/${p}: التغيير في الـ octet رقم ${oct}، القفزة ${blk}، والـ mask هو ${mask}.</span></p>`;
+      };
+      td.addEventListener('click',pick);td.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pick();}});
+    });
+  });
+})();
+</script>
+<script>
+(function(){
+  /* ---------- quiz sections: matching + essay ---------- */
+  const tabs=document.querySelectorAll('[data-qs]');
+  tabs.forEach(b=>b.addEventListener('click',()=>{
+    tabs.forEach(x=>x.setAttribute('aria-pressed',x===b));
+    document.getElementById('qsObj').hidden=b.dataset.qs!=='obj';
+    document.getElementById('qsEssay').hidden=b.dataset.qs!=='essay';
+  }));
+
+  /* matching */
+  const MS=[
+    [1,"Unit 6 vocabulary",[["Sensor","Device that measures or detects signals"],["Actuator","Mechanical part that causes movement"],["Controller","Device that manages a robot's functions"],["Precision","Accuracy or exactness"],["Maintenance","Regular care and repair"],["Collaboration","Working together to achieve a goal"]]],
+    [2,"Unit 7 vocabulary",[["Bias","Unfair judgment or preference"],["Transparency","Clarity or openness"],["Accountability","Being responsible for outcomes"],["Oversight","Monitoring or supervision"],["Consent","Permission or approval"],["Regulation","Official control or law"]]],
+    [3,"Unit 8 vocabulary",[["Dataset","Group of collected data"],["Algorithm","Step-by-step procedure"],["Variable","Factor that changes results"],["Visualization","Picture or chart of data"],["Accuracy","Level of correctness"],["Pattern","Repeated trend or structure"]]],
+    [3,"Grammar forms",[["Present passive","am/is/are + V3"],["Past passive","was/were + V3"],["Modal passive","modal + be + V3"],["First conditional","If + present, will + verb"],["Present perfect continuous","have/has + been + V-ing"],["Uncountable nouns","much / a little"]]]
+  ];
+  const mBox=document.getElementById('mList');
+  const L='ABCDEFGH';
+  mBox.innerHTML=MS.map(([ch,title,pairs],si)=>{
+    const order=pairs.map((_,i)=>i).sort((a,b)=>((a*5+3)%8)-((b*5+3)%8));
+    const right='<ol class="mB" type="A">'+order.map(i=>`<li>${pairs[i][1]}</li>`).join('')+'</ol>';
+    const left=pairs.map((p,i)=>`<label class="mrow"><span class="mA">${i+1}. ${p[0]}</span><select data-ans="${L[order.indexOf(i)]}" aria-label="Answer for ${p[0]}"><option value="">—</option>${[...L].map(c=>`<option>${c}</option>`).join('')}</select><span class="mres"></span></label>`).join('');
+    return `<div class="mset" data-ch="${ch}"><h4><span class="pill">Ch${ch}</span> <span class="pill">Matching</span> ${title}</h4><p class="muted">Match each term in column A with the right description in column B.<span class="tr">وصّلي كل كلمة في العمود A بالتعريف الصح في العمود B.</span></p><div class="mgrid"><div>${left}</div><div>${right}</div></div><div class="dg-ctl"><button class="btn" type="button" data-mcheck>Check answers</button><button class="btn ghost" type="button" data-mshow>Show answers</button><span class="mscore"></span></div></div>`;
+  }).join('');
+  mBox.addEventListener('click',e=>{
+    const set=e.target.closest('.mset');if(!set)return;
+    const sels=[...set.querySelectorAll('select')];
+    if(e.target.closest('[data-mshow]'))sels.forEach(s=>s.value=s.dataset.ans);
+    if(e.target.closest('[data-mcheck]')||e.target.closest('[data-mshow]')){
+      let ok=0;sels.forEach(s=>{const r=s.value===s.dataset.ans;ok+=r;s.nextElementSibling.textContent=s.value?(r?'✓':'✗ '+s.dataset.ans):'';s.nextElementSibling.className='mres '+(r?'ok':'no');});
+      set.querySelector('.mscore').textContent=`${ok} / ${sels.length} correct`;
+    }
+  });
+
+  /* essay */
+  const ES=[
+   [1,"Reading","What is robotics?","A branch of AI and engineering that designs and builds machines that can perform tasks automatically.","القطعة."],
+   [1,"Reading","How does a robot sense and act?","It uses sensors to understand its environment, makes decisions using algorithms and moves using motors or wheels.","يحس، يفكر، يتحرك."],
+   [1,"Reading","What is the difference between robotics and automation?","Automation uses technology to repeat programmed tasks without human help and may not think; intelligent robots can adapt to changes.","الفرق."],
+   [1,"Reading","Name four types of robots and their uses.","Industrial (assemble products), service (clean, assist customers), medical (surgery, deliver medicine), exploration (space, ocean).","الأربعة."],
+   [1,"Grammar","Rewrite in the passive: (1) Engineers program the robots. (2) The sensors detect motion. (3) Workers clean the factory manually.","(1) The robots are programmed by engineers. (2) Motion is detected by the sensors. (3) The factory is cleaned manually by workers.","is/are + V3."],
+   [1,"Grammar","Rewrite: (1) It is necessary to test the robot. (2) It is not necessary for humans to assemble products. (3) It is a good idea to check the program.","(1) The robot must be tested. (2) Humans don't have to assemble products. (3) Developers should check the program before use.","must / don't have to / should."],
+   [1,"Grammar","Explain the difference between mustn't and don't have to with examples.","mustn't = prohibited (You mustn't touch the robot while it is operating). don't have to = not necessary (Operators don't have to control robots manually).","ممنوع ضد مش ضروري."],
+   [1,"Writing","Write a short essay (150–180 words): How robots and automation are changing human work.","See the model essay in Unit 6 (definitions, examples, positive and negative effects, conclusion; use the passive and modals).","المقال النموذجي."],
+   [2,"Reading","What is AI ethics?","The study of right and wrong in the design and use of intelligent systems; it focuses on fairness, transparency, accountability and privacy.","التعريف."],
+   [2,"Reading","Give examples of unethical AI behavior.","A hiring algorithm rejecting applicants unfairly because of biased data; facial recognition used without consent.","مثالين."],
+   [2,"Reading","How can human oversight help? What is the main goal of ethical AI?","People monitor AI, find mistakes and prevent misuse. The goal is to make AI responsible, inclusive and beneficial, not to stop it.","الإشراف والهدف."],
+   [2,"Grammar","Complete: (1) If machines make mistakes, people ___ (need) to fix them. (2) If users share too much data, their privacy ___ (be) at risk. (3) If algorithms are transparent, people ___ (trust) them more.","(1) will need (2) will be (3) will trust.","will + verb."],
+   [2,"Grammar","Rewrite in the passive: (1) Companies should protect user information. (2) People can monitor AI behavior. (3) Governments must create ethical laws.","(1) User information should be protected by companies. (2) AI behavior can be monitored by people. (3) Ethical laws must be created by governments.","modal + be + V3."],
+   [2,"Grammar","Correct the mistake: 'If AI will be trained with bad data, it makes unfair decisions.'","If AI is trained with bad data, it will make unfair decisions.","will في النتيجة بس."],
+   [2,"Writing","Write a short opinion essay (150–180 words): Why ethical AI matters for the future.","See the model essay in Unit 7 (clear opinion, 2–3 reasons, an example, conclusion; first conditional and modal passive).","المقال النموذجي."],
+   [3,"Reading","What is data science and how does AI use data to learn?","Collecting, organizing and analyzing information to make useful decisions; AI uses large datasets to recognize patterns and learns from examples.","التعريف."],
+   [3,"Reading","What are the four steps of the AI data process?","Data collection (gather raw information), data cleaning (remove mistakes and irrelevant items), data analysis (find patterns), prediction (use models to decide or forecast).","الخطوات."],
+   [3,"Reading","Give two examples of data-driven AI applications.","A weather app predicting tomorrow's temperature from climate data; a streaming service recommending movies from viewing history.","مثالين."],
+   [3,"Grammar","Choose and explain: (1) There isn't (much/many) noise. (2) There are (a few/a little) mistakes. (3) We need (some/any) more images.","(1) much – noise is uncountable. (2) a few – mistakes are countable. (3) some – positive sentence.","countable/uncountable."],
+   [3,"Grammar","Rewrite using the present perfect continuous: (1) They started building the model in January. (2) Scientists began testing algorithms last year.","(1) They have been building the model since January. (2) Scientists have been testing algorithms for a year.","since/for."],
+   [3,"Grammar","Fill in: (1) Researchers ___ (work) on improving prediction accuracy. (2) The team ___ (develop) a new method for cleaning data.","(1) have been working (2) has been developing.","have/has been + ing."],
+   [3,"Writing","Write a short essay (150–180 words): How data shapes artificial intelligence.","See the model essay in Unit 8 (definition, the four steps, two examples, benefits and challenges, conclusion).","المقال النموذجي."]
+  ];
+  const eList=document.getElementById('eList'),types=[...new Set(ES.map(e=>e[1]))];
+  document.getElementById('eCount').textContent=ES.length;
+  const fT=document.getElementById('eType');fT.innerHTML='<option value="">All types</option>'+types.map(t=>`<option>${t}</option>`).join('');
+  let fc='all';
+  function render(){
+    const t=fT.value,items=ES.filter(e=>(fc==='all'||String(e[0])===fc)&&(!t||e[1]===t));
+    eList.innerHTML=items.map((e,i)=>`<div class="eq"><p><b>${i+1}.</b> <span class="pill">${{"1": "Unit 6", "2": "Unit 7", "3": "Unit 8"}[e[0]]||'Ch'+e[0]}</span> <span class="pill">${e[1]}</span> ${e[2]}</p><details><summary>Show model answer</summary><div class="ea">${e[3]}<span class="tr">${e[4]}</span></div></details></div>`).join('')||'<p class="muted">No questions.</p>';
+    document.getElementById('eShown').textContent=items.length;
+  }
+  document.getElementById('eFilters').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;fc=b.dataset.f;document.querySelectorAll('#eFilters button').forEach(x=>x.setAttribute('aria-pressed',x===b));render();});
+  fT.addEventListener('change',render);
+  document.getElementById('eOpen').addEventListener('click',()=>eList.querySelectorAll('details').forEach(d=>d.open=true));
+  document.getElementById('eClose').addEventListener('click',()=>eList.querySelectorAll('details').forEach(d=>d.open=false));
+  render();
+})();
+</script>
+<script>
+(function(){
+  /* ---------- sidebar contents, studied progress, back to top ---------- */
+  const KEY='studied:'+(location.pathname.split('/').filter(Boolean)[0]||'site');try{if(!localStorage.getItem(KEY)&&localStorage.getItem('netStudied'))localStorage.setItem(KEY,localStorage.getItem('netStudied'));}catch(e){}let done={};
+  try{done=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){}
+  const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(done));}catch(e){}};
+  let n=0;
+  document.querySelectorAll('section.view .block > h3').forEach(h=>{
+    const b=h.parentElement;if(!b.id)b.id='s'+(++n);
+    const key=b.closest('section').id+'|'+h.textContent.trim();
+    const t=document.createElement('span');t.className='h3t';while(h.firstChild)t.appendChild(h.firstChild);h.appendChild(t);
+    const btn=document.createElement('button');btn.type='button';btn.className='studied';btn.dataset.key=key;
+    const paint=()=>{btn.setAttribute('aria-pressed',!!done[key]);btn.textContent=done[key]?'✓ Studied':'☐ Mark as studied';h.classList.toggle('isdone',!!done[key]);};
+    btn.addEventListener('click',()=>{if(done[key])delete done[key];else done[key]=1;save();paint();build();toast(done[key]?'✓ Marked as studied · اتعلّم إنه اتذاكر':'Unmarked · اتشال من المذاكر');});
+    const row=document.createElement('div');row.className='studied-row';row.innerHTML='<span>Finished this part?<span class="tr">خلصتي الجزء ده؟</span></span>';row.appendChild(btn);b.appendChild(row);const badge=document.createElement('span');badge.className='h3done';badge.textContent='✓ Studied';h.appendChild(badge);paint();
+  });
+  function toast(t){let el=document.getElementById('toast');if(!el){el=document.createElement('div');el.id='toast';el.className='toast';el.setAttribute('role','status');document.body.appendChild(el);}el.textContent=t;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),1800);}
+  const toc=document.getElementById('toc');let obs;
+  function build(){
+    const sec=[...document.querySelectorAll('section.view')].find(x=>!x.hidden);if(!sec)return;
+    toc.style.setProperty('--k',getComputedStyle(sec).getPropertyValue('--k'));
+    const hs=[...sec.querySelectorAll('.block > h3')];
+    const items=hs.map(h=>{const b=h.parentElement,k=b.querySelector('.studied-row .studied').dataset.key;return {id:b.id,t:h.querySelector('.h3t').textContent.replace('★','').trim(),d:!!done[k]};});
+    const c=items.filter(i=>i.d).length,pct=items.length?Math.round(c/items.length*100):0;
+    const list='<ol>'+items.map(i=>`<li><a href="#${i.id}" data-id="${i.id}" class="${i.d?'done':''}"><span class="dot"></span><span>${i.t}</span></a></li>`).join('')+'</ol>';
+    const title=sec.querySelector('.chap-head h2').textContent;
+    toc.innerHTML=`<div class="toc-in"><div class="toc-h">On this page</div><div class="toc-pt"><b>${title}</b></div><div class="toc-prog"><i style="width:${pct}%"></i></div><div class="toc-pt">${c} of ${items.length} studied · ${pct}%</div>${list}</div><details class="toc-mob"><summary>Contents · ${c}/${items.length} studied</summary>${list}</details>`;
+    toc.querySelectorAll('a[data-id]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();document.getElementById(a.dataset.id).scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});}));
+    if(obs)obs.disconnect();
+    obs=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting)toc.querySelectorAll('.toc-in a').forEach(a=>a.classList.toggle('cur',a.dataset.id===en.target.id));});},{rootMargin:'-80px 0px -70% 0px'});
+    hs.forEach(h=>obs.observe(h.parentElement));
+  }
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.addEventListener('click',()=>setTimeout(build,0)));
+  build();
+  const top=document.createElement('button');top.type='button';top.className='totop';top.textContent='↑ Top';
+  top.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));document.body.appendChild(top);
+  addEventListener('scroll',()=>top.classList.toggle('show',scrollY>700),{passive:true});
+})();
+</script>
+
+
+
+
+
+</html>
