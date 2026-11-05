@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Design &amp; Analysis of Algorithms</title>
-<meta name="site-version" content="algo-2026-11-02-r4">
+<meta name="site-version" content="algo-2026-11-05-r5">
 <script>
 (function(){
   /* auto-update: if the server has a newer version than this cached copy, reload once */
   try{
-    var cur='algo-2026-11-02-r4';
+    var cur='algo-2026-11-05-r5';
     fetch(location.pathname+'?nocache='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():'';}).then(function(t){
       var m=t.match(/name="site-version" content="([^"]+)"/);
       if(m&&m[1]!==cur&&!sessionStorage.getItem('reloaded-'+m[1])){sessionStorage.setItem('reloaded-'+m[1],'1');location.reload();}
@@ -598,6 +598,7 @@ details.ans .tr{border:0!important;padding:0!important}
 .ios-term{background:#221a16!important;color:#f0eceb!important}
 .view code{overflow-wrap:anywhere}
 /*/THEME*/
+.qb{border-top:1px solid var(--line);padding:.55rem 0}.qb>p{margin:.15rem 0;font-weight:500}.qb details.ans{margin:.3rem 0 .2rem}
 .cells.acells{margin-top:22px;row-gap:28px}
 .cell em{position:absolute;top:-19px;font:700 .66rem var(--f-mono);color:var(--k);white-space:nowrap;font-style:normal}
 .cell.dim{opacity:.32}
@@ -610,6 +611,7 @@ details.ans .tr{border:0!important;padding:0!important}
 .grp{font:700 .9rem var(--f-mono);padding:4px 8px;border:1.5px solid var(--k);border-radius:6px;background:var(--panel)}
 .mrow.merge .grp{border-color:var(--good)}
 .mt{font:500 .95rem var(--f-mono);display:grid;gap:4px}
+.qb{border-top:1px solid var(--line);padding:.55rem 0}.qb>p{margin:.15rem 0;font-weight:500}
 .mt-res{margin-top:8px;font:800 1.4rem var(--f-mono);color:var(--k)}
 /*ART*/
 .art.doodle{filter:none!important;mix-blend-mode:normal!important;transform:translateY(-50%)!important;height:112px;width:150px;max-width:150px}
@@ -654,6 +656,7 @@ details.ans .tr{border:0!important;padding:0!important}
   <button role="tab" data-v="ch5" style="--k:var(--lab)"><i></i>Recurrences</button>
   <button role="tab" data-v="ch6" style="--k:var(--c8)"><i></i>Quick Sort &amp; Matrices</button>
   <button role="tab" data-v="lab" style="--k:var(--c7)"><i></i>Lab</button>
+  <button role="tab" data-v="bank" style="--k:var(--c8)"><i></i>Question Bank</button>
   <button role="tab" data-v="quiz" style="--k:var(--c5)"><i></i>Quiz</button>
   <button role="tab" data-v="review" style="--k:var(--c6)"><i></i>Night Before</button>
 </div></nav>
@@ -2098,6 +2101,156 @@ n/2^k = 1 → k = log₂ n → T(n) = c log₂ n + T(1) = Θ(log n)
     <details class="ans"><summary>Show solution</summary><pre class="cli">pivot near the median → balanced: T(n) = 2T(n/2) + Θ(n) = Θ(n log n)
 random pivot          → usually balanced: expected Θ(n log n)
 pivot always extreme  → T(n) = T(n−1) + Θ(n) = Θ(n²)   (e.g. sorted input, last element as pivot)</pre><span class="tr">الـ pivot الكويس بيقسم في النص، والوحش (أصغر أو أكبر عنصر) بيخلي جزء فاضي.</span></details>
+  </div>
+  <div class="block">
+    <h3>Section copy 2: the f(n) values written in the clean section notes</h3>
+    <p>A second, cleaner copy of the same sections uses a slightly different counting rule (it also counts the return and the if-test as steps). The Big-O never changes.<span class="tr">فيه نسخة تانية أنضف من نفس السكاشن، بتعدّ الـ return والـ if كخطوات، فالأرقام بتفرق شوية. الـ Big-O واحد في الحالتين. اكتبي في الامتحان بطريقة الدكتور.</span></p>
+    <div class="tw"><table>
+      <tr><th>Problem</th><th>f(n) in copy 2</th><th>Big-O</th></tr>
+      <tr><td>Sum(a, b)</td><td>3</td><td>O(1)</td></tr>
+      <tr><td>ArraySum</td><td>4n + 4</td><td>O(n)</td></tr>
+      <tr><td>Print 2D array</td><td>3n² + 4n + 2</td><td>O(n²)</td></tr>
+      <tr><td>while (i &lt; n) i *= 2</td><td>2 + 2 log₂ n</td><td>O(log n)</td></tr>
+      <tr><td>Find maximum</td><td>3n</td><td>O(n)</td></tr>
+      <tr><td>Count even numbers</td><td>5n + 3</td><td>O(n)</td></tr>
+      <tr><td>Check if sorted</td><td>3n − 1</td><td>O(n)</td></tr>
+      <tr><td>Reverse an array</td><td>3n + 3</td><td>O(n)</td></tr>
+      <tr><td>Multiplication table</td><td>2n² + 2n + 1</td><td>O(n²)</td></tr>
+      <tr><td>Common elements</td><td>3mn + 2n + 1</td><td>O(mn)</td></tr>
+      <tr><td>Linear search</td><td>3n + 2</td><td>O(n)</td></tr>
+      <tr><td>Triangular nested loop</td><td>n(n+1)/2</td><td>O(n²)</td></tr>
+      <tr><td>Two loops one after the other</td><td>4n + 2</td><td>O(n)</td></tr>
+      <tr><td>Loop + doubling while</td><td>2n + 2 log₂ n + 2</td><td>O(n)</td></tr>
+    </table></div>
+  </div>
+
+  <div class="block">
+    <h3>Recursion tree recipe (summary sheet)</h3>
+    <ol>
+      <li>T(n) = a·T(n/b) + f(n): <b>a</b> = number of children of every node, <b>f(n)</b> = the cost of the node itself (the parent).<span class="tr">a = عدد الفروع اللي طالعة من كل node، و f(n) = تكلفة الـ node نفسها (الأب).</span></li>
+      <li>Draw 3 levels, replacing each T(…) by its own cost and its children, then write the cost of every level.<span class="tr">ارسمي 3 مستويات، كل T نعوّضها بتكلفتها وفروعها، واكتبي مجموع كل مستوى.</span></li>
+      <li>Height: if n is <b>divided</b> each level → h = log n; if n is <b>reduced by subtraction</b> (n − 1) → h = n.<span class="tr">الارتفاع: لو بنقسم يبقى log n، ولو بنطرح يبقى n.</span></li>
+      <li>Add the levels with the right series: <b>same cost every level</b> → cost × height; <b>geometric</b> (each level × r) → a(1 − rʰ)/(1 − r), or a/(1 − r) when it decreases (r &lt; 1); <b>arithmetic</b> (each level − a constant) → Σ formulas like n(n+1)/2.<span class="tr">لو كل مستوى نفس التكلفة: التكلفة × الارتفاع. لو كل مستوى مضروب في نسبة r: متتالية هندسية. لو كل مستوى بيقل بالطرح: متتالية حسابية (Σ).</span></li>
+      <li>Geometric vs arithmetic: in a geometric series the change is by multiplying or dividing; in an arithmetic series it is by adding or subtracting.<span class="tr">الفرق: الهندسية بالضرب أو القسمة، والحسابية بالجمع أو الطرح.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="view" id="v-bank" style="--k:var(--c8)" hidden>
+  <div class="chap-head"><svg class="doodle art" viewBox="0 0 160 120" role="img" aria-label="quiz checklist"><rect class="f" x="40" y="14" width="80" height="96" rx="8"/><rect class="d" x="64" y="8" width="32" height="12" rx="4"/><rect class="s" x="52" y="32" width="12" height="12" rx="2"/><path class="s" d="M54 38l4 4 8-10"/><path class="s" d="M72 38h36"/><rect class="s" x="52" y="54" width="12" height="12" rx="2"/><path class="s" d="M54 60l4 4 8-10"/><path class="s" d="M72 60h36"/><rect class="s" x="52" y="76" width="12" height="12" rx="2"/><path class="s" d="M54 82l4 4 8-10"/><path class="s" d="M72 82h36"/></svg><small>Practice · the question banks you sent</small><h2>Question Bank</h2><p>Every question from the banks, grouped by file and section, with the model answer hidden under each one.</p><span class="tr">كل أسئلة الـ question banks اللي بعتيها، متقسمة بالملف والجزء، وكل سؤال إجابته مستخبية تحته.</span></div>
+  <div class="block">
+    <h3>ALGORITHM – EXAM PRACTICE QUESTIONS</h3>
+    <p class="muted">88 questions · answers hidden under each question.<span class="tr">حلّي السؤال الأول على ورقة، وبعدين افتحي الإجابة.</span></p>
+<p>ALGORITHM – EXAM PRACTICE QUESTIONS</p>
+<p>Chapters 1–4 | Questions with Model Answers</p>
+<p>Sigma notation is written in copy-friendly plain text, such as Σ(i=1 to n) i, to avoid formatting problems when copying.</p>
+<p>Chapter 1 – Introduction</p>
+<div class="qb"><p>Q: An algorithm is: (a) a programming language (b) a finite sequence of well-defined steps (c) a computer (d) a flowchart only</p><details class="ans"><summary>Show answer</summary><p>(b) A finite sequence of well-defined steps used to solve a problem.</p></details></div>
+<div class="qb"><p>Q: Which property means that an algorithm must stop after a finite number of steps?</p><details class="ans"><summary>Show answer</summary><p>Finiteness.</p></details></div>
+<div class="qb"><p>Q: Which property means every instruction must be clear and unambiguous?</p><details class="ans"><summary>Show answer</summary><p>Definiteness.</p></details></div>
+<div class="qb"><p>Q: What does the RAM model assume?</p><details class="ans"><summary>Show answer</summary><p>A simplified random-access machine where basic operations take constant time.</p></details></div>
+<div class="qb"><p>Q: When can Binary Search be applied?</p><details class="ans"><summary>Show answer</summary><p>When the data is sorted.</p></details></div>
+<div class="qb"><p>Q: What is the worst-case complexity of Sequential Search?</p><details class="ans"><summary>Show answer</summary><p>Θ(n), because all n elements may be checked.</p></details></div>
+<div class="qb"><p>Q: What is the best-case complexity of Sequential Search?</p><details class="ans"><summary>Show answer</summary><p>Θ(1), when the target is the first element.</p></details></div>
+<div class="qb"><p>Q: Trace Sequential Search on [4, 9, 2, 7, 5] to find 7. How many elements are checked?</p><details class="ans"><summary>Show answer</summary><p>4 elements: 4, 9, 2, then 7.</p></details></div>
+<div class="qb"><p>Q: Find the maximum in [12, 5, 27, 8, 19].</p><details class="ans"><summary>Show answer</summary><p>27.</p></details></div>
+<div class="qb"><p>Q: Use Euclid’s algorithm to find GCD(60, 24).</p><details class="ans"><summary>Show answer</summary><p>60 mod 24 = 12; 24 mod 12 = 0. GCD = 12.</p></details></div>
+<div class="qb"><p>Q: State best, average, and worst-case Sequential Search complexity.</p><details class="ans"><summary>Show answer</summary><p>Best Θ(1), average Θ(n), worst Θ(n).<br>Chapter 2 – Mathematical Foundations</p></details></div>
+<div class="qb"><p>Q: Evaluate: Σ(i=1 to 10) 1.</p><details class="ans"><summary>Show answer</summary><p>10.</p></details></div>
+<div class="qb"><p>Q: Evaluate: Σ(i=1 to 5) i.</p><details class="ans"><summary>Show answer</summary><p>1+2+3+4+5 = 15. Formula: n(n+1)/2.</p></details></div>
+<div class="qb"><p>Q: Evaluate: Σ(i=1 to 4) i².</p><details class="ans"><summary>Show answer</summary><p>1+4+9+16 = 30. Formula: n(n+1)(2n+1)/6.</p></details></div>
+<div class="qb"><p>Q: Evaluate: Σ(i=0 to 3) 2^i.</p><details class="ans"><summary>Show answer</summary><p>1+2+4+8 = 15.</p></details></div>
+<div class="qb"><p>Q: Evaluate: Σ(i=1 to 20) i.</p><details class="ans"><summary>Show answer</summary><p>20×21/2 = 210.</p></details></div>
+<div class="qb"><p>Q: Find the order of growth of 3n²+5n+8.</p><details class="ans"><summary>Show answer</summary><p>Θ(n²).</p></details></div>
+<div class="qb"><p>Q: Solve T(n)=T(n/2)+1.</p><details class="ans"><summary>Show answer</summary><p>Θ(log n).</p></details></div>
+<div class="qb"><p>Q: Solve T(n)=2T(n/2)+n.</p><details class="ans"><summary>Show answer</summary><p>Θ(n log n).</p></details></div>
+<div class="qb"><p>Q: Solve T(n)=4T(n/2)+n.</p><details class="ans"><summary>Show answer</summary><p>Θ(n²).</p></details></div>
+<div class="qb"><p>Q: Solve T(n)=8T(n/2)+n².</p><details class="ans"><summary>Show answer</summary><p>Θ(n³).</p></details></div>
+<div class="qb"><p>Q: Use a recursion-tree idea to solve T(n)=2T(n/2)+n.</p><details class="ans"><summary>Show answer</summary><p>Each level costs Θ(n); there are Θ(log n) levels. Total Θ(n log n).</p></details></div>
+<div class="qb"><p>Q: Write the formula for the sum of the first n positive integers.</p><details class="ans"><summary>Show answer</summary><p>Σ(i=1 to n) i = n(n+1)/2.<br>Chapter 3 – Asymptotic Notations and Complexity</p></details></div>
+<div class="qb"><p>Q: What does O(g(n)) represent?</p><details class="ans"><summary>Show answer</summary><p>An asymptotic upper bound.</p></details></div>
+<div class="qb"><p>Q: What does Ω(g(n)) represent?</p><details class="ans"><summary>Show answer</summary><p>An asymptotic lower bound.</p></details></div>
+<div class="qb"><p>Q: What does Θ(g(n)) represent?</p><details class="ans"><summary>Show answer</summary><p>A tight bound: both upper and lower.</p></details></div>
+<div class="qb"><p>Q: What is the difference between O(n²) and o(n²)?</p><details class="ans"><summary>Show answer</summary><p>O(n²) allows the same order or smaller; o(n²) is a strict upper bound.</p></details></div>
+<div class="qb"><p>Q: What does ω(n) mean?</p><details class="ans"><summary>Show answer</summary><p>A strict lower bound: the function grows faster than n.</p></details></div>
+<div class="qb"><p>Q: Find the complexity of 7n²+4n+10.</p><details class="ans"><summary>Show answer</summary><p>Θ(n²).</p></details></div>
+<div class="qb"><p>Q: Find the complexity of 5n³+2n²+9.</p><details class="ans"><summary>Show answer</summary><p>Θ(n³).</p></details></div>
+<div class="qb"><p>Q: Find the complexity of 8n+20.</p><details class="ans"><summary>Show answer</summary><p>Θ(n).</p></details></div>
+<div class="qb"><p>Q: Arrange in increasing order: n², log n, n!, n, 2ⁿ, n log n.</p><details class="ans"><summary>Show answer</summary><p>log n &lt; n &lt; n log n &lt; n² &lt; 2ⁿ &lt; n!.</p></details></div>
+<div class="qb"><p>Q: Find complexity: for (i=1; i&lt;n; i++) constant work.</p><details class="ans"><summary>Show answer</summary><p>Θ(n).</p></details></div>
+<div class="qb"><p>Q: Find complexity: for (i=1; i&lt;n; i*=2) constant work.</p><details class="ans"><summary>Show answer</summary><p>Θ(log n).</p></details></div>
+<div class="qb"><p>Q: Two nested loops, each running from 1 to n.</p><details class="ans"><summary>Show answer</summary><p>Θ(n²).</p></details></div>
+<div class="qb"><p>Q: for i=1 to n; for j=1 to i. Find complexity.</p><details class="ans"><summary>Show answer</summary><p>Σ(i=1 to n) i = n(n+1)/2, so Θ(n²).</p></details></div>
+<div class="qb"><p>Q: Outer loop runs log n times; inner loop runs n times.</p><details class="ans"><summary>Show answer</summary><p>Θ(n log n).</p></details></div>
+<div class="qb"><p>Q: Two nested loops, each doubling its counter until n.</p><details class="ans"><summary>Show answer</summary><p>Θ(log² n).</p></details></div>
+<div class="qb"><p>Q: for i=1 to n; for j=1 to i; for k=1 to j.</p><details class="ans"><summary>Show answer</summary><p>Σ(i=1 to n) Σ(j=1 to i) j = Θ(n³).</p></details></div>
+<div class="qb"><p>Q: True or False: 4n²+3n+1 = Θ(n²).</p><details class="ans"><summary>Show answer</summary><p>True.</p></details></div>
+<div class="qb"><p>Q: True or False: Θ(n) is only an upper bound.</p><details class="ans"><summary>Show answer</summary><p>False. It is both an upper and lower bound.</p></details></div>
+<div class="qb"><p>Q: True or False: Θ(log n) grows more slowly than Θ(n).</p><details class="ans"><summary>Show answer</summary><p>True.<br>Chapter 4 – Divide and Conquer</p></details></div>
+<div class="qb"><p>Q: What are the three main steps of Divide and Conquer?</p><details class="ans"><summary>Show answer</summary><p>Divide into smaller subproblems, solve recursively, and combine the results.</p></details></div>
+<div class="qb"><p>Q: What is Merge Sort complexity in best, average, and worst cases?</p><details class="ans"><summary>Show answer</summary><p>Θ(n log n) in all three cases.</p></details></div>
+<div class="qb"><p>Q: Write the recurrence of Merge Sort.</p><details class="ans"><summary>Show answer</summary><p>T(n)=2T(n/2)+Θ(n).</p></details></div>
+<div class="qb"><p>Q: Trace Merge Sort on [8, 3, 6, 2].</p><details class="ans"><summary>Show answer</summary><p>Split [8,3] and [6,2], then single elements. Merge to [3,8] and [2,6], then [2,3,6,8].</p></details></div>
+<div class="qb"><p>Q: What is Quick Sort worst-case complexity?</p><details class="ans"><summary>Show answer</summary><p>Θ(n²), when partitions are repeatedly very unbalanced.</p></details></div>
+<div class="qb"><p>Q: What is Quick Sort average/expected complexity?</p><details class="ans"><summary>Show answer</summary><p>Θ(n log n).</p></details></div>
+<div class="qb"><p>Q: Write Quick Sort worst-case recurrence.</p><details class="ans"><summary>Show answer</summary><p>T(n)=T(n−1)+Θ(n), which solves to Θ(n²).</p></details></div>
+<div class="qb"><p>Q: Write balanced Quick Sort recurrence.</p><details class="ans"><summary>Show answer</summary><p>T(n)=2T(n/2)+Θ(n), which solves to Θ(n log n).</p></details></div>
+<div class="qb"><p>Q: Why must data be sorted before Binary Search?</p><details class="ans"><summary>Show answer</summary><p>Because the algorithm uses the middle value to decide which half can be discarded.</p></details></div>
+<div class="qb"><p>Q: Apply Binary Search to [2,5,8,12,16,23,38] to find 16.</p><details class="ans"><summary>Show answer</summary><p>Middle 12; search right half [16,23,38]. Middle 23; search left and find 16.</p></details></div>
+<div class="qb"><p>Q: What is Binary Search worst-case complexity?</p><details class="ans"><summary>Show answer</summary><p>Θ(log n).</p></details></div>
+<div class="qb"><p>Q: Write Strassen’s matrix multiplication recurrence.</p><details class="ans"><summary>Show answer</summary><p>T(n)=7T(n/2)+Θ(n²).</p></details></div>
+<div class="qb"><p>Q: What is Strassen’s asymptotic complexity?</p><details class="ans"><summary>Show answer</summary><p>Θ(n^(log₂7)) ≈ Θ(n^2.807).</p></details></div>
+<div class="qb"><p>Q: True or False: Merge Sort divides the array and merges sorted halves.</p><details class="ans"><summary>Show answer</summary><p>True.</p></details></div>
+<div class="qb"><p>Q: True or False: Quick Sort always has Θ(n log n) worst-case complexity.</p><details class="ans"><summary>Show answer</summary><p>False. Worst case is Θ(n²).</p></details></div>
+<div class="qb"><p>Q: True or False: Binary Search can be applied directly to an unsorted array.</p><details class="ans"><summary>Show answer</summary><p>False.<br>Quick Complexity Reference<br>Constant operation: Θ(1)<br>One loop of n iterations: Θ(n)<br>Two independent nested n-loops: Θ(n²)<br>Three independent nested n-loops: Θ(n³)<br>Counter multiplied/divided by a constant: Θ(log n)<br>n-loop with inner log n loop: Θ(n log n)<br>Two nested logarithmic loops: Θ(log² n)<br>Merge Sort: Θ(n log n)<br>Binary Search: Θ(log n)<br>Quick Sort average: Θ(n log n)<br>Quick Sort worst: Θ(n²)<br>Strassen: Θ(n^2.807) approximately<br>Sigma – Copy-Friendly Formulas<br>Σ(i=1 to n) 1 = n<br>Σ(i=1 to n) i = n(n+1)/2<br>Σ(i=1 to n) i² = n(n+1)(2n+1)/6<br>Σ(i=0 to n) 2^i = 2^(n+1) − 1<br>Σ(i=1 to n) i = Θ(n²)<br>Σ(i=1 to n) i² = Θ(n³)<br>Additional Exam Questions – Proofs and Recurrence Methods<br>This section adds the proof-style and recurrence questions that are common in Algorithm exams: Big-O / Big-Ω / Big-Θ proofs, Recursion Tree, Substitution, and Master Theorem.<br>A. Prove Asymptotic Bounds<br>Question: Prove that f(n) = 3n² + 5n + 2 is O(n²).<br>By definition, we need positive constants c and n₀ such that f(n) ≤ c·n² for all n ≥ n₀. For n ≥ 1: 5n ≤ 5n² and 2 ≤ 2n². Therefore, 3n² + 5n + 2 ≤ 3n² + 5n² + 2n² = 10n². Choose c = 10 and n₀ = 1. Hence f(n) = O(n²).<br>Question: Prove that f(n) = 4n + 7 is O(n).<br>For n ≥ 1, 7 ≤ 7n. Thus 4n + 7 ≤ 11n. Choose c = 11 and n₀ = 1. Therefore f(n) = O(n).<br>Question: Prove that f(n) = 3n² + 5n + 2 is Ω(n²).<br>We need positive constants c and n₀ such that f(n) ≥ c·n² for n ≥ n₀. Since 3n² + 5n + 2 ≥ 3n² for n ≥ 1, choose c = 3 and n₀ = 1. Therefore f(n) = Ω(n²).<br>Question: Prove that f(n) = 3n² + 5n + 2 is Θ(n²).<br>Θ(n²) requires both an upper and a lower bound. From the two previous inequalities, for n ≥ 1: 3n² ≤ 3n² + 5n + 2 ≤ 10n². Choose c₁ = 3, c₂ = 10, and n₀ = 1. Therefore f(n) = Θ(n²).<br>Question: Prove that n is o(n²).<br>Use the limit definition: n/n² = 1/n. As n approaches infinity, 1/n approaches 0. Therefore n = o(n²).<br>Question: Prove that n² is ω(n).<br>Consider n²/n = n. As n approaches infinity, n approaches infinity. Therefore n² = ω(n).<br>Question: Determine whether 5n² + 3n + 9 is Θ(n²), and justify your answer.<br>Yes. For n ≥ 1, 5n² ≤ 5n² + 3n + 9 ≤ 17n². Thus suitable positive lower and upper constants exist, so the function is Θ(n²).<br>Question: True or False: If f(n) = O(g(n)), then f(n) must also be Ω(g(n)).<br>False. O gives an upper bound only. To conclude Θ(g(n)), we also need a matching lower bound.<br>Question: True or False: If f(n) = Θ(g(n)), then f(n) = O(g(n)) and f(n) = Ω(g(n)).<br>True. This is exactly the meaning of a tight asymptotic bound.<br>B. Recursion Tree Method<br>Question: Solve T(n) = 2T(n/2) + n using a recursion tree.<br>Level 0: 1 node, cost n. Level 1: 2 nodes, each costs n/2, total n. Level 2: 4 nodes, each costs n/4, total n. At every level the total cost is n. The tree has log₂n levels until subproblem size 1. Total cost = n × log₂n, so T(n) = Θ(n log n).<br>Question: For T(n) = 4T(n/2) + n, find the cost at levels 0, 1, and 2, then give the total order.<br>Level 0: 1 node × n = n. Level 1: 4 nodes × (n/2) = 2n. Level 2: 16 nodes × (n/4) = 4n. The level cost doubles each level. The leaves dominate; the total is Θ(n²).<br>Question: Solve T(n) = T(n/2) + 1 using a recursion tree.<br>There is one subproblem at each level, and each level costs 1. The input size is halved until 1, giving Θ(log n) levels. Therefore T(n) = Θ(log n).<br>Question: Solve T(n) = 2T(n/2) + 1 using a recursion tree.<br>At level i there are 2^i nodes, each with constant cost, so level i costs Θ(2^i). The last level has Θ(n) leaves, and the geometric sum is Θ(n). Therefore T(n) = Θ(n).<br>Question: What should be written in a recursion-tree solution?<br>Show the number of nodes at each level, the cost of each node, the total cost per level, the tree height, and the sum of all level costs (including leaves when relevant).<br>C. Substitution Method<br>Question: Solve T(n) = 2T(n/2) + n by repeated substitution.<br>T(n) = 2[2T(n/4) + n/2] + n = 4T(n/4) + 2n. Next: T(n) = 8T(n/8) + 3n. After k steps: T(n) = 2^k T(n/2^k) + kn. Set k = log₂n: T(n) = nT(1) + n log₂n = Θ(n log n).<br>Question: Using the substitution (induction) method, prove the upper bound T(n) = O(n log n) for T(n) = 2T(n/2) + n.<br>Guess T(n) ≤ c n log₂n for sufficiently large n. Assume the hypothesis holds for n/2: T(n/2) ≤ c(n/2)log₂(n/2). Then T(n) ≤ 2[c(n/2)log₂(n/2)] + n = cn(log₂n − 1) + n = cnlog₂n − cn + n. This is ≤ cnlog₂n when c ≥ 1. Choose c large enough to cover the base case. Thus T(n) = O(n log n). A corresponding lower-bound argument gives Θ(n log n).<br>Question: Solve T(n) = T(n/2) + n by repeated substitution.<br>T(n) = n + T(n/2) = n + n/2 + T(n/4) = n + n/2 + n/4 + ... . This is a geometric series bounded above by 2n. Therefore T(n) = Θ(n).<br>Question: Solve T(n) = T(n−1) + 1 by repeated substitution.<br>T(n) = T(n−1)+1 = T(n−2)+2 = ... = T(1)+(n−1). Therefore T(n) = Θ(n).<br>Question: In the Substitution Method, what are the main steps?<br>1) Guess the asymptotic bound. 2) Assume it holds for smaller inputs. 3) Substitute the assumption into the recurrence. 4) Choose constants so the inequality holds. 5) Verify the base case.<br>D. Master Theorem<br>Question: For T(n) = aT(n/b) + f(n), what quantities must be identified first?<br>Identify a (number of recursive subproblems), b (factor by which the input size is divided), and f(n) (the non-recursive work). Then compare f(n) with n^(log_b a).<br>Question: Apply the Master Theorem to T(n) = 4T(n/2) + n.<br>a = 4, b = 2, f(n) = n. Compute n^(log₂4) = n². Since f(n) = n is polynomially smaller than n², Case 1 applies. Therefore T(n) = Θ(n²).<br>Question: Apply the Master Theorem to T(n) = 2T(n/2) + n.<br>a = 2, b = 2, f(n) = n. Compute n^(log₂2) = n. Here f(n) = Θ(n), matching Case 2 with k = 0. Therefore T(n) = Θ(n log n).<br>Question: Apply the Master Theorem to T(n) = 8T(n/2) + n².<br>a = 8, b = 2, f(n) = n². Compute n^(log₂8) = n³. Since n² is polynomially smaller than n³, Case 1 applies. Therefore T(n) = Θ(n³).<br>Question: Apply the Master Theorem to T(n) = 2T(n/2) + n log n.<br>a = 2, b = 2, so n^(log₂2) = n. Also f(n) = Θ(n log n) = Θ(n log^1 n). Case 2 applies with k = 1, so T(n) = Θ(n log²n).<br>Question: Apply the Master Theorem to T(n) = 2T(n/2) + n².<br>a = 2, b = 2, so n^(log₂2) = n. The function f(n) = n² is polynomially larger. The regularity condition holds because 2f(n/2) = 2(n/2)² = n²/2 ≤ c n² for a constant c &lt; 1. Case 3 applies, so T(n) = Θ(n²).<br>Question: Can the basic Master Theorem be applied directly to T(n) = T(n−1) + n?<br>No. The subproblem size is n−1, not n/b for a constant b &gt; 1. Use substitution, expansion, or another suitable method. Expanding gives n+(n−1)+...+1 = Θ(n²).<br>Question: Choose the correct answer: In T(n)=aT(n/b)+f(n), the critical comparison function is:<br>(c) n^(log_b a).<br>Question: True or False: Master Theorem applies directly to every recurrence.<br>False. It applies to recurrences in the required form, subject to the theorem’s case conditions.<br>E. Mixed Exam Practice<br>Question: Solve each recurrence and name a suitable method: (1) T(n)=2T(n/2)+n; (2) T(n)=T(n/2)+1; (3) T(n)=T(n−1)+n.<br>(1) Θ(n log n), by Master Theorem or recursion tree. (2) Θ(log n), by Master Theorem or recursion tree. (3) Θ(n²), by expansion/substitution; it is not in the standard Master Theorem form.<br>Question: A student claims that T(n)=2T(n/2)+n is Θ(n) because each level costs n. What is wrong?<br>The student forgot to multiply by the number of levels. Each level costs Θ(n), but there are Θ(log n) levels. The correct total is Θ(n log n).<br>Question: A student claims that f(n)=O(g(n)) means f(n)=g(n). Is this correct?<br>No. Big-O is an asymptotic upper bound; the functions do not need to be equal.<br>Exam Reminder<br>For Big-O proof: find constants c and n₀ such that 0 ≤ f(n) ≤ c·g(n) for n ≥ n₀.<br>For Big-Ω proof: find constants c and n₀ such that 0 ≤ c·g(n) ≤ f(n) for n ≥ n₀.<br>For Big-Θ proof: prove both the Big-O and Big-Ω inequalities.<br>For Recursion Tree: calculate total work per level, then multiply/sum over the tree height.<br>For Substitution: guess, assume for smaller n, substitute, choose constants, check base case.<br>For Master Theorem: identify a, b, f(n), calculate n^(log_b a), compare, then state the case and answer.<br>Additional Practice: Proving Asymptotic Relationships by Finding Constants<br>Important exam idea: When a question asks you to prove an asymptotic relationship, you must find suitable constants (such as c, c1, c2, and n0) and show that the required inequality holds for every n &gt;= n0. Do not rely only on comparing the highest powers.<br>A. What you must prove<br>Big-O: Find c &gt; 0 and n0 such that 0 &lt;= f(n) &lt;= c g(n), for all n &gt;= n0.<br>Big-Omega: Find c &gt; 0 and n0 such that 0 &lt;= c g(n) &lt;= f(n), for all n &gt;= n0.<br>Big-Theta: Find c1, c2 &gt; 0 and n0 such that 0 &lt;= c1 g(n) &lt;= f(n) &lt;= c2 g(n), for all n &gt;= n0.<br>little-o: Show that f(n)/g(n) approaches 0 as n approaches infinity.<br>little-omega: Show that f(n)/g(n) approaches infinity as n approaches infinity.<br>B. Solved examples: finding the constants<br>Example 1 — Prove that f(n) = n^2 - 1000 is Θ(n^2).<br>Let f(n) = n^2 - 1000 and g(n) = n^2.<br>We need c1, c2 &gt; 0 and n0 such that c1 n^2 &lt;= n^2 - 1000 &lt;= c2 n^2.<br>Upper bound: n^2 - 1000 &lt;= n^2, so choose c2 = 1.<br>Lower bound: n^2 - 1000 &gt;= (1/2)n^2 when (1/2)n^2 &gt;= 1000.<br>Thus n^2 &gt;= 2000. Choose n0 = 45 because 45^2 = 2025 &gt;= 2000.<br>Therefore, for every n &gt;= 45: (1/2)n^2 &lt;= n^2 - 1000 &lt;= 1*n^2.<br>Choose c1 = 1/2, c2 = 1, n0 = 45. Hence f(n) = Θ(n^2).<br>Example 2 — Prove that f(n) = 3n + 5 is O(n).<br>For n &gt;= 1, 5 &lt;= 5n.<br>Therefore 3n + 5 &lt;= 3n + 5n = 8n.<br>Choose c = 8 and n0 = 1. Hence 3n + 5 = O(n).<br>Example 3 — Prove that f(n) = 5n^2 + 2n is Ω(n^2).<br>For n &gt;= 1, 2n &gt;= 0.<br>Therefore 5n^2 + 2n &gt;= 5n^2.<br>Choose c = 5 and n0 = 1. Hence f(n) = Ω(n^2).<br>Example 4 — Prove that f(n) = n is o(n^2).<br>Calculate the ratio: f(n)/g(n) = n/n^2 = 1/n.<br>As n approaches infinity, 1/n approaches 0.<br>Therefore n = o(n^2).<br>Example 5 — Prove that f(n) = n^2 is ω(n).<br>Calculate the ratio: f(n)/g(n) = n^2/n = n.<br>As n approaches infinity, n approaches infinity.<br>Therefore n^2 = ω(n).<br>C. Exam practice: find the constants yourself</p></details></div>
+<div class="qb"><p>1. Prove that f(n) = n^2 + 7n + 4 is O(n^2). Find c and n0.</p><details class="ans"><summary>Show answer</summary><p>For n &gt;= 1: n^2 + 7n + 4 &lt;= 12n^2. Choose c = 12, n0 = 1.</p></details></div>
+<div class="qb"><p>2. Prove that f(n) = 4n^2 - 3n is Ω(n^2). Find c and n0.</p><details class="ans"><summary>Show answer</summary><p>For n &gt;= 1: 4n^2 - 3n &gt;= n^2. Choose c = 1, n0 = 1.</p></details></div>
+<div class="qb"><p>3. Prove that f(n) = 2n^2 + 9n + 6 is Θ(n^2). Find c1, c2, and n0.</p><details class="ans"><summary>Show answer</summary><p>For n &gt;= 1: 2n^2 &lt;= 2n^2 + 9n + 6 &lt;= 17n^2. Choose c1 = 2, c2 = 17, n0 = 1.</p></details></div>
+<div class="qb"><p>4. Prove that f(n) = 7n + 12 is O(n). Find c and n0.</p><details class="ans"><summary>Show answer</summary><p>For n &gt;= 1: 7n + 12 &lt;= 19n. Choose c = 19, n0 = 1.</p></details></div>
+<div class="qb"><p>5. Prove that f(n) = n^3 + 2n^2 is Ω(n^3). Find c and n0.</p><details class="ans"><summary>Show answer</summary><p>For n &gt;= 1: n^3 + 2n^2 &gt;= n^3. Choose c = 1, n0 = 1.</p></details></div>
+<div class="qb"><p>6. Prove that f(n) = 6n^2 + 5n + 8 is Θ(n^2). Find suitable constants.</p><details class="ans"><summary>Show answer</summary><p>For n &gt;= 1: 6n^2 &lt;= 6n^2 + 5n + 8 &lt;= 19n^2. Choose c1 = 6, c2 = 19, n0 = 1.</p></details></div>
+<div class="qb"><p>7. Prove that f(n) = 1/n is o(1). Use the ratio definition.</p><details class="ans"><summary>Show answer</summary><p>(1/n)/1 = 1/n -&gt; 0. Therefore (1/n) = o(1).</p></details></div>
+<div class="qb"><p>8. Prove that f(n) = n log n is o(n^2). Use the ratio definition.</p><details class="ans"><summary>Show answer</summary><p>(n log n)/n^2 = (log n)/n -&gt; 0. Therefore n log n = o(n^2).</p></details></div>
+<div class="qb"><p>9. Prove that f(n) = n^3 is ω(n^2). Use the ratio definition.</p><details class="ans"><summary>Show answer</summary><p>n^3/n^2 = n -&gt; infinity. Therefore n^3 = ω(n^2).</p></details></div>
+<div class="qb"><p>10. Determine whether f(n) = n^2 + 100 is O(n). Prove your answer or explain why it is impossible.</p><details class="ans"><summary>Show answer</summary><p>No. The ratio (n^2 + 100)/n = n + 100/n grows without bound, so no fixed constant c can make n^2 + 100 &lt;= cn for all sufficiently large n.</p></details></div>
+<div class="qb"><p>11. Determine whether f(n) = 3n^2 - 8n is Θ(n^2). Find suitable constants and n0.</p><details class="ans"><summary>Show answer</summary><p>For n &gt;= 4: 3n^2 - 8n &gt;= n^2 (because 2n^2 &gt;= 8n ⇔ n &gt;= 4); and 3n^2 - 8n &lt;= 3n^2. Choose c1 = 1, c2 = 3, n0 = 4.<br><b>⚠ Corrected:</b> the bank wrote n0 = 3, but at n = 3: 3·9 − 24 = 3 &lt; 9 = n². <span class="tr">البنك كاتب n0 = 3 وده غلط: عند n = 3 الطرف الشمال 3 وهو أصغر من 9. الصح n0 = 4.</span></p></details></div>
+<div class="qb"><p>12. Given f(n) = 2n^2 + 3n and g(n) = n^2 + 10, prove that f(n) = Θ(g(n)) by finding c1, c2, and n0.</p><details class="ans"><summary>Show answer</summary><p>For n &gt;= 1, f(n) &gt;= 2n^2 and g(n) = n^2 + 10 &lt;= 11n^2, so f(n) &gt;= (2/11)g(n). Also f(n) &lt;= 5n^2 and g(n) &gt;= n^2, so f(n) &lt;= 5g(n). Choose c1 = 2/11, c2 = 5, n0 = 1.<br>Exam reminder: If the question only gives f(n) and g(n), check what relationship it asks you to prove (O, Ω, Θ, o, or ω). A pair of functions can satisfy more than one relationship; do not assume the required notation.<br>Extra Exam Practice: Function Relationships and Non-Recursive Code Complexity</p></details></div>
+<h4>Part 1 — Given f(n) and g(n): Prove the Relationship</h4>
+<p>In this question style, the exam gives you two functions and tells you which asymptotic relationship to prove. Your task is to choose suitable constants and an n0, then prove the required inequality (or use the limit definition for little-o and little-omega).</p>
+<p>Given</p>
+<p>Required</p>
+<p>What to find / show</p>
+<p>f(n) = n^2 - 1000,  g(n) = n^2</p>
+<p>f(n) = Θ(g(n))</p>
+<p>Find c1, c2, and n0.</p>
+<p>f(n) = 3n + 5,  g(n) = n</p>
+<p>f(n) = O(g(n))</p>
+<p>Find c and n0.</p>
+<p>f(n) = 5n^2 + 2n,  g(n) = n^2</p>
+<p>f(n) = Ω(g(n))</p>
+<p>Find c and n0.</p>
+<p>Practice questions</p>
+<div class="qb"><p>1. Given f(n) = 4n^2 + 7n + 2 and g(n) = n^2, prove that f(n) = O(g(n)).</p><details class="ans"><summary>Show answer</summary><p>For n &gt;= 1: 4n^2 + 7n + 2 &lt;= 4n^2 + 7n^2 + 2n^2 = 13n^2. Choose c = 13, n0 = 1. <i>(answer added; the bank had none)</i></p></details></div>
+<div class="qb"><p>2. Given f(n) = 6n^2 - 5n and g(n) = n^2, prove that f(n) = Ω(g(n)).</p><details class="ans"><summary>Show answer</summary><p>6n^2 − 5n &gt;= n^2 ⇔ 5n^2 &gt;= 5n ⇔ n &gt;= 1. Choose c = 1, n0 = 1. <i>(answer added; the bank had none)</i></p></details></div>
+<div class="qb"><p>3. Given f(n) = 2n^2 + 8n + 3 and g(n) = n^2, prove that f(n) = Θ(g(n)).</p><details class="ans"><summary>Show answer</summary><p>For n &gt;= 1: 2n^2 &lt;= 2n^2 + 8n + 3 &lt;= 13n^2. Choose c1 = 2, c2 = 13, n0 = 1. <i>(answer added; the bank had none)</i></p></details></div>
+<div class="qb"><p>4. Given f(n) = 3n + 10 and g(n) = n, prove that f(n) = Θ(g(n)).</p><details class="ans"><summary>Show answer</summary><p>For n &gt;= 1: 3n &lt;= 3n + 10 &lt;= 13n. Choose c1 = 3, c2 = 13, n0 = 1. <i>(answer added; the bank had none)</i></p></details></div>
+<div class="qb"><p>5. Given f(n) = n and g(n) = n^2, prove that f(n) = o(g(n)) using the limit definition.</p><details class="ans"><summary>Show answer</summary><p>n / n^2 = 1/n → 0 as n → ∞, so n = o(n^2). <i>(answer added; the bank had none)</i></p></details></div>
+<div class="qb"><p>6. Given f(n) = n^3 and g(n) = n^2, prove that f(n) = ω(g(n)) using the limit definition.</p><details class="ans"><summary>Show answer</summary><p>n^3 / n^2 = n → ∞ as n → ∞, so n^3 = ω(n^2). <i>(answer added; the bank had none)</i></p></details></div>
+<h4>Part 2 — Find the Time Complexity (Non-Recursive Code)</h4>
+<p>For each code snippet, determine the time complexity using Θ-notation. Assume each basic statement takes constant time, and n is a positive integer. These snippets do not use recursion.</p>
+<div class="qb"><p>Question 1 — One loop<br>for (int i = 0; i &lt; n; i++) {   cout &lt;&lt; i;}</p><details class="ans"><summary>Show answer</summary><p>Θ(n) — the loop runs n times.</p></details></div>
+<div class="qb"><p>Question 2 — Nested loops, both depend on n<br>for (int i = 0; i &lt; n; i++) {   for (int j = 0; j &lt; n; j++) {   cout &lt;&lt; i + j;   }}</p><details class="ans"><summary>Show answer</summary><p>Θ(n^2) — n iterations for the outer loop and n for each inner loop: n × n.</p></details></div>
+<div class="qb"><p>Question 3 — Consecutive loops<br>for (int i = 0; i &lt; n; i++) {   cout &lt;&lt; i;}for (int j = 0; j &lt; n; j++) {   cout &lt;&lt; j;}</p><details class="ans"><summary>Show answer</summary><p>Θ(n) — the total is n + n = 2n, and constants are ignored.</p></details></div>
+<div class="qb"><p>Question 4 — Logarithmic loop<br>int i = 1;while (i &lt; n) {   i = i * 2;}</p><details class="ans"><summary>Show answer</summary><p>Θ(log n) — i doubles each iteration: 1, 2, 4, 8, ...</p></details></div>
+<div class="qb"><p>Question 5 — Halving loop<br>int i = n;while (i &gt; 1) {   i = i / 2;}</p><details class="ans"><summary>Show answer</summary><p>Θ(log n) — i is halved each iteration until it reaches 1.</p></details></div>
+<div class="qb"><p>Question 6 — Triangular nested loop<br>for (int i = 0; i &lt; n; i++) {   for (int j = 0; j &lt; i; j++) {   cout &lt;&lt; j;   }}</p><details class="ans"><summary>Show answer</summary><p>Θ(n^2) — the inner loop runs 0 + 1 + 2 + ... + (n - 1) times, which is Θ(n^2).</p></details></div>
+<div class="qb"><p>Question 7 — Inner loop starts at i<br>for (int i = 1; i &lt;= n; i++) {   for (int j = i; j &lt;= n; j++) {   cout &lt;&lt; j;   }}</p><details class="ans"><summary>Show answer</summary><p>Θ(n^2) — total iterations are n + (n - 1) + ... + 1 = Θ(n^2).</p></details></div>
+<div class="qb"><p>Question 8 — Multiplicative outer loop, linear inner loop<br>for (int i = 1; i &lt; n; i *= 2) {   for (int j = 0; j &lt; n; j++) {   cout &lt;&lt; i + j;   }}</p><details class="ans"><summary>Show answer</summary><p>Θ(n log n) — the outer loop runs Θ(log n) times and the inner loop runs n times each time.</p></details></div>
+<div class="qb"><p>Question 9 — Two different loop variables<br>for (int i = 0; i &lt; n; i++) {   cout &lt;&lt; i;}for (int j = 1; j &lt; n; j *= 2) {   cout &lt;&lt; j;}</p><details class="ans"><summary>Show answer</summary><p>Θ(n) — total work is n + log n, dominated by n.</p></details></div>
+<div class="qb"><p>Question 10 — Inner loop doubles each time<br>for (int i = 0; i &lt; n; i++) {   int j = 1;   while (j &lt; n) {   j *= 2;   }}</p><details class="ans"><summary>Show answer</summary><p>Θ(n log n) — the outer loop runs n times; the inner while loop runs Θ(log n) times per outer iteration.</p></details></div>
+<div class="qb"><p>Question 11 — Loop with a decreasing bound<br>for (int i = n; i &gt; 0; i--) {   for (int j = 0; j &lt; i; j++) {   cout &lt;&lt; j;   }}</p><details class="ans"><summary>Show answer</summary><p>Θ(n^2) — total inner iterations are n + (n - 1) + ... + 1 = Θ(n^2).</p></details></div>
+<div class="qb"><p>Question 12 — Three nested loops<br>for (int i = 0; i &lt; n; i++) {   for (int j = 0; j &lt; n; j++) {   for (int k = 0; k &lt; n; k++) {   cout &lt;&lt; i + j + k;   }   }}</p><details class="ans"><summary>Show answer</summary><p>Θ(n^3) — there are three nested loops, each running n times: n × n × n.<br>Quick reminders<br>Consecutive loops: add their costs, then keep the dominant term (for example, n + log n = Θ(n)).<br>Nested loops: multiply iteration counts when the loops are independent (for example, n × n = Θ(n^2)).<br>A variable multiplied or divided by a constant factor each iteration usually gives Θ(log n).<br>For triangular loops, write the sum (1 + 2 + ... + n) before simplifying it to Θ(n^2).<br>Do not assume every nested loop is Θ(n^2): inspect the exact starting and stopping conditions.</p></details></div>
+<p>Try the questions first, then use this answer key to check your work.</p>
   </div>
 </section>
 
