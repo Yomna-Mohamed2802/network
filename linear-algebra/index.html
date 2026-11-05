@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Linear Algebra</title>
-<meta name="site-version" content="la-2026-11-03-r2">
+<meta name="site-version" content="la-2026-11-05-r3">
 <script>
 (function(){
   /* auto-update: if the server has a newer version than this cached copy, reload once */
   try{
-    var cur='la-2026-11-03-r2';
+    var cur='la-2026-11-05-r3';
     fetch(location.pathname+'?nocache='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():'';}).then(function(t){
       var m=t.match(/name="site-version" content="([^"]+)"/);
       if(m&&m[1]!==cur&&!sessionStorage.getItem('reloaded-'+m[1])){sessionStorage.setItem('reloaded-'+m[1],'1');location.reload();}
@@ -598,6 +598,7 @@ details.ans .tr{border:0!important;padding:0!important}
 .ios-term{background:#1c1622!important;color:#edebf0!important}
 .view code{overflow-wrap:anywhere}
 /*/THEME*/
+.qb{border-top:1px solid var(--line);padding:.55rem 0}.qb>p{margin:.15rem 0;font-weight:500}.qb details.ans{margin:.3rem 0 .2rem}
 .mx{border-collapse:separate;border-spacing:0;border-left:2px solid var(--fg);border-right:2px solid var(--fg);border-radius:6px;margin:4px 0;font:600 .95rem var(--f-mono)}
 .mx td{padding:5px 10px;text-align:center;min-width:2.2em;border:0!important;background:transparent!important}
 .mx td.bar{border-left:1.5px dashed var(--muted)!important}
@@ -1293,6 +1294,44 @@ det(2A) = 2³·2 = 16          det(A²B⁻¹) = 2·2·(1/(−3)) = −4/3</pre><
     <details class="ans"><summary>Show solution</summary><pre class="cli">R₂ = 2R₁ (one row is a multiple of another) → det = 0 → not invertible</pre><span class="tr">صف مضاعف صف تاني = الـ det صفر.</span></details>
     <h4>17. Is A = [2 6; 1 3] invertible?</h4>
     <details class="ans"><summary>Show solution</summary><pre class="cli">det = 2·3 − 6·1 = 0 → NOT invertible (singular)</pre><span class="tr">الـ det صفر.</span></details>
+  </div>
+  <div class="block">
+    <h3>Part 4: Lecture 2 examples (Shahd's notes)</h3>
+    <h4>18. Show that A = [2 1 5; 1 2 4; 5 4 3] is symmetric and B = [0 2 −1; −2 0 0; 1 0 0] is skew-symmetric.</h4>
+    <details class="ans"><summary>Show solution</summary><pre class="cli">Aᵀ = [2 1 5; 1 2 4; 5 4 3] = A  → symmetric
+Bᵀ = [0 −2 1; 2 0 0; −1 0 0] = −B → skew-symmetric (main diagonal must be 0)</pre><span class="tr">المتماثلة: الصفوف بقت أعمدة ومحصلش تغيير. ضد المتماثلة: الـ transpose طلع نفس المصفوفة بإشارة سالبة.</span></details>
+    <h4>19. A = [2 1 0; −1 3 5], B = [3 1; 1 0; 1 −1]. Verify (AB)ᵀ = BᵀAᵀ.</h4>
+    <details class="ans"><summary>Show solution</summary><pre class="cli">AB (2×3 · 3×2 = 2×2) = [2·3+1·1+0·1   2·1+1·0+0·(−1); −3+3+5   −1+0−5] = [7 2; 5 −6]
+L.H.S = (AB)ᵀ = [7 5; 2 −6]
+R.H.S = BᵀAᵀ = [3 1 1; 1 0 −1]·[2 −1; 1 3; 0 5] = [7 5; 2 −6]   ✓</pre><span class="tr">حسبنا الطرفين لوحدهم وطلعوا متساويين.</span></details>
+    <h4>20. Prove that AAᵀ is symmetric for any matrix A.</h4>
+    <details class="ans"><summary>Show solution</summary><pre class="cli">(AAᵀ)ᵀ = (Aᵀ)ᵀ·Aᵀ = A·Aᵀ   → it equals its own transpose → symmetric</pre><span class="tr">استخدمنا (AB)ᵀ = BᵀAᵀ و (Aᵀ)ᵀ = A.</span></details>
+    <h4>21. Solve 2x − 3 = 0; 2x + 3y = 0; x + 2y + 3z = 0.</h4>
+    <details class="ans"><summary>Show solution</summary><pre class="cli">2x − 3 = 0       → x = 3/2                       S.S = {3/2}
+2x + 3y = 0      → y = t free, x = −(3/2)t        S.S = {(−3t/2, t)}  infinitely many
+x + 2y + 3z = 0  → x = t, y = s free, z = −(t + 2s)/3   S.S = {(t, s, −(t+2s)/3)}</pre><span class="tr">معادلة واحدة فيها أكتر من متغير: كل المتغيرات إلا واحد بتبقى حرة، فالحلول لا نهائية.</span></details>
+    <h4>22. Which are NOT linear: x + yz = 5, x² + 1 = 0, sin x + 2z = 0?</h4>
+    <details class="ans"><summary>Show solution</summary><pre class="cli">all three are NOT linear: yz is a product of variables, x² has power 2, sin x is a function of x</pre></details>
+    <h4>23. Solve 3x + 2y = 3, −x + y = 4 (and draw the two lines).</h4>
+    <details class="ans"><summary>Show solution</summary><pre class="cli">3 × (−x + y = 4) → −3x + 3y = 12;  add to 3x + 2y = 3 → 5y = 15 → y = 3
+3x + 6 = 3 → x = −1       S.S = {(−1, 3)}  unique (the lines cross at (−1, 3))</pre><span class="tr">ضربنا التانية في 3 عشان x تروح. الخطين بيتقاطعوا في نقطة واحدة.</span></details>
+    <h4>24. Back substitution: x − 2y + 3z = 9, y + 3z = 5, z = 2.</h4>
+    <details class="ans"><summary>Show solution</summary><pre class="cli">z = 2 → y + 6 = 5 → y = −1 → x + 2 + 6 = 9 → x = 1      S.S = {(1, −1, 2)}</pre></details>
+    <h4>25. Solve x − 4y + 3z = 5, −x + 3y − z = −3, 2x − 4z = 6 with the augmented matrix.</h4>
+    <details class="ans"><summary>Show solution</summary><pre class="cli">|  1 -4  3 |  5 |
+| -1  3 -1 | -3 |   R₁ + R₂ → R₂ ,  −2R₁ + R₃ → R₃
+|  2  0 -4 |  6 |
+| 1 -4   3 |  5 |
+| 0 -1   2 |  2 |   8R₂ + R₃ → R₃
+| 0  8 -10 | -4 |
+| 1 -4  3 |  5 |
+| 0 -1  2 |  2 |    6z = 12 → z = 2 ;  −y + 4 = 2 → y = 2 ;  x − 8 + 6 = 5 → x = 7
+| 0  0  6 | 12 |    S.S = {(7, 2, 2)}   check: 7−8+6 = 5 ✓  −7+6−2 = −3 ✓  14−8 = 6 ✓</pre><span class="tr">نصفّر تحت أول عنصر، وبعدين تحت التاني، ونعوّض من تحت لفوق.</span></details>
+    <h4>26. Solve 2x₁ + 3x₂ + 5x₃ = 1, 2x₁ + 6x₂ + 7x₃ = 2, −3x₁ + 2x₂ − x₃ = 8 (written in the notes without a solution).</h4>
+    <details class="ans"><summary>Show solution</summary><pre class="cli">R₂ − R₁: 3x₂ + 2x₃ = 1 ;  R₃ + (3/2)R₁: (13/2)x₂ + (13/2)x₃ = 19/2 → x₂ + x₃ = 19/13
+x₂ = 1 − 2(19/13) = −25/13 ,  x₃ = 19/13 + 25/13 = 44/13
+x₁ = (1 − 3x₂ − 5x₃)/2 = (1 + 75/13 − 220/13)/2 = −66/13
+check eq.3: −3(−66) + 2(−25) − 44 = 104 → 104/13 = 8 ✓</pre><span class="tr">المثال ده في الكشكول متكتب بس من غير حل، فحليته أنا. الإجابة كسور، واتأكدت منها بالتعويض.</span></details>
   </div>
 </section>
 
